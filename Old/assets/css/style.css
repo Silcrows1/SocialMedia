@@ -6,3 +6,18 @@
     justify-content: center;
     align-items: center;    
 }
+.register{
+    Margin:auto;
+    Height:100vh;
+    justify-content: center;
+    align-items: center;    
+}
+.small{
+    font-size:18px;
+}
+.medium{
+    font-size:24px;
+}
+.large{
+    font-size:28px;
+}

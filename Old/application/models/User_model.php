@@ -15,5 +15,22 @@ class User_model extends CI_model{
             return false;
         }
     }
+
+    public function register($password){
+        var_dump($password);
+    $data = array(
+        'FirstName' => $this->input->post('fname'),
+        'LastName' => $this->input->post('lname'),
+        'Email' => $this->input->post('email'),
+        'HelpRequired' => $this->input->post('support'),
+        'Vision' => $this->input->post('fontpref'),
+        'reminderquestion' => $this->input->post('question'),
+        'Reminder' => $this->input->post('reminder'),
+        'Username' => $this->input->post('username'),
+        'password' => $password
+    );
+    //insert data into a table
+    return $this->db->insert('users', $data);
+    }
 }
 ?>

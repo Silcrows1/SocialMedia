@@ -27,6 +27,9 @@
     <input type="checkbox" class="form-check-input" onclick="myFunction()">
     <label class="form-check-label" for="exampleCheck1">Show Password</label>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary">Submit</button></br></br></br>
+
+  <p>Need an account? Register <a href="<?php echo base_url(); ?>users/register">here</a></p>
+  <!--<button type="button" onclick="location.href='<?php echo base_url(); ?>users/register'" class="btn btn-primary">Register</button>-->
   <?php echo form_close(); ?>
 </div>
