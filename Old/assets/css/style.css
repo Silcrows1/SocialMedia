@@ -1,3 +1,8 @@
-body{
-    background-color: red;
+
+.login{
+    Margin:auto;
+    Height:100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
 }
