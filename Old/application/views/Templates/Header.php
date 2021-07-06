@@ -25,7 +25,10 @@
         
         <?php if($this->session->userdata('logged_in')) : ?> 
           <li class="nav-item">
-          <a class="nav-link" href="<?php echo base_url(); ?>users/viewprofile">Profile</a>
+          <a class="nav-link" href="<?php echo base_url(); ?>users/viewownprofile">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo base_url(); ?>users/viewaccount">Account</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo base_url(); ?>users/logout">Log out</a>

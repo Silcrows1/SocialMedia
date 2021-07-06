@@ -34,6 +34,7 @@
   <button type="submit" class="btn btn-primary">Submit</button></br></br></br>
 
   <p>Need an account? Register <a href="<?php echo base_url(); ?>users/register">here</a></p>
+  <p>Forgot password? Click <a href="<?php echo base_url(); ?>users/register">here for a reminder</a></p>
   <!--<button type="button" onclick="location.href='<?php echo base_url(); ?>users/register'" class="btn btn-primary">Register</button>-->
   <?php echo form_close(); ?>
 </div>

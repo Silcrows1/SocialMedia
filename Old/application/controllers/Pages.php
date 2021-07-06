@@ -11,8 +11,9 @@
             }
             else{
 
+			$posts['posts']=$this->post_model->viewposts();	
 			$this->load->view('templates/header');
-			$this->load->view('pages/'.$page);
+			$this->load->view('pages/home', $posts);
 			$this->load->view('templates/footer');
             }
 		}

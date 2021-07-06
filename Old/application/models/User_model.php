@@ -30,7 +30,7 @@ class User_model extends CI_model{
         'Reminder' => $this->input->post('reminder'),
         'Username' => $this->input->post('username'),
         'password' => $password
-    );
+        );
 
     //run duplicate function
     $bool = $this->duplicate($data);
@@ -47,15 +47,14 @@ class User_model extends CI_model{
         $created_id = (string)$created_new;
         //add user id to array to be used to create profile for user.
         $created = array(
-            'User_id' => $created_id
-            //'Bio' => $data('fname'.' '.'lname')
+            'User_id' => $created_id,
+            'gender' => $this->input->post('gender')
         );
         $this->db->insert('profiles', $created);
         return true;
     }
     }
-
-    public function viewprofile(){
+    public function viewownprofile(){
         $this->db->select('*');
         $this->db->join('profiles', 'users.User_id = profiles.User_id');
         $this->db->where('users.User_id', $this->session->userdata('user_id'));
@@ -63,7 +62,66 @@ class User_model extends CI_model{
         return $user->result_array();
 
     }
-    
+
+    public function addfriend($id){
+
+        $data =array(
+            'User_id' => $this->session->userdata('user_id'),
+            'Usertwo_id' => $id
+        );
+        return $this->db->insert('friends', $data);
+
+    }
+    public function editprofile(){
+
+        $data = array(
+       'Bio' => $this->input->post('Bio')
+       );
+       $this->db->where('User_id', $this->session->userdata('user_id'));
+       $this->db->set($data);
+       return $this->db->update('profiles', $data);
+
+   }
+
+    public function viewownaccount(){
+        $this->db->select('*');
+        $this->db->join('profiles', 'users.User_id = profiles.User_id');
+        $this->db->where('users.User_id', $this->session->userdata('user_id'));
+        $user = $this->db->get('users');
+        return $user->result_array();
+
+    }
+
+    public function viewaccount($id){
+        $this->db->select('*');
+        $this->db->join('profiles', 'users.User_id = profiles.User_id');
+        $this->db->where('users.User_id', $id);
+        $user = $this->db->get('users');
+        return $user->result_array();
+
+    }
+    public function editaccount(){
+
+         $data = array(
+        'FirstName' => $this->input->post('fname'),
+        'LastName' => $this->input->post('lname'),
+        'Email' => $this->input->post('email'),
+        'HelpRequired' => $this->input->post('support'),
+        'Vision' => $this->input->post('fontpref'),        
+        'Username' => $this->input->post('username')
+        );
+        $data2 = array(
+            'Gender'=>$this->input->post('gender')
+        );
+        $this->db->where('User_id', $this->session->userdata('user_id'));
+		$this->db->set($data);
+		$this->db->update('users', $data);
+        $this->db->where('User_id', $this->session->userdata('user_id'));
+		$this->db->set($data2);
+		return $this->db->update('profiles', $data2);
+
+    }
+
     ////////////////////check for duplicate usernames function///////////////////
     public function duplicate($data)
     {

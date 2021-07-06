@@ -39,6 +39,17 @@
         </div>
 	</div><br>
 	<div class="form-group loginelement">
+	<!--Gender input -->
+		<p>Gender</p>
+        <div>    
+		<input type="radio" class="No" name="gender" value="Male" checked="checked">
+        <label for="No" class="small">Male</label>
+        <br>
+        <input type="radio" class="Yes" name="gender" value="Female">
+        <label for="Yes" class="small">Female</label>
+        </div>
+	</div><br>
+	<div class="form-group loginelement">
 	<!--Email address input -->
 		<label>Email Address</label>
 		<input type='email' class="form-control" name="email" placeholder="Email Address">

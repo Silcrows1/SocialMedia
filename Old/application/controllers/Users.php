@@ -62,18 +62,76 @@
                     redirect('users/login');
                   }   
             }
-        }
+        }        
 
-        public function viewprofile(){
-            $user['users']=$this->user_model->viewprofile();
-            $this->load->view('templates/header');
-            $this->load->view('users/profile', $user);
-            $this->load->view('templates/footer');
+        public function addfriend($id){
+
+            $this->user_model->addfriend($id);
+
+            redirect('pages/view');
         
         }
 
+        public function viewaccount(){
+            $user['users']=$this->user_model->viewownaccount();
+            $this->load->view('templates/header');
+            $this->load->view('users/account', $user);
+            $this->load->view('templates/footer');        
+        }
 
-    
+        public function viewownprofile(){
+            $user['users']=$this->user_model->viewownaccount();
+            $this->load->view('templates/header');
+            $this->load->view('users/profile', $user);
+            $this->load->view('templates/footer');        
+        }
+
+        public function viewprofile($id){
+            $user['users']=$this->user_model->viewaccount($id);
+            $this->load->view('templates/header');
+            $this->load->view('users/profile', $user);
+            $this->load->view('templates/footer');        
+        }
+
+        public function editaccount($id){
+
+            $this->form_validation->set_rules('fname','FName','required');
+            $this->form_validation->set_rules('lname','LName','required');
+            $this->form_validation->set_rules('email','Email','required');
+            $user['users']=$this->user_model->viewaccount($id);
+            
+
+            if($this->form_validation->run()===FALSE){
+                $this->load->view('templates/header');
+                $this->load->view('users/editaccount', $user);
+                $this->load->view('templates/footer');
+            }
+            else{              
+                $this->user_model->editaccount($id);
+                $this->viewaccount();
+            }
+        
+        }
+
+        public function editprofile(){
+
+            $this->form_validation->set_rules('Bio','Bio','required');
+
+            $id=$this->session->userdata('user_id');
+            $user['users']=$this->user_model->viewaccount($id);
+            
+
+            if($this->form_validation->run()===FALSE){
+                $this->load->view('templates/header');
+                $this->load->view('users/editprofile', $user);
+                $this->load->view('templates/footer');
+            }
+            else{              
+                $this->user_model->editprofile();
+                $this->viewprofile($id);
+            }
+        
+        }    
         public function logout(){
             //unset user data from session
             $this->session->unset_userdata('logged_in');
