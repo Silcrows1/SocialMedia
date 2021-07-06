@@ -20,24 +20,17 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="<?php echo base_url(); ?>pages/view">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+        
+        <?php if($this->session->userdata('logged_in')) : ?> 
+          <li class="nav-item">
+          <a class="nav-link" href="<?php echo base_url(); ?>users/viewprofile">Profile</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo base_url(); ?>users/logout">Log out</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown link
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
+        <?php endif ?>
       </ul>
     </div>
   </div>

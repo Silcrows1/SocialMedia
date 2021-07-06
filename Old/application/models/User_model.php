@@ -32,50 +32,59 @@ class User_model extends CI_model{
         'password' => $password
     );
 
-    
+    //run duplicate function
     $bool = $this->duplicate($data);
-
+    //if duplicate username found, return false
     if($bool == false){
         return false;
     }
+    //if no duplicate username found, insert new user.
     else
     {
         $this->db->insert('users', $data);
-            //return the new user id
+        //return the new user id
         $created_new = $this->db->insert_id();
         $created_id = (string)$created_new;
-
         //add user id to array to be used to create profile for user.
         $created = array(
             'User_id' => $created_id
             //'Bio' => $data('fname'.' '.'lname')
         );
-
         $this->db->insert('profiles', $created);
         return true;
     }
+    }
+
+    public function viewprofile(){
+        $this->db->select('*');
+        $this->db->join('profiles', 'users.User_id = profiles.User_id');
+        $this->db->where('users.User_id', $this->session->userdata('user_id'));
+        $user = $this->db->get('users');
+        return $user->result_array();
+
     }
     
     ////////////////////check for duplicate usernames function///////////////////
     public function duplicate($data)
     {
+        //retireve all users that match username entered.
         $this->db->select('Username');
         $this->db->where('users.Username', $data['Username']);
         $found = $this->db->get('users');
-    
-    if ($found->num_rows()>=1) 
-    {
-        $msgText = "User already exsists with this username";
-        $this->session->set_flashdata('userexsists', '<div class="alert alert-danger text-center">'.$msgText.'</div>');
-        return false;
-    }
-    else
-    {
-        return true;
-    }
+        
+        //if username is found in database, create flashdata for user exsists.
+        if ($found->num_rows()>=1) 
+        {
+            $msgText = "User already exsists with this username";
+            $this->session->set_flashdata('userexsists', '<div class="alert alert-danger text-center">'.$msgText.'</div>');
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }
-
 
 
 ?>

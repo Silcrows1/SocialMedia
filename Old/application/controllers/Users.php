@@ -22,7 +22,6 @@
                     //ADD HASHING
                     
                     $bool = $this->user_model->register($password);
-                    var_dump($bool);
                     
                     //if true, user was successfully created
                     if ($bool == true){
@@ -64,6 +63,16 @@
                   }   
             }
         }
+
+        public function viewprofile(){
+            $user['users']=$this->user_model->viewprofile();
+            $this->load->view('templates/header');
+            $this->load->view('users/profile', $user);
+            $this->load->view('templates/footer');
+        
+        }
+
+
     
         public function logout(){
             //unset user data from session
