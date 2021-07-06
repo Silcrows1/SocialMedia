@@ -9,6 +9,10 @@
 	  }
 	} 
 	</script>
+  <?php 
+  if(isset($_SESSION['userexsists'])){
+    unset($_SESSION['userexsists']);
+  }?>
 <div class="col-3 login">
 
 <!--login Form-->

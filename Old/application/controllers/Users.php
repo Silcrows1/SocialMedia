@@ -20,9 +20,19 @@
                 else{
                     $password = $this->input->post('password');
                     //ADD HASHING
-                    var_dump($password);
-                    $this->user_model->register($password);    
+                    
+                    $bool = $this->user_model->register($password);
+                    var_dump($bool);
+                    
+                    //if true, user was successfully created
+                    if ($bool == true){
                     redirect('users/login');
+                    }
+
+                    //if false, duplicate was found, redirect back to register page
+                    else if ($bool == false) {
+                    redirect('users/register');    
+                    }
                 }
             }
 

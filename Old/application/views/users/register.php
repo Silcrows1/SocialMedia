@@ -3,6 +3,7 @@
 <!--Form location -->
 <div class="col-8 register">
 <?php echo form_open('users/register'); ?>
+<?php echo $this->session->flashdata('userexsists');?>
 	<div class="form-group loginelement">
 	<!--First name input --><br>
 		<label>First Name</label>
