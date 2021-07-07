@@ -38,3 +38,10 @@
     margin:2vh;
     padding:2vh;
 }
+
+.searchbar{
+    float:right;
+}
+.navbar-nav{
+    width:100%;
+}

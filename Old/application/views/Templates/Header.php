@@ -34,8 +34,15 @@
           <a class="nav-link" href="<?php echo base_url(); ?>users/logout">Log out</a>
         </li>
         <?php endif ?>
+        
       </ul>
     </div>
+    <form action="<?php echo base_url(); ?>users/search" method = "post" class="searchbar">
+        <label for="keyword">Search
+        <input class = "input" type="text" name = "keyword" placeholder ="Search Users"label="Search" />
+        <input type="submit" value = "Search" />
+        </label>
+        </form>
   </div>
 </nav>
 <?php if ($this->session->flashdata('login_failed')): ?>

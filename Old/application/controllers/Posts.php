@@ -5,6 +5,7 @@
 
         $this->post_model->createPost();
         $posts['posts'] = $this->post_model->viewposts();
+        $pending['pending'] = $this->post_model->viewpending();
         $this->load->view('templates/header');
         $this->load->view('pages/home', $posts);
         $this->load->view('templates/footer');

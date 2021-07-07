@@ -16,15 +16,8 @@ class Post_model extends CI_model{
         
     }
     //Find friends function
-    public function friends(){
-        $this->db->select('Usertwo_id');
-        $this->db->from('friends');
-        $this->db->where('User_id', $this->session->userdata('user_id'));
-        $friends=$this->db->get();    
-        return $friends->result_array();
 
-         
-    }
+
     //view posts function
     public function viewPosts(){
 

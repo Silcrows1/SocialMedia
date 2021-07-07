@@ -72,6 +72,11 @@
         
         }
 
+        public function acceptrequest($id){
+            $this->user_model->acceptrequest($id);
+            redirect('pages/view');
+        }
+
         public function viewaccount(){
             $user['users']=$this->user_model->viewownaccount();
             $this->load->view('templates/header');
@@ -79,8 +84,17 @@
             $this->load->view('templates/footer');        
         }
 
+        public function requests(){
+            $user['requests']=$this->user_model->viewpending();
+            $this->load->view('templates/header');
+            $this->load->view('users/requests', $user);
+            $this->load->view('templates/footer');    
+        }
+
         public function viewownprofile(){
             $user['users']=$this->user_model->viewownaccount();
+            $user['friends']=$this->user_model->friends();
+            $user['requests']=$this->user_model->viewpending();
             $this->load->view('templates/header');
             $this->load->view('users/profile', $user);
             $this->load->view('templates/footer');        
@@ -112,6 +126,15 @@
             }
         
         }
+        
+        public function search(){
+            $form_data = $this->input->post('keyword');
+            $users['users']=$this->user_model->search($form_data);            
+            $this->load->view('templates/header');
+            $this->load->view('users/search', $users);
+            $this->load->view('templates/footer');
+        }
+
 
         public function editprofile(){
 

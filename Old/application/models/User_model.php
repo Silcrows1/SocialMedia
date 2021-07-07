@@ -62,14 +62,82 @@ class User_model extends CI_model{
         return $user->result_array();
 
     }
+    public function friends(){
+        $this->db->select('Usertwo_id, users.FirstName, users.LastName');
+        $this->db->from('friends');
+        $this->db->join('users', 'users.user_id = friends.usertwo_id');
+        $this->db->where('friends.User_id', $this->session->userdata('user_id'));
+        $friends=$this->db->get();    
+        return $friends->result_array();         
+    }
+    public function viewpending(){
+        $this->db->select('Usertwo_id, users.FirstName, users.LastName, Pending_id, submitted_by');
+        $this->db->from('pending');
+        $this->db->join('users', 'users.user_id = pending.usertwo_id');
+        $this->db->where('pending.User_id', $this->session->userdata('user_id'));
+        $friends=$this->db->get();    
+        return $friends->result_array();         
+    }
+    
+    public function acceptrequest($id){
+        $this->db->select('pending.User_id, Usertwo_id, users.FirstName, users.LastName');
+        $this->db->from('pending');
+        $this->db->join('users', 'users.user_id = pending.usertwo_id');
+        $this->db->where('pending.Pending_id', $id);
+        $friends=$this->db->get();   
+        $array=(array)$friends->row(); 
 
+        $id1 = $array['User_id'];
+        $id2 = $array['Usertwo_id'];
+
+        //delete pending friend 1 
+        $this->db->select('*');
+        $this->db->from('pending');
+        $this->db->where('pending.User_id', $id1);
+        $this->db->where('pending.Usertwo_id', $id2);
+        $this->db->delete();    
+
+        //delete pending friend 2
+        $this->db->select('*');
+        $this->db->from('pending');
+        $this->db->where('pending.User_id', $id2);
+        $this->db->where('pending.Usertwo_id', $id1);
+        $this->db->delete();
+
+        $data = array(
+            'User_id' => $id1,
+            'Usertwo_id' => $id2
+        );
+
+        $data2 = array(
+            'Usertwo_id' => $id1,
+            'User_id' => $id2
+        );
+
+        //Add friend 1
+        $this->db->insert('friends', $data);
+        //Add friend 2
+        $this->db->insert('friends', $data2);
+    
+        return;
+
+    }
     public function addfriend($id){
 
         $data =array(
             'User_id' => $this->session->userdata('user_id'),
-            'Usertwo_id' => $id
+            'Usertwo_id' => $id,
+            'submitted_by' => $this->session->userdata('user_id')
         );
-        return $this->db->insert('friends', $data);
+
+        $data2 =array(
+            'User_id' => $id,
+            'Usertwo_id' => $this->session->userdata('user_id'),
+            'submitted_by' => $this->session->userdata('user_id')
+        );
+
+        $this->db->insert('pending', $data2);
+        return $this->db->insert('pending', $data);
 
     }
     public function editprofile(){
@@ -120,6 +188,15 @@ class User_model extends CI_model{
 		$this->db->set($data2);
 		return $this->db->update('profiles', $data2);
 
+    }
+    public function search($form_data){
+
+        $sql = "CONCAT(FirstName,' ', LastName) LIKE '%$form_data%'";
+        $this->db->select('FirstName, LastName, User_id');
+        $this->db->where($sql);        
+        $found = $this->db->get('users');
+
+        return $found->result_array();
     }
 
     ////////////////////check for duplicate usernames function///////////////////
