@@ -62,6 +62,14 @@ class User_model extends CI_model{
         return $user->result_array();
 
     }
+    public function profilepicture($url){
+        $data = array(
+            'Picture' => $url
+        );        
+        $this->db->where('profiles.User_id', $this->session->userdata('user_id'));
+        $user = $this->db->update('profiles', $data);
+        return;       
+    }
     public function friends(){
         $this->db->select('Usertwo_id, users.FirstName, users.LastName');
         $this->db->from('friends');

@@ -92,6 +92,8 @@
         }
 
         public function viewownprofile(){
+            $this->load->library('upload');
+            $user['errors'] = array('error' => $this->upload->display_errors());
             $user['users']=$this->user_model->viewownaccount();
             $user['friends']=$this->user_model->friends();
             $user['requests']=$this->user_model->viewpending();
