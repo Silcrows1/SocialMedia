@@ -71,9 +71,10 @@ class User_model extends CI_model{
         return;       
     }
     public function friends(){
-        $this->db->select('Usertwo_id, users.FirstName, users.LastName');
+        $this->db->select('Usertwo_id, users.FirstName, users.LastName, profiles.Picture');
         $this->db->from('friends');
         $this->db->join('users', 'users.user_id = friends.usertwo_id');
+        $this->db->join('profiles', 'users.user_id = profiles.user_id');
         $this->db->where('friends.User_id', $this->session->userdata('user_id'));
         $friends=$this->db->get();    
         return $friends->result_array();         
