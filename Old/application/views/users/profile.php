@@ -1,9 +1,10 @@
 <?php foreach($users as $user) : ?>
+
     <!--Itterate through friends found, if friend found matches User_id set $match to true-->
     <!--Preventing checking for array that doesnt exist-->
     <?php $match = FALSE; ?>
     <?php foreach ($friends as $friend) :?>
-    <?php if($friend['Usertwo_id']==$user['User_id']): $match = TRUE; ?>
+    <?php if($friend['Usertwo_id']==$this->session->userdata['user_id']): $match = TRUE; ?>
     <?php endif ?>
     <?php endforeach?>
 

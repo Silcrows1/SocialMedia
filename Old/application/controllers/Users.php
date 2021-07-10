@@ -92,10 +92,11 @@
         }
 
         public function viewownprofile(){
+            $id=$this->session->userdata('user_id');
             $this->load->library('upload');
             $user['errors'] = array('error' => $this->upload->display_errors());
             $user['users']=$this->user_model->viewownaccount();
-            $user['friends']=$this->user_model->friends();
+            $user['friends']=$this->user_model->friends($id);
             $user['requests']=$this->user_model->viewpending();
             $this->load->view('templates/header');
             $this->load->view('users/profile', $user);
@@ -106,7 +107,8 @@
             $this->load->library('upload');
             $user['errors'] = array('error' => $this->upload->display_errors());
             $user['users']=$this->user_model->viewaccount($id);
-            $user['friends']=$this->user_model->friends();
+            
+            $user['friends']=$this->user_model->friends($id);
             $user['requests']=$this->user_model->viewpending();
             $this->load->view('templates/header');
             $this->load->view('users/profile', $user);
