@@ -1,10 +1,25 @@
 <?php foreach($users as $user) : ?>
+    <!--Itterate through friends found, if friend found matches User_id set $match to true-->
+    <?php $match = FALSE; ?>
+    <?php foreach ($friends as $friend) :?>
+    <?php if($friend['Usertwo_id']==$user['User_id']): $match = TRUE; ?>
+    <?php endif ?>
+    <?php endforeach?>
+
 <div class = "col 12 profileContent">
     <div class = "row 12 profileOptions">
-        <?php if ($this->session->userdata['user_id'] != $user['User_id']) : ?> 
+        <!--Preventing checking for array that doesnt exist and checking user_id isnt the same as the session holder-->
+        <?php if ($match == FALSE && $this->session->userdata['user_id'] != $user['User_id']) : ?>
+            <a href="<?php echo base_url('/users/addfriend/'.$user['User_id']); ?>">Add Friend</btn></a>  
+
+        <!--if session userdata doesnt match the userID of the profile, and doesnt match friends show add friend-->
+        <?php elseif ($this->session->userdata['user_id'] != $user['User_id'] && $match == FALSE) : ?> 
         <a href="<?php echo base_url('/users/addfriend/'.$user['User_id']); ?>">Add Friend</btn></a>
         <?php endif ?>
+
+        <?php if ($this->session->userdata['user_id'] == $user['User_id']) : ?> 
         <a href="<?php echo base_url('/users/editprofile/'.$user['User_id']); ?>">Edit Profile</btn></a>
+        <?php endif ?>
     </div>
     <div class = "row 12">
         <img class="profPic" src="<?php echo base_url('assets/images/'.$user['Picture']);?>" alt="Profile Picture">

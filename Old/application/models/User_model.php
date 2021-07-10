@@ -10,7 +10,7 @@ class User_model extends CI_model{
 
         //If results from database are true, then return the Id of the user, else return false.
         if ($result->num_rows()==1) {
-            return $result->row(0) ->User_id;
+            return $result->row(0)->User_id;
         }else{
             return false;
         }

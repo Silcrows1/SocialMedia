@@ -20,7 +20,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<?php echo base_url(); ?>pages/view">Home</a>
+          <a class="nav-link active" aria-current="page" href="<?php echo base_url(); ?>Home">Home</a>
         </li>
         
         <?php if($this->session->userdata('logged_in')) : ?> 
@@ -43,6 +43,7 @@
         <input type="submit" value = "Search" />
         </label>
         </form>
+        
   </div>
 </nav>
 <?php if ($this->session->flashdata('login_failed')): ?>

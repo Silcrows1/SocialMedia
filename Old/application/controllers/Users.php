@@ -103,7 +103,11 @@
         }
 
         public function viewprofile($id){
+            $this->load->library('upload');
+            $user['errors'] = array('error' => $this->upload->display_errors());
             $user['users']=$this->user_model->viewaccount($id);
+            $user['friends']=$this->user_model->friends();
+            $user['requests']=$this->user_model->viewpending();
             $this->load->view('templates/header');
             $this->load->view('users/profile', $user);
             $this->load->view('templates/footer');        

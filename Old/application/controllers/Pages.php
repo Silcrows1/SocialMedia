@@ -10,7 +10,7 @@
                 redirect('users/login');
             }
             else{
-
+			$posts=NULL;
 			$posts['posts']=$this->post_model->viewposts();	
 			$this->load->view('templates/header');
 			$this->load->view('pages/home', $posts);

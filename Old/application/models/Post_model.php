@@ -23,7 +23,7 @@ class Post_model extends CI_model{
 
             //SQL call for all posts that match session id in friends database
 
-                $this->db->select('users.FirstName, users.LastName, posts.Content, users.user_id, posts.Posted, friends.Usertwo_id');
+                $this->db->select('users.FirstName, users.LastName, posts.Content, users.user_id, profiles.Picture, posts.Posted, friends.Usertwo_id');
                 $this->db->from('friends');
                 $this->db->join('users', 'users.User_id = friends.Usertwo_id');
                 $this->db->join('profiles', 'users.User_id = profiles.User_id');

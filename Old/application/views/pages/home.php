@@ -7,17 +7,17 @@
             <div class="form-row">
                 <div class="col">
                 <textarea type="text" name="postContent" class="form-control" rows="3" placeholder="Post"></textarea>
-                <button type="submit" class="createPost btn btn-primary">Sign in</button>
+                <button type="submit" class="createPost btn btn-primary">Post</button>
                 </div>
             </div>
             <br>
             <br>
-            <?php echo form_close(); ?>
+            <?php echo form_close(); ?> 
             <?php foreach($posts as $post) : ?>
                 <div class="col-12 post">
                     <div class="row">
                         <div class="col-1 pic">
-                        <img src ="https://i.redd.it/0atek8mhhlr31.jpg" class="profile">
+                        <img src ="<?php echo base_url('assets/images/'.$post['Picture']);?>" class="profile">
                     </div>
                     
                     <div class="col-11 name">
