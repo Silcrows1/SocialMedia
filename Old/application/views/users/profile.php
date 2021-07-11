@@ -1,5 +1,4 @@
 <?php foreach($users as $user) : ?>
-
     <!--Itterate through friends found, if friend found matches User_id set $match to true-->
     <!--Preventing checking for array that doesnt exist-->
     <?php $match = FALSE; ?>

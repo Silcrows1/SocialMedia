@@ -10,8 +10,10 @@
                 redirect('users/login');
             }
             else{
-			$posts=NULL;
-			$posts['posts']=$this->post_model->viewposts();	
+				
+			$posts['posts']=$this->post_model->viewposts();				
+			$posts['likes']=$this->post_model->getLikes($posts);
+			$posts['liked']=$this->post_model->Liked($posts);
 			$this->load->view('templates/header');
 			$this->load->view('pages/home', $posts);
 			$this->load->view('templates/footer');

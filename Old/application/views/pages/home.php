@@ -1,8 +1,6 @@
-
 <div class="col-md-12 ">
     <div class="row-12">
         <div class="col-6 mainfeed">
-        
             <?php echo form_open('posts/createPost'); ?>
             <div class="form-row">
                 <div class="col">
@@ -39,13 +37,42 @@
                         </div>                   
                     </div>
                     <div class="row interact">
-                        <div class="col-6 postinteract">                           
-                             <p>Like</p>                           
+                        <div class="col-6 postinteract">
+                        <?php foreach($likes as $entry) : ?> 
+
+                            <?php if($entry['Post_id'] == $post['post_id']) :?>
+                                
+                                <?php if ($entry['Likes']>0):?>
+                                <?php echo $entry['Likes']?> 
+                                <?php if($entry['Likes'] <>1  ): echo 'likes';?>
+                                <?php elseif($entry['Likes'] =1  ): echo 'like';?>  
+                                <?php endif ?>      
+                                <?php endif ?>                       
+
+                            <?php endif ?>
+                        <?php endforeach; ?>
+
+                        <p><a class="namelink" id ="submit" href="<?php echo base_url('posts/like/'.$post['post_id']); ?>">
+                        <?php $match = FALSE?>
+                        <?php foreach($liked as $like) : ?> 
+                            <?php if($like['post_id'] == $post['post_id']) :$match = TRUE;?>                            
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                        <?php if ($match == TRUE){
+                            echo "Liked";
+                        }
+                        else{
+                            echo "Like";
+                        }?>
+
+                         </p></a>                          
+   
                         </div>
                         <div class="col-6 postinteract">                               
                              <p>Comment</p>                           
                         </div>                    
-                    </div>                
+                    </div>
+                                    
                 </div>
         </div>
             
