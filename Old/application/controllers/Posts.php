@@ -5,7 +5,7 @@
 
         $this->post_model->createPost();
         $posts['posts'] = $this->post_model->viewposts();
-        $posts['pending'] = $this->post_model->viewpending();
+        //$posts['pending'] = $this->post_model->viewpending();
         $posts['likes']=$this->post_model->getLikes($posts);
         $posts['liked']=$this->post_model->liked($posts);
         $this->load->view('templates/header');

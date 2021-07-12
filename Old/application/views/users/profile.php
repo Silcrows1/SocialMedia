@@ -1,3 +1,4 @@
+<?php if (!$this->session->userdata('logged_in')){ redirect('Home');}?>
 <?php foreach($users as $user) : ?>
     <!--Itterate through friends found, if friend found matches User_id set $match to true-->
     <!--Preventing checking for array that doesnt exist-->
@@ -29,6 +30,7 @@
 
         <!--Display all posts-->
         <?php foreach($posts as $post) : ?>
+            
                 <div class="col-12 post">
                     <div class="row">
                         <div class="col-1 pic">
