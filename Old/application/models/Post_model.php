@@ -36,6 +36,24 @@ class Post_model extends CI_model{
             return $posts->result_array();
                 
     }
+    public function viewownPosts($id=NULL){
+
+        //SQL call for all posts that match session id in friends database
+            if($id==NULL){
+                $id=$this->session->userdata('user_id');
+            }
+            $this->db->select('users.FirstName, users.LastName, posts.Content, users.user_id, profiles.Picture, posts.Posted,  posts.post_id');
+            $this->db->from('posts');
+            $this->db->join('users', 'users.User_id = posts.User_id');
+            $this->db->join('profiles', 'users.User_id = profiles.User_id');             
+            $this->db->where('users.User_id = '. $id);
+            $this->db->order_by('posts.Posted', 'DESC');
+            $posts = $this->db->get();
+            $posts->result_array();
+
+        return $posts->result_array();
+            
+    }
 
     public function viewaPost($id){
 
@@ -95,6 +113,33 @@ class Post_model extends CI_model{
             }
              return $found;
     }
+//////////////////////////////////////////TEMPORARY as Nested/////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////
+    public function getprofileLikes($posts){
+
+        $found = array();
+        $i=0;
+        $user="";
+
+        foreach($posts['posts'] as $post['posts']){
+                $this->db->select('user_id');
+                $this->db->where('post_id', $post['posts']['post_id']);
+                $liked = $this->db->get('Interactions');                
+                $rows= $liked->num_rows();     
+   
+
+                $found2=array(
+                    'Post_id' =>$post, 
+                    'Likes' => $rows
+             
+                );
+                array_push($found, $found2);                        
+        }
+         return $found;
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////TEMPORARY ////////////////////////////////////////////////
+
     public function liked(){
 
         $this->db->select('interactions.post_id');

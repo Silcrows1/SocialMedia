@@ -98,6 +98,10 @@
             $user['users']=$this->user_model->viewownaccount();
             $user['friends']=$this->user_model->friends($id);
             $user['requests']=$this->user_model->viewpending();
+            
+            $user['posts']=$this->post_model->viewownPosts();				
+			$user['likes']=$this->post_model->getprofileLikes($user);
+			$user['liked']=$this->post_model->Liked($user);
             $this->load->view('templates/header');
             $this->load->view('users/profile', $user);
             $this->load->view('templates/footer');        
@@ -106,9 +110,11 @@
         public function viewprofile($id){
             $this->load->library('upload');
             $user['errors'] = array('error' => $this->upload->display_errors());
-            $user['users']=$this->user_model->viewaccount($id);
-            
+            $user['users']=$this->user_model->viewaccount($id);            
             $user['friends']=$this->user_model->friends($id);
+            $user['posts']=$this->post_model->viewownPosts($id);
+            $user['likes']=$this->post_model->getprofileLikes($user);
+			$user['liked']=$this->post_model->Liked($user);
             $user['requests']=$this->user_model->viewpending();
             $this->load->view('templates/header');
             $this->load->view('users/profile', $user);

@@ -41,7 +41,7 @@
                         <?php foreach($likes as $entry) : ?> 
 
                             <?php if($entry['Post_id'] == $post['post_id']) :?>
-                                
+
                                 <?php if ($entry['Likes']>0):?>
                                 <?php echo $entry['Likes']?> 
                                 <?php if($entry['Likes'] <>1  ): echo 'likes';?>
@@ -72,6 +72,7 @@
                              <p>Comment</p>                           
                         </div>                    
                     </div>
+                    
                                     
                 </div>
         </div>

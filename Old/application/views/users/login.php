@@ -1,3 +1,5 @@
+<!-- if logged in, redirect -->
+<?php if ($this->session->userdata('logged_in')){ redirect('Home');}?>
 <!--Show and hide password javeascript function (found in w3) -->
 <script>
 	function myFunction() {
