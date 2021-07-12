@@ -70,12 +70,12 @@
                         <?php endforeach; ?>
 
                         <p><a class="namelink" id ="submit" href="<?php echo base_url('posts/like/'.$post['post_id']); ?>">
-                        <?php $match = FALSE?>
+                        <?php $likematch = FALSE?>
                         <?php foreach($liked as $like) : ?> 
-                            <?php if($like['post_id'] == $post['post_id']) :$match = TRUE;?>                            
+                            <?php if($like['post_id'] == $post['post_id']) :$likematch = TRUE;?>                            
                             <?php endif; ?>
                         <?php endforeach; ?>
-                        <?php if ($match == TRUE){
+                        <?php if ($likematch == TRUE){
                             echo "Liked";
                         }
                         else{
