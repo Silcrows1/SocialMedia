@@ -12,7 +12,8 @@
             <br>
             <?php echo form_close(); ?> 
             <?php foreach($posts as $post) : ?>
-                <div class="col-12 post">
+                <?php echo $post['post_id']?>
+                <div class="col-12 post" id="">
                     <div class="row">
                         <div class="col-1 pic">
                         <img src ="<?php echo base_url('assets/images/'.$post['Picture']);?>" class="profile">
@@ -37,29 +38,40 @@
                         </div>                   
                     </div>
                     <div class="row interact">
+                        <div class="col-6 postinteracttop" id="<?php echo $post['post_id']?>">
+                        <!--------------------LIKES COUNT HERE---------------------->
+                        <p><?php foreach($likes as $entry) : ?> 
+                        <?php if($entry['Post_id'] == $post['post_id']) :?>
+                            <?php if ($entry['Likes']>0): echo $entry['Likes']?> 
+                            <?php if($entry['Likes'] <>1  ): echo 'likes';?>
+                            <?php elseif($entry['Likes'] =1  ): echo 'like';?>  
+                            <?php endif ?>      
+                            <?php endif ?>                       
+
+                        <?php endif ?>
+                        <?php endforeach; ?>  
+                        </p> 
+                        </div>
+                        <div class="col-6 postinteracttop">                               
+                             <p><!--ENTER COMMENTS COUNT HERE--></p>                           
+                        </div>                    
+                    </div>
+                    <div class="row interact">
+                    <form name="like">
+                    <input type="hidden" class="id" id="<?php echo $post['post_id']?>" name="postid" value="<?php echo $post['post_id']?>">
+                    <button class='like' id="<?php echo $post['post_id']?>" aria-hidden='true'> Like</button>
+                    </form>
+
                         <div class="col-6 postinteract">
-                        <?php foreach($likes as $entry) : ?> 
-
-                            <?php if($entry['Post_id'] == $post['post_id']) :?>
-
-                                <?php if ($entry['Likes']>0):?>
-                                <?php echo $entry['Likes']?> 
-                                <?php if($entry['Likes'] <>1  ): echo 'likes';?>
-                                <?php elseif($entry['Likes'] =1  ): echo 'like';?>  
-                                <?php endif ?>      
-                                <?php endif ?>                       
-
-                            <?php endif ?>
-                        <?php endforeach; ?>
-
-                        <p><a class="namelink" id ="submit" href="<?php echo base_url('posts/like/'.$post['post_id']); ?>">
+                        <p class="likedby"><a class="Likebtn" id ="submit<?php echo $post['post_id']?>" href="<?php echo base_url('posts/like/'.$post['post_id']); ?>">
                         <?php $match = FALSE?>
                         <?php foreach($liked as $like) : ?> 
-                            <?php if($like['post_id'] == $post['post_id']) :$match = TRUE;?>                            
+                            <?php if($like['post_id'] == $post['post_id']) :$match = TRUE;?>
+                            <?php else:$match = FALSE;?>
                             <?php endif; ?>
                         <?php endforeach; ?>
                         <?php if ($match == TRUE){
-                            echo "Liked";
+                            echo "You liked this";
                         }
                         else{
                             echo "Like";

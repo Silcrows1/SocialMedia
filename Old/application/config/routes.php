@@ -54,7 +54,8 @@ $route['default_controller'] = 'Pages/view';
 $route['Home'] = 'Pages/view';
 $route['404_override'] = '';
 $route['users/acceptrequest/(:any)'] = 'users/acceptrequest/$1';
-
+$route['posts/like2'] = 'posts/like2';
+$route['posts/like/(:any)'] = 'posts/like/$1';
 $route['users/viewprofile/(:any)'] = 'users/viewprofile/$1';
 $route['users/editprofile/(:any)'] = 'users/editprofile/$1';
 $route['users/edit/(:any)'] = 'users/editaccount/$1';

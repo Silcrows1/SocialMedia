@@ -72,7 +72,7 @@ class Post_model extends CI_model{
     }
    
     public function likePost($post_id){
-
+        
         $data = array(
             'post_id' => $post_id,
             'user_id' => $this->session->userdata('user_id')
@@ -112,11 +112,37 @@ class Post_model extends CI_model{
                         'Likes' => $rows
                  
                     );
-                    array_push($found, $found2);                    
+                    array_push($found, $found2);
+                   // echo '<script>console.log($found)</script>';                
                 }                
             }
              return $found;
     }
+    public function getLikes2($posts){
+        
+        $found = array();
+        $i=0;
+        $user="";
+        
+        foreach($posts as $post){
+                
+                $this->db->select('user_id');
+                $this->db->where('post_id', $post['post_id']);
+                $liked = $this->db->get('Interactions');
+                $rows= $liked->num_rows();                   
+
+
+                $found2=array(
+                    'Post_id' =>$post['post_id'], 
+                    'Likes' => $rows
+             
+                );
+                array_push($found, $found2);
+               
+            }                
+        
+         return $found;
+}
 ////////////////////////////////TEMPORARY as Nested array/////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
     public function getprofileLikes($posts){
