@@ -57,13 +57,9 @@
                         </div>                    
                     </div>
                     <div class="row interact">
-                    <form name="like">
-                    <input type="hidden" class="id" id="<?php echo $post['post_id']?>" name="postid" value="<?php echo $post['post_id']?>">
-                    <button class='like' id="<?php echo $post['post_id']?>" aria-hidden='true'> Like</button>
-                    </form>
 
                         <div class="col-6 postinteract">
-                        <a class="Likebtn<?php echo $post['post_id']?>" id ="<?php echo $post['post_id']?>" href="<?php echo base_url('posts/like/'.$post['post_id']); ?>">
+                        <a class="Likebtn" id ="submit<?php echo $post['post_id']?>" href=""  title = "<?php echo $post['post_id']?>" data-elemid="">
                         <?php $match = FALSE?>
                         <?php foreach($liked as $like) : ?> 
                             <?php if($like['post_id'] == $post['post_id']) :$match = TRUE;?>

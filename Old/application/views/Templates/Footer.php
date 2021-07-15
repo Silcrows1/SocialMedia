@@ -7,10 +7,12 @@
 <script>
   
     $(document).ready(function() {
-    $('.like').click(function(e) {
-      var postid = event.target.id;
+    $('.Likebtn').click(function(e) {
+      var postid = event.target.title;
+      console.log(event.target.title);
+      
       var url = "<?php echo base_url(); ?>posts/like2";
-      var post_id = $(this).closest("div.post").attr("id");
+      //var post_id = $(this).closest("div.post").attr("id");
             jQuery.ajax({
                 type: "POST",
                 url: url,
