@@ -63,11 +63,10 @@
                     </form>
 
                         <div class="col-6 postinteract">
-                        <p class="likedby"><a class="Likebtn" id ="submit<?php echo $post['post_id']?>" href="<?php echo base_url('posts/like/'.$post['post_id']); ?>">
+                        <a class="Likebtn<?php echo $post['post_id']?>" id ="<?php echo $post['post_id']?>" href="<?php echo base_url('posts/like/'.$post['post_id']); ?>">
                         <?php $match = FALSE?>
                         <?php foreach($liked as $like) : ?> 
                             <?php if($like['post_id'] == $post['post_id']) :$match = TRUE;?>
-                            <?php else:$match = FALSE;?>
                             <?php endif; ?>
                         <?php endforeach; ?>
                         <?php if ($match == TRUE){
@@ -76,8 +75,7 @@
                         else{
                             echo "Like";
                         }?>
-
-                         </p></a>                          
+                         </a>                          
    
                         </div>
                         <div class="col-6 postinteract">                               
