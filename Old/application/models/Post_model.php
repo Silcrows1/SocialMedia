@@ -118,6 +118,8 @@ class Post_model extends CI_model{
             }
              return $found;
     }
+
+    
     public function getLikes2($posts){
         
         $found = array();

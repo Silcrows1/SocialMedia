@@ -13,11 +13,15 @@
         $this->load->view('templates/footer');
         }
 
+        /////////////////////////////////////////////
+        /////////////not in use//////////////////////
         public function like($post_id){
             var_dump($post_id);
            $this->post_model->likePost($post_id);
             redirect('Home');
         }
+        /////////////not in use//////////////////////
+        /////////////////////////////////////////////
 
         public function like2(){
             $id = $this->input->post('id');
@@ -29,6 +33,17 @@
             $this->post_model->likePost($id);            
             
             $posts['likes']=$this->post_model->getLikes2($posts2);
+            
+            $like = $posts['likes'][0]['Likes'];
+            $id = $posts['likes'][0]['Post_id'];
+            
+            echo json_encode(array($like, $id));
+            
+        }
+
+        public function getLikes($post){
+
+           $posts['likes']=$this->post_model->getLikes($post);
 
             $like = $posts['likes'][0]['Likes'];
             $id = $posts['likes'][0]['Post_id'];

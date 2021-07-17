@@ -6,7 +6,7 @@
 
 <script>
   
-    $(document).ready(function() {
+$(document).ready(function() {
     $('.Likebtn').click(function(e) {
       var postid = event.target.title;
       console.log(event.target.title);
@@ -60,7 +60,106 @@
           });
           e.preventDefault();
     });
+    $('.commentsubmit').click(function(e) {
+            var postid = event.target.title;
+            if ($('textarea#addcomment'+postid).val() != ""){
+            var comment = $('textarea#addcomment'+postid).val();
+
+            console.log(event.target.title);
+            console.log(comment);
+            var url = "<?php echo base_url(); ?>comments/createComment";
+            //var post_id = $(this).closest("div.post").attr("id");
+                  jQuery.ajax({
+                      type: "POST",
+                      url: url,
+                      dataType: "html",
+                      data: {
+                        id: postid,
+                        comment: comment
+                      },
+                      success:function(result)
+                      {
+                        var dt = new Date();
+                        var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                        var parentNode = document.querySelector('.viewcommentsingle'+ postid);
+                        $('<div class="post viewcomments'+postid+' row"><div class="col-1"><img class="profile "src="'+'<?php echo base_url('assets/images/'.$this->session->userdata('Picture'))?>'+'"></div><div class="col-11"><div class="row"><P>'+'<?php echo $this->session->userdata('FirstName')?>'+' '+'<?php echo $this->session->userdata('LastName')?>'+'</P></div><div class="row"><P>Posted Now</P></div></div><p> '+comment+'</p></div>').prependTo('.viewcomments'+ postid);
+                        var response = $.parseJSON(result);  
+                        $('textarea#addcomment'+postid).val("");
+                        console.log(response);
+                        if (response[1]==0){
+                          document.getElementById('comment'+postid).innerHTML=('');
+                        }
+                        else if (response[1]>1)
+                        {
+                        document.getElementById('comment'+postid).innerHTML=String(response[1])+' Comments';
+                        } 
+                        else 
+                        { 
+                          document.getElementById('comment'+postid).innerHTML=String(response[1])+' Comment'; 
+                        }
+                        
+                        
+                    }
+                      
+                });
+            }
+                e.preventDefault();
+          });
+
+          //////////view comments function on click//////////////////////////////
+          $('.viewcomment').click(function(e) {
+            var postid = event.target.title;
+            console.log(postid);
+            
+            var x = document.getElementById('viewcomment'+postid)
+
+            /////////////if div contains class name hidden, change to show, else change to hidden////////////////////////////////
+            if(x.className =="form-row hidden")
+            {
+            document.getElementById('viewcomment'+postid).setAttribute("class", "form-row show");
+            getcomment();
+            }
+            else
+            {
+              document.getElementById('viewcomment'+postid).setAttribute("class", "form-row hidden");
+              $(".viewcommentsingle"+postid).remove();
+            } 
+
+           
+            /////////////retrieve comments for post and append to div when clicking view comments/////////
+            function getcomment(){                  
+             var url = "<?php echo base_url(); ?>comments/getComments";            
+                  jQuery.ajax({
+                      type: "POST",
+                      url: url,
+                      dataType: 'json',
+                      data: {
+                        id: postid
+                      },
+                      success:function(result)
+                      {
+                       var response = result;                   
+
+                      var i=0
+
+                      //////foreach comment found, append to parent////////////
+                      $.each(response, function(index, value)
+                        { 
+                          $('<div class="post viewcommentsingle'+value.Post_id+' row"><div class="col-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/'+value.Picture+'"></div><div class="col-11"><div class="row"><P>'+value.FirstName+' '+value.LastName+'</P></div><div class="row"><P>'+value.created_at+'</P></div></div><p> '+value.comment+'</p></div>').appendTo('.viewcomments'+ postid);
+                        i++
+                        });
+                    }                      
+                });                               
+            e.preventDefault();  
+          }        
+          });
+          
+         
 });
+
+
+
+
 </script>
 </html>
 

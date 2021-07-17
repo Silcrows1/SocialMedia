@@ -117,3 +117,6 @@ a:hover {
 .navbar-nav{
     width:100%;
 }
+.hidden{
+    display:none;
+}

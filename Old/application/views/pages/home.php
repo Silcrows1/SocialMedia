@@ -12,10 +12,11 @@
             <br>
             <?php echo form_close(); ?> 
             <?php foreach($posts as $post) : ?>
-                <?php echo $post['post_id']?>
-                <div class="col-12 post" id="">
+               
+                <div class="col-12 post">
                     <div class="row">
                         <div class="col-1 pic">
+                        
                         <img src ="<?php echo base_url('assets/images/'.$post['Picture']);?>" class="profile">
                     </div>
                     
@@ -52,8 +53,17 @@
                         <?php endforeach; ?>  
                         </p> 
                         </div>
-                        <div class="col-6 postinteracttop">                               
-                             <p><!--ENTER COMMENTS COUNT HERE--></p>                           
+                        <div class="col-6 postinteracttop" id="comment<?php echo $post['post_id']?>">                               
+                        <p><?php foreach($comments as $entry) : ?> 
+                        <?php if($entry['Post_id'] == $post['post_id']) :?>
+                            <?php if ($entry['Comments']>0): echo $entry['Comments']?> 
+                            <?php if($entry['Comments'] <>1  ): echo 'Comments';?>
+                            <?php elseif($entry['Comments'] =1  ): echo 'Comments';?>  
+                            <?php endif ?>      
+                            <?php endif ?>                       
+
+                        <?php endif ?>
+                        <?php endforeach; ?>                                
                         </div>                    
                     </div>
                     <div class="row interact">
@@ -74,9 +84,36 @@
                          </a>                          
    
                         </div>
-                        <div class="col-6 postinteract">                               
-                             <p>Comment</p>                           
+                        <div class="col-6 postinteract " id="<?php echo $post['post_id']; ?>">
+                            <a class="viewcomment" id="viewcomment" title="<?php echo $post['post_id']; ?>">
+                                <?php foreach($comments as $entry) : ?> 
+                                    <?php if($entry['Post_id'] == $post['post_id']) :?>
+                                        <?php if ($entry['Comments']==0): echo 'Add Comment';?> 
+                                        <?php else : echo 'View Comments';?>
+                                        <?php endif ?>                            
+                                    <?php endif ?>
+                                <?php endforeach; ?>                               
+                            </a>                           
                         </div>                    
+                    </div>
+                    <!-- ADD COMMENT SECTION-->
+                    <div class="row">
+                        <div class="comments<?php echo $post['post_id']; ?>">
+                            
+                                <div class="form-row hidden" id="viewcomment<?php echo $post['post_id']; ?>" name="comment<?php echo $post['post_id']; ?>"> 
+                                    <div class="col">
+                                    <input type="hidden" name="post_Id" value="<?php echo $post['post_id']; ?>">
+                                    <textarea type="text" name="addcomment" id="addcomment<?php echo $post['post_id']; ?>" class="form-control" rows="3" placeholder="comment"></textarea>
+                                    <button type="button" id="commentsubmit" title = "<?php echo $post['post_id']?>" class="commentsubmit createPost btn btn-primary">Post</button>
+                                    </div>
+                                </div>
+                           
+                        </div>
+                        <div class="viewcomments<?php echo $post['post_id']; ?>">
+   
+                           
+                        </div>
+                        
                     </div>
                     
                                     

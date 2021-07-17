@@ -50,10 +50,14 @@
                 $user = $this->user_model->login($username, $password);
 
                 if($user){
+                    $profile = $this->user_model->viewaccount($user);
                     $user_data = array(
                         'user_id' => $user,
                         'username' => ucfirst($username),
-                        'logged_in' => true
+                        'logged_in' => true,
+                        'Picture' => $profile[0]['Picture'],
+                        'FirstName' => $profile[0]['FirstName'],
+                        'LastName' => $profile[0]['LastName']  
                     );
                     $this->session->set_userdata($user_data);
                     redirect('pages/view');
