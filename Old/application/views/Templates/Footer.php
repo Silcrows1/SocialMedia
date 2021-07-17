@@ -82,7 +82,7 @@ $(document).ready(function() {
                         var dt = new Date();
                         var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
                         var parentNode = document.querySelector('.viewcommentsingle'+ postid);
-                        $('<div class="post viewcomments'+postid+' row"><div class="col-1"><img class="profile "src="'+'<?php echo base_url('assets/images/'.$this->session->userdata('Picture'))?>'+'"></div><div class="col-11"><div class="row"><P>'+'<?php echo $this->session->userdata('FirstName')?>'+' '+'<?php echo $this->session->userdata('LastName')?>'+'</P></div><div class="row"><P>Posted Now</P></div></div><p> '+comment+'</p></div>').prependTo('.viewcomments'+ postid);
+                        $('<div class="post viewcommentsingle'+postid+' row"><div class="col-1"><img class="profile "src="'+'<?php echo base_url('assets/images/'.$this->session->userdata('Picture'))?>'+'"></div><div class="col-11"><div class="row"><P>'+'<?php echo $this->session->userdata('FirstName')?>'+' '+'<?php echo $this->session->userdata('LastName')?>'+'</P></div><div class="row"><P>Posted Now</P></div></div><p> '+comment+'</p></div>').prependTo('.viewcomments'+ postid);
                         var response = $.parseJSON(result);  
                         $('textarea#addcomment'+postid).val("");
                         console.log(response);
