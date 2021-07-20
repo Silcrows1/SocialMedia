@@ -60,6 +60,7 @@
                         'LastName' => $profile[0]['LastName']  
                     );
                     $this->session->set_userdata($user_data);
+                    $this->user_model->textResize();
                     redirect('pages/view');
                 }else{
 
@@ -151,6 +152,11 @@
             $this->load->view('templates/header');
             $this->load->view('users/search', $users);
             $this->load->view('templates/footer');
+        }
+
+        public function getFriends(){
+            $friends=$this->user_model->getFriends();
+            echo json_encode($friends);
         }
 
 

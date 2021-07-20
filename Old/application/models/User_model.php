@@ -208,6 +208,16 @@ class User_model extends CI_model{
         return $found->result_array();
     }
 
+    public function getFriends(){
+
+        $this->db->select('users.FirstName, users.LastName, friends.Usertwo_id');
+        $this->db->from('users');
+        $this->db->join('friends', 'users.User_id = friends.Usertwo_id');
+        $this->db->where('friends.User_id', $this->session->userdata('user_id'));
+        $friends=$this->db->get();
+        return $friends->result_array();
+    }
+
     ////////////////////check for duplicate usernames function///////////////////
     public function duplicate($data)
     {
@@ -227,6 +237,13 @@ class User_model extends CI_model{
         {
             return true;
         }
+    }
+
+    public function gettextsize(){
+        $this->db->select('vision');
+        $this->where('User_id', $this->session->userdata('user_id'));
+        $text=$this->db->get('users');
+
     }
 }
 

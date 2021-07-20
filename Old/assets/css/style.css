@@ -3,6 +3,14 @@ p{
 }
 body{
     background-color:#EBEDF0;
+
+}
+#body{
+    font-size:10px;
+}
+#size{
+    font-size:10px;
+    display:none;
 }
 .login{
     Margin:auto;
@@ -120,3 +128,57 @@ a:hover {
 .hidden{
     display:none;
 }
+
+#wrapper
+{
+    width:75%;
+    height:75%;
+}
+.minimize {
+    color : red;
+    width:20VW;
+    height:3vh;
+    background:#474747;
+     position:fixed;
+    float:right;
+    bottom:0px;
+    right:0px;
+ } 
+
+ .maximize {
+    color : blue;
+    width:20VW;
+    height:50%;
+    background:#ccc;
+    position:fixed;
+    float:right;
+    bottom:0px;
+    right:0px;
+ }
+
+ .friendList{
+    list-style-type: none;
+
+ }
+#friendfind{
+    text-align: center;
+ }
+ .viewfriends{     
+     color:White;
+     text-shadow: 1px 1px 2px black;
+ }
+ .Friend{
+    margin:0;
+    padding:0;
+ }
+
+ .contents.right{
+    text-align: right;
+}
+.messageboard{
+    height: 75vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
+

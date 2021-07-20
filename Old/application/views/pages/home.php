@@ -1,6 +1,9 @@
-<div class="col-md-12 ">
+
+<div class="body">
+
     <div class="row-12">
         <div class="col-6 mainfeed">
+
             <?php echo form_open('posts/createPost'); ?>
             <div class="form-row">
                 <div class="col">
@@ -123,5 +126,11 @@
         <?php endforeach; ?>
     </div>
         
+    </div>
+    <div id="wrapper friends">
+        <div  id="friendfind" class="minimize"><a class="viewfriends" onclick="changeCssClass('friendfind')">View Friends</a>
+            <li class="friendList">
+            </li>
+        </div>
     </div>
 </div>

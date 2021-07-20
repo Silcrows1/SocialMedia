@@ -2,6 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+
 </body>
 
 <script>
@@ -152,12 +153,44 @@ $(document).ready(function() {
                 });                               
             e.preventDefault();  
           }        
-          });
-          
-         
+          });         
 });
 
 
+     function changeCssClass(friendfind)
+        {
+            if(document.getElementById(friendfind).className=='minimize')
+            {
+                document.getElementById(friendfind).className = 'maximize';
+
+                var url = "<?php echo base_url(); ?>users/getFriends";            
+                  jQuery.ajax({
+                      type: "POST",
+                      url: url,
+                      dataType: 'json',
+                      success:function(result)
+                      {
+                       var response = result; 
+                       console.log(result);                 
+
+                      var i=0
+
+                      //////foreach comment found, append to parent////////////
+                      $.each(response, function(index, value)
+                        { 
+                          $('<ul class="Friend" id="'+value.Usertwo_id+'"><a href="<?php echo base_url('Message/')?>'+value.Usertwo_id+'">'+value.FirstName+' '+value.LastName+'</a></ul>').appendTo('.friendList'); 
+
+                        });
+                    }                      
+                });                               
+           
+            }
+            else
+            {
+                document.getElementById(friendfind).className = 'minimize';
+                $(".Friend").remove();
+            }
+        }
 
 
 </script>

@@ -20,4 +20,9 @@
 			$this->load->view('templates/footer');
             }
 		}
+
+		public function textResize(){
+			$resize=$this->user_model->gettextsize();
+
+		}
 	}
