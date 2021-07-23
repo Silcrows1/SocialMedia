@@ -10,7 +10,12 @@
 <script>
   
 $(document).ready(function() {
+
+  if(document.getElementById("typing")){
   document.getElementById("typing").style.display = "none";
+  }
+  
+
     $('.Likebtn').click(function(e) {
       var postid = event.target.title;
       console.log(event.target.title);

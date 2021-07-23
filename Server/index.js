@@ -1,4 +1,5 @@
-
+const axios = require('axios').default;
+const https = require('https')
 const httpServer = require("http").createServer();
 const io = require("socket.io")(httpServer, {
   cors: {
@@ -8,6 +9,7 @@ const io = require("socket.io")(httpServer, {
   credentials: true
   }
   });
+
 
 ///const express = require('express');
 //const app = express();
@@ -31,6 +33,10 @@ const removeUser=(socketId)=>{
   console.log(users);
 }
 
+const getuserbysocket = (socketId)=>{
+  return users.find(users=>users.socketId == socketId);
+ 
+}
 const getUser = (userId)=>{
   console.log(userId);  
   console.log(users);
@@ -45,11 +51,26 @@ io.on('connection', (socket) => {
     socket.on("addUser", (userId)=> {
       addUser(userId['userId'], socket.id);
       console.log(users);
+
+      axios.post("http://127.0.0.1/SocialMedia/Old/Users/online/"+userId['userId'], {
+      }, {
+        headers: {'Content-Type': 'application/json'}
+      }).then(function(response) {
+      }).catch(function(error) {
+      })
       io.emit("getUsers", users);
     });    
     console.log(socket.id);
     socket.on('disconnect', () => {
-      console.log('user disconnected');
+      console.log('user disconnected');     
+      var user = getuserbysocket(socket.id);
+      if (user){
+      ///GET USER ID HERE FOR REMOVING/////
+      axios.post("http://127.0.0.1/SocialMedia/Old/Users/offline/"+user['userId'], {
+      }, {
+        headers: {'Content-Type': 'application/json'}
+      })
+    }
       removeUser(socket.id);
       io.emit("getUsers", users);
     });

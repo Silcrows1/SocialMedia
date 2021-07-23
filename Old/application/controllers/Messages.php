@@ -2,12 +2,20 @@
 	class Messages extends CI_Controller{
 
         public function getMessages($id){
+            //check users are friends to prevent url altering
+            $status = $this->user_model->getfriendstatus($id);
+            if($status){
             $messages['Message']=$this->message_model->getMessages($id);
             $messages['friendid'] = $id;
 
             $this->load->view('templates/header');
 			$this->load->view('pages/chat', $messages);
 			$this->load->view('templates/footer');
+            }
+            //if users arent friends, redirect
+            else{
+                redirect("pages/view");
+            }
         }
 
         public function sendMessage(){

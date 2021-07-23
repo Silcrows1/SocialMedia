@@ -83,6 +83,17 @@ class User_model extends CI_model
         $friends = $this->db->get();
         return $friends->result_array();
     }
+
+    public function getfriendstatus($id)
+    {
+        $this->db->select('*');
+        $this->db->from('friends');
+        $this->db->where('friends.Usertwo_id', $id);
+        $this->db->where('friends.User_id', $this->session->userdata('user_id'));
+        $friends = $this->db->get();
+        return $friends->result_array();
+    }
+
     public function viewpending()
     {
         $this->db->select('Usertwo_id, users.FirstName, users.LastName, Pending_id, submitted_by');
@@ -248,5 +259,19 @@ class User_model extends CI_model
         $this->db->select('vision');
         $this->db->where('User_id', $this->session->userdata('user_id'));
         $text = $this->db->get('users');
+    }
+
+    public function online($id){
+        $users = array(
+            'User_id' => $id,
+        );
+        $this->db->insert('onlineUsers', $users);
+    }
+
+    public function offline($id){
+        $users = array(
+            'User_id' => $id,
+        );
+        $this->db->delete('onlineUsers', $users);
     }
 }

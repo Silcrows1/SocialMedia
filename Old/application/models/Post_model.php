@@ -95,7 +95,6 @@ class Post_model extends CI_model{
     }
 
     public function getLikes($posts){
-
             $found = array();
             $i=0;
             $user="";
@@ -157,15 +156,16 @@ class Post_model extends CI_model{
                 $this->db->select('user_id');
                 $this->db->where('post_id', $post['posts']['post_id']);
                 $liked = $this->db->get('Interactions');                
-                $rows= $liked->num_rows();     
+                $rows= $liked->num_rows(); 
+                
    
 
                 $found2=array(
-                    'Post_id' =>$post, 
+                    'Post_id' =>$post['posts']['post_id'], 
                     'Likes' => $rows
              
                 );
-                array_push($found, $found2);                        
+                array_push($found, $found2);                    
         }
          return $found;
 }

@@ -110,10 +110,12 @@ class Users extends CI_controller
         $user['users'] = $this->user_model->viewownaccount();
         $user['friends'] = $this->user_model->friends($id);
         $user['requests'] = $this->user_model->viewpending();
+        
 
         $user['posts'] = $this->post_model->viewownPosts();
-        $user['likes'] = $this->post_model->getprofileLikes($user);
-        $user['liked'] = $this->post_model->Liked($user);
+        $user['likes']=$this->post_model->getprofileLikes($user);
+        $user['liked']=$this->post_model->Liked($user);
+        $user['comments']=$this->comment_model->getCommentCount($user);
         $this->load->view('templates/header');
         $this->load->view('users/profile', $user);
         $this->load->view('templates/footer');
@@ -129,6 +131,7 @@ class Users extends CI_controller
         $user['likes'] = $this->post_model->getprofileLikes($user);
         $user['liked'] = $this->post_model->Liked($user);
         $user['requests'] = $this->user_model->viewpending();
+        $user['comments']=$this->comment_model->getCommentCount($user);
         $this->load->view('templates/header');
         $this->load->view('users/profile', $user);
         $this->load->view('templates/footer');
@@ -194,5 +197,16 @@ class Users extends CI_controller
         $this->session->unset_userdata('user_id');
         $this->session->unset_userdata('username');
         redirect('users/login');
+    }
+
+    public function online($id){
+        
+        $this->user_model->online($id);
+        return true;
+    }
+
+    public function offline($id){        
+        $this->user_model->offline($id);
+        return true;
     }
 }

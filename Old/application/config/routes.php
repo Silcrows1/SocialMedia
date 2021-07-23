@@ -53,6 +53,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'Pages/view';
 
 $route['Home'] = 'Pages/view';
+$route['users/online'] = 'users/online';
 $route['404_override'] = '';
 $route['users/acceptrequest/(:any)'] = 'users/acceptrequest/$1';
 $route['posts/like2'] = 'posts/like2';
