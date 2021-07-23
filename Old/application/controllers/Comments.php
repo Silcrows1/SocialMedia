@@ -22,7 +22,7 @@
 
         public function getCommentCount($posts){            
             
-            $commentsfound = $this->comment_model->getCommentCount($post);
+            $commentsfound = $this->comment_model->getCommentCount($posts);
             return $commentsfound ->result_array();
         }
 

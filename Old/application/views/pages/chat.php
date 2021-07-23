@@ -1,40 +1,130 @@
+<?php
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
+<script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+
+<script>
+   
+    function sendMessage(e) {
+        e.preventDefault();
+        var url = "<?php echo base_url(); ?>Messages/sendMessage";
+
+        jQuery.ajax({
+            type: "POST",
+            url: url,
+            dataType: "html",
+            data: {
+                targetId: <?php echo $friendid; ?>,
+                message: document.getElementById("message").value
+            },
+            success: function(result) {
+                $('<div class="post viewcommentsingle row"><div class="col-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/"></div><div class="col-11"><div class="row"><P></P></div><div class="row"><P>ProfileID :' + <?php echo $this->session->userdata('user_id') ?> + '</P></div></div><p> ' + document.getElementById("message").value + '</p></div>').prependTo('.messageboard');
+            }
+
+        });
+
+        socket.emit("sendMessage", {
+            text: document.getElementById("message").value,
+            userId: <?php echo $this->session->userdata('user_id') ?>,
+            recieverId: <?php echo $friendid; ?>,
+        });
+    }
+    var socket = io("http://localhost:3000");
+        socket.emit("addUser", {
+            userId: "<?php echo $this->session->userdata('user_id'); ?>",
+        });
+        socket.on("getUsers", users => {
+            console.log(users);
+        });
+        socket.on("getMessage", function(data) {
+            $('<div class="post viewcommentsingle row"><div class="col-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/"></div><div class="col-11"><div class="row"><P></P></div><div class="row"><P>ProfileID :' + data.userId + '</P></div></div><p> ' + data.text + '</p></div>').prependTo('.messageboard');
+            console.log(data.text + data.userId);
+        });
+        var timeout;
+        socket.on("typing", function(data) {
+
+                if (document.getElementById("typing").style.display != "block") 
+                {
+                    document.getElementById("typing").style.display = "block";
+                }
+                else{
+
+                }               
+                clearTimeout(timeout);
+                timeout = setTimeout(timeoutFunction, 1500);
+            
+        });
+
+    function timeoutFunction() {
+
+        document.getElementById("typing").style.display = "none";
+    }
+    //adding message into array for emit
+</script>
+
 <body>
     <div class="row">
         <div class="col messageboard">
-            <?php foreach ($Message as $message) :?>            
+            <?php foreach ($Message as $message) : ?>
                 <div class="row-12 message">
                     <div class="col-12 contents 
-                        <?php if ($message['Posted_to'] == $this->session->userdata('user_id')){
-                        echo "right";
-                        }
-                        else{
-                            echo "left"; 
-                        }?>">
+                        <?php if ($message['Posted_to'] == $this->session->userdata('user_id')) {
+                            echo "right";
+                        } else {
+                            echo "left";
+                        } ?>">
                         <div class="row">
                             <div class="col pill">
                                 <div class="row-12">
-                                    <p><?php echo $message['FirstName']?> <?php echo $message['LastName']?></p>
-                                    <p><?php echo $message['Posted_at']?></p>
+                                    <p><?php echo $message['FirstName'] ?> <?php echo $message['LastName'] ?></p>
+                                    <p><?php echo $message['Posted_at'] ?></p>
                                 </div>
                                 <div class="row">
-                                    <p><?php echo $message['Message']?></p>
+                                    <p><?php echo $message['Message'] ?></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            <?php endforeach?>
+            <?php endforeach ?>            
         </div>        
     </div>
     <div class="row">
         <div class="col">
-            <?php echo form_open('messages/sendMessage'); ?>
+            <form onsubmit="return sendMessage(event)">
                 <div class="sticky-bottom">
-                    <input type="hidden" name="targetId" value="<?php echo $friendid;?>">
+                    <input type="hidden" name="targetId" value="<?php echo $friendid; ?>">
                     <textarea type="text" name="message" id="message" class="form-control" rows="3" placeholder="Insert Message here"></textarea>
                     <button type="submit" id="messagesubmit" class="messagesubmit createPost btn btn-primary">Post</button>
+                    <div id='typing' class="pulsate"><p>User is typing...</p></div>
                 </div>
-            <?php echo form_close(); ?> 
+            </form>
         </div>
-    </div>    
+    </div>
+
+
+
+
 </body>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#message").keyup(
+            function(e) {
+
+                socket.emit("typing", {
+                    recieverId: <?php echo $friendid; ?>,
+                });
+
+                if (e.keyCode === 13) {
+                    clearTimeout(timeout);
+                }
+            }
+        );
+
+      
+    });
+</script>
