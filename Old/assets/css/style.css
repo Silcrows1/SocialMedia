@@ -172,7 +172,7 @@ a:hover {
     padding:0;
  }
 
- .contents.right{
+ .right{
     text-align: right;
 }
 .messageboard{
@@ -197,4 +197,7 @@ a:hover {
         opacity: 0.5;
     }
 }
-
+.message{
+    background-color:rgb(224, 224, 224);
+    margin-top:1vh;
+}

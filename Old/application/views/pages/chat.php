@@ -17,8 +17,11 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
                 targetId: <?php echo $friendid; ?>,
                 message: document.getElementById("message").value
             },
+            
             success: function(result) {
-                $('<div class="post viewcommentsingle row"><div class="col-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/"></div><div class="col-11"><div class="row"><P></P></div><div class="row"><P>ProfileID :' + <?php echo $this->session->userdata('user_id') ?> + '</P></div></div><p> ' + document.getElementById("message").value + '</p></div>').prependTo('.messageboard');
+                
+                $('<div class="row-12 message"><div class="col pill"><div class="row-12"><p>'+"<?php echo $this->session->userdata('FirstName'); ?>"+" "+"<?php echo $this->session->userdata('LastName'); ?>"+'</p><p>Posted Now</p></div><div class="row"><p>'+document.getElementById("message").value+'</p></div></div></div>').prependTo('.messageboard');
+                
             }
 
         });
@@ -37,7 +40,7 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
             console.log(users);
         });
         socket.on("getMessage", function(data) {
-            $('<div class="post viewcommentsingle row"><div class="col-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/"></div><div class="col-11"><div class="row"><P></P></div><div class="row"><P>ProfileID :' + data.userId + '</P></div></div><p> ' + data.text + '</p></div>').prependTo('.messageboard');
+            $('<div class="row-12 message"><div class="col pill right"><div class="row-12"><p>Testnames</p><p>Posted Now</p></div><div class="row"><p>'+data.text+'</p></div></div></div>').prependTo('.messageboard');
             console.log(data.text + data.userId);
         });
         var timeout;
@@ -61,7 +64,6 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
     }
     //adding message into array for emit
 </script>
-
 <body>
     <div class="row">
         <div class="col messageboard">
