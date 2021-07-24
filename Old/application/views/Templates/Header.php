@@ -13,6 +13,11 @@
 </head>
 <body>
 <script>
+   var socket = io("http://localhost:3000");
+    socket.emit("addUser", {
+        userId: "<?php echo $this->session->userdata('user_id'); ?>",
+        
+    });
 </script>
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
   <a class="navbar-brand" href="#">Navbar</a>

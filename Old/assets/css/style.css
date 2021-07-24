@@ -178,6 +178,17 @@ a:hover {
     border-width:0.5px;
     border-color:grey;
  }
+ .offline{
+    float:left;  
+    z-index: -1;
+    color:red;
+ }
+
+ .online {    
+    float:left;  
+    z-index: -1;
+    color:green;
+  }
  .friends{
     max-height:50vh;
     overflow-y: scroll;

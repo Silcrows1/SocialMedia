@@ -167,9 +167,16 @@ class Users extends CI_controller
 
     public function getFriends()
     {
-        $friends = $this->user_model->getFriends();
+        $friendsoff = $this->user_model->getFriends();
+        echo json_encode($friendsoff);
+    }
+
+    public function getOnlineFriends()
+    {
+        $friends = $this->user_model->getOnlineFriends();
         echo json_encode($friends);
     }
+
 
 
     public function editprofile()

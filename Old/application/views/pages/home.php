@@ -129,7 +129,7 @@
     </div>
     <div id="wrapper friends">
         <div  id="friendfind" class="minimize"><a class="viewfriends" onclick="changeCssClass('friendfind')">View Friends</a>
-            <ul class="friendList">
+            <ul class="friendList" id="friendList">
                                     </ul>
         </div>
     </div>

@@ -228,9 +228,28 @@ class User_model extends CI_model
     public function getFriends()
     {
 
+        
+        $online = 'select User_id FROM onlineusers';
+         
+
+
+        $this->db->select('users.FirstName, users.LastName, friends.Usertwo_id');
+        $this->db->from('users');
+        $this->db->join('friends', 'users.User_id = friends.Usertwo_id');       
+        $this->db->where('friends.User_id', $this->session->userdata('user_id'));
+        $this->db->where('users.User_id NOT IN (select User_id FROM onlineusers)');
+        
+        $friendsoff = $this->db->get();
+        return $friendsoff->result_array();
+    }
+
+    public function getOnlineFriends()
+    {
+
         $this->db->select('users.FirstName, users.LastName, friends.Usertwo_id');
         $this->db->from('users');
         $this->db->join('friends', 'users.User_id = friends.Usertwo_id');
+        $this->db->join('onlineusers', 'users.User_id = onlineusers.User_id');
         $this->db->where('friends.User_id', $this->session->userdata('user_id'));
         $friends = $this->db->get();
         return $friends->result_array();

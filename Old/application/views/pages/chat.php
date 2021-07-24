@@ -31,11 +31,7 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
             recieverId: <?php echo $friendid; ?>,
         });
     }
-    var socket = io("http://localhost:3000");
-    socket.emit("addUser", {
-        userId: "<?php echo $this->session->userdata('user_id'); ?>",
-        
-    });
+   
 
 
     socket.on("getUsers", users => {

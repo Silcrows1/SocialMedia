@@ -30,7 +30,7 @@ const addUser = (userId, socketId) => {
 
 const removeUser=(socketId)=>{
   users = users.filter(user=>user.socketId !==socketId);
-  console.log(users);
+
 }
 
 const getuserbysocket = (socketId)=>{
@@ -38,19 +38,14 @@ const getuserbysocket = (socketId)=>{
  
 }
 const getUser = (userId)=>{
-  console.log(userId);  
-  console.log(users);
+
   return users.find(users=>users.userId == userId.toString());
  
 }
 
 io.on('connection', (socket) => {
-    console.log('a user connected');
-    //io.emit("welcome", "welcome to the chat room")
-
     socket.on("addUser", (userId)=> {
       addUser(userId['userId'], socket.id);
-      console.log(users);
 
       axios.post("http://127.0.0.1/SocialMedia/Old/Users/online/"+userId['userId'], {
       }, {
@@ -60,9 +55,7 @@ io.on('connection', (socket) => {
       })
       io.emit("getUsers", users);
     });    
-    console.log(socket.id);
-    socket.on('disconnect', () => {
-      console.log('user disconnected');     
+    socket.on('disconnect', () => { 
       var user = getuserbysocket(socket.id);
       if (user){
       ///GET USER ID HERE FOR REMOVING/////
@@ -76,9 +69,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on("typing", (recieverId)=> {
-      console.log(recieverId['recieverId']);
       const user = getUser(recieverId['recieverId']);
-      //console.log(user);
       if(user!=null){
       io.to(user.socketId).emit("typing")
     }
@@ -86,29 +77,16 @@ io.on('connection', (socket) => {
 
     //send a message
     socket.on("sendMessage", ({userId, recieverId, text})=>{
-      console.log(userId);
       const user = getUser(recieverId);
 
       //preventing error if user isnt online
       if(user!=null){
-      console.log(user);
       io.to(user.socketId).emit("getMessage", {
         userId, 
         text,
       })
     }
     })    
-  });
-  //send and recieve message
- 
-  
-  io.on('connection', (socket) => {
-    socket.on('chat message', (msg) => {
-      io.emit('chat message', msg);
-      console.log('chat message', msg);
-    });
-  });
-  
+  });  
   httpServer.listen(3000, () => {
-  console.log('listening on *:3000');
 });
