@@ -18,6 +18,18 @@
             }
         }
 
+        public function getMessagesadmin($id){
+
+            $messages['Message']=$this->message_model->getMessages($id);
+            $messages['friendid'] = $id;
+
+            $this->load->view('templates/header');
+			$this->load->view('pages/chat', $messages);
+			$this->load->view('templates/footer');
+
+        }
+
+
         public function sendMessage(){
             $message = $this->input->post('message');
             $targetID = $this->input->post('targetId');

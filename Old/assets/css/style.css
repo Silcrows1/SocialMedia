@@ -1,225 +1,336 @@
-p{
-    margin:0;
-}
-body{
-    background-color:#EBEDF0;
-
-}
-#body{
-    font-size:10px;
-}
-#size{
-    font-size:10px;
-    display:none;
-}
-.login{
-    Margin:auto;
-    Height:100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;    
-}
-.register{
-    Margin:auto;
-    Height:100vh;
-    justify-content: center;
-    align-items: center;    
-}
-.small{
-    font-size:18px;
-}
-.medium{
-    font-size:24px;
-}
-.large{
-    font-size:28px;
-}
-.mainfeed{
-    margin:auto;
-    margin-top:10vh;
+p {
+	margin: 0;
 }
 
-.createPost{
-    float:right;
-    margin-top:1vh;
-}
-
-.postcard{
-    background-color:antiquewhite;
-    border-style:solid;
-    border-width:1px;
-    margin:2vh;
-    padding:2vh;
-}
-.post{
-    background-color:#ffffff;
-    border-style:solid;
-    border-width:1px;
-    border-radius: 7px;
-    border-color: rgb(184, 184, 184);
-    margin:2vh;
-    padding:2vh;
-    box-shadow: 0 1px 2px #3f3f3f;
-}
-.postinteract{
-    text-align:center;
-    border-top: 1px solid red;
-}
-.postinteracttop{
-    text-align:center;
-}
-
-.profile{
-    width:5vh;
-    height:5vh;
-    border-radius:50%;
-    border-style:solid;
-    border-width:1px;
-}
-.profPic{
-    max-height:15vh;
-    max-width:15vh;
-    width:100%;
-}
-.profileContent{
-    margin:3vh;
-}
-.profileOptions{
-    margin-bottom:3vh;
-}
-.profileDetails{
-    margin-top:3vh;
-}
-.profileFriends{
-    display:inline-block;
-    background-color:rgb(255, 255, 255);
-    border-style:solid;
-    border-width:1px;
-    padding:2vh;
+body {
+	background-color: #EBEDF0;
 
 }
+
+#body {
+	font-size: 10px;
+}
+
+#size {
+	font-size: 10px;
+	display: none;
+}
+
+.login {
+	Margin: auto;
+	Height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.register {
+	Margin: auto;
+	Height: 100vh;
+	justify-content: center;
+	align-items: center;
+}
+
+.small {
+	font-size: 18px;
+}
+
+.medium {
+	font-size: 24px;
+}
+
+.large {
+	font-size: 28px;
+}
+
+.mainfeed {
+	margin: auto;
+	margin-top: 10vh;
+}
+
+.createPost {
+	float: right;
+	margin-top: 1vh;
+}
+
+.postcard {
+	background-color: antiquewhite;
+	border-style: solid;
+	border-width: 1px;
+	margin: 2vh;
+	padding: 2vh;
+}
+
+.post {
+	background-color: #ffffff;
+	border-style: solid;
+	border-width: 1px;
+	border-radius: 7px;
+	border-color: rgb(184, 184, 184);
+	margin: 2vh;
+	padding: 2vh;
+	box-shadow: 0 1px 2px #3f3f3f;
+}
+
+.postinteract {
+	text-align: center;
+	border-top: 1px solid red;
+}
+
+.postinteracttop {
+	text-align: center;
+}
+
+.profile {
+	width: 5vh;
+	height: 5vh;
+	border-radius: 50%;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.profPic {
+	max-height: 15vh;
+	max-width: 15vh;
+	width: 100%;
+}
+
+.profileContent {
+	margin: 3vh;
+}
+
+.profileOptions {
+	margin-bottom: 3vh;
+}
+
+.profileDetails {
+	margin-top: 3vh;
+}
+
+.profileFriends {
+	display: inline-block;
+	background-color: rgb(255, 255, 255);
+	border-style: solid;
+	border-width: 1px;
+	padding: 2vh;
+
+}
+
 a {
-    color: #000000;
-    text-decoration: none;
+	color: #000000;
+	text-decoration: none;
 }
 
 a:hover {
-    color:#5a5a5a; 
-    text-decoration:none; 
-    cursor:pointer;  
-}
-.post{
-   width:100%;
-   margin:2vh 0 2vh 0;
-}
-.content{
-    padding:2vh;
-}
-.details{
-    padding:0px;
-    margin:0px;
-}
-.searchbar{
-    float:right;
-}
-.navbar-nav{
-    width:100%;
-}
-.hidden{
-    display:none;
+	color: #5a5a5a;
+	text-decoration: none;
+	cursor: pointer;
 }
 
-#wrapper
-{
-    width:75%;
-    height:75%;
+.post {
+	width: 100%;
+	margin: 2vh 0 2vh 0;
 }
+
+.content {
+	padding: 2vh;
+}
+
+.details {
+	padding: 0px;
+	margin: 0px;
+}
+
+.searchbar {
+	float: right;
+}
+
+.navbar-nav {
+	width: 100%;
+}
+
+.hidden {
+	display: none;
+}
+
+#wrapper {
+	width: 75%;
+	height: 75%;
+}
+
 .minimize {
-    color : red;
-    width:20VW;
-    height:3vh;
-    background:#474747;
-     position:fixed;
-    float:right;
-    bottom:0px;
-    right:0px;
- } 
-
- .maximize {
-    color : blue;
-    width:20VW;
-    height:50%;
-    background:#ccc;
-    position:fixed;
-    float:right;
-    bottom:0px;
-    right:0px;
- }
-
- .friendList{
-    list-style-type: none;
-    padding:0;
-
- }
-#friendfind{
-    text-align: center;
- }
- .viewfriends{     
-     color:White;
-     text-shadow: 1px 1px 2px black;
- }
- .Friend{
-    margin:auto;
-    padding:0;
-    width:100%;
-    height:auto;
-    background-color: #bed7fd;
-    border-style:solid;
-    border-width:0.5px;
-    border-color:grey;
- }
- .offline{
-    float:left;  
-    z-index: -1;
-    color:red;
- }
-
- .online {    
-    float:left;  
-    z-index: -1;
-    color:green;
-  }
- .friends{
-    max-height:50vh;
-    overflow-y: scroll;
- }
-
- .right{
-    text-align: right;
+	color: red;
+	width: 20VW;
+	height: 3vh;
+	background: #474747;
+	position: fixed;
+	float: right;
+	bottom: 0px;
+	right: 0px;
 }
-.messageboard{
-    height: 75vh;
-  overflow: auto;
-  display: flex;
-  flex-direction: column-reverse;
+
+.maximize {
+	color: blue;
+	width: 20VW;
+	height: 50%;
+	background: #ccc;
+	position: fixed;
+	float: right;
+	bottom: 0px;
+	right: 0px;
 }
+
+.friendList {
+	list-style-type: none;
+	padding: 0;
+
+}
+
+#friendfind {
+	text-align: center;
+}
+
+.viewfriends {
+	color: White;
+	text-shadow: 1px 1px 2px black;
+}
+
+.Friend {
+	margin: auto;
+	padding: 0;
+	width: 100%;
+	height: auto;
+	background-color: #bed7fd;
+	border-style: solid;
+	border-width: 0.5px;
+	border-color: grey;
+}
+
+.offline {
+	float: left;
+	z-index: -1;
+	color: red;
+}
+
+.online {
+	float: left;
+	z-index: -1;
+	color: green;
+}
+
+.friends {
+	max-height: 50vh;
+	overflow-y: scroll;
+}
+
+.right {
+	text-align: right;
+}
+
+.messageboard {
+	height: 75vh;
+	overflow: auto;
+	display: flex;
+	flex-direction: column-reverse;
+}
+
 .pulsate {
-    -webkit-animation: pulsate 1s ease-out;
-    -webkit-animation-iteration-count: infinite; 
-    opacity: 0.5;
+	-webkit-animation: pulsate 1s ease-out;
+	-webkit-animation-iteration-count: infinite;
+	opacity: 0.5;
 }
+
 @-webkit-keyframes pulsate {
-    0% { 
-        opacity: 0.5;
-    }
-    50% { 
-        opacity: 1.0;
-    }
-    100% { 
-        opacity: 0.5;
-    }
+	0% {
+		opacity: 0.5;
+	}
+
+	50% {
+		opacity: 1.0;
+	}
+
+	100% {
+		opacity: 0.5;
+	}
 }
-.message{
-    background-color:rgb(224, 224, 224);
-    margin-top:1vh;
+
+.message {
+	background-color: rgb(224, 224, 224);
+	margin-top: 1vh;
 }
+
+#customers {
+	font-family: Arial, Helvetica, sans-serif;
+	border-collapse: collapse;
+	width: 100%;
+    text-align: center;
+}
+
+#customers td,
+#customers th {
+	border: 1px solid #ddd;
+	padding: 8px;
+  
+}
+
+#customers tr:nth-child(even) {
+	background-color: #f2f2f2;
+}
+
+#customers tr:hover {
+	background-color: #ddd;
+}
+
+#customers th {
+	padding-top: 12px;
+	padding-bottom: 12px;
+	
+	background-color: #a3a3a3;
+	color: white;
+}
+
+#talk{
+    background-color:blue;
+    color:white;
+}
+.white {
+    color:white;
+}
+
+ /* The Modal (background) */
+ .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  } 

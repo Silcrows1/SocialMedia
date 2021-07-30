@@ -75,6 +75,20 @@ io.on('connection', (socket) => {
     }
   }); 
 
+  socket.on("adminContact", ({userId, recieverId})=>{
+    console.log("working");
+
+      const user = getUser(recieverId);
+      const socketadmin = socket.id;
+      if(user!=null){
+        
+        io.to(user.socketId).emit("admin", {
+          userId,
+          socketadmin,          
+        })
+      }
+  });
+
     //send a message
     socket.on("sendMessage", ({userId, recieverId, text})=>{
       const user = getUser(recieverId);

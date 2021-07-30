@@ -62,4 +62,5 @@ $route['users/viewprofile/(:any)'] = 'users/viewprofile/$1';
 $route['users/editprofile/(:any)'] = 'users/editprofile/$1';
 $route['users/edit/(:any)'] = 'users/editaccount/$1';
 $route['Message/(:any)'] = 'Messages/getMessages/$1';
+$route['Messages/(:any)'] = 'Messages/getMessagesadmin/$1';
 $route['translate_uri_dashes'] = FALSE;

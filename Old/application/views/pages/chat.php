@@ -24,14 +24,18 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
             }
 
         });
-
         socket.emit("sendMessage", {
             text: document.getElementById("message").value,
             userId: <?php echo $this->session->userdata('user_id') ?>,
             recieverId: <?php echo $friendid; ?>,
         });
     }
-   
+    
+    socket.emit("adminContact", {
+            userId: <?php echo $this->session->userdata('user_id') ?>,
+            recieverId: <?php echo $friendid; ?>,
+        });
+
 
 
     socket.on("getUsers", users => {
@@ -116,7 +120,6 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-
     $(document).ready(function() {
 
         $("#message").keyup(

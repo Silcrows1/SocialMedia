@@ -37,11 +37,22 @@
         <li class="nav-item">
           <a class="nav-link" href="<?php echo base_url(); ?>users/viewaccount">Account</a>
         </li>
+          <!-- remove after testing -->
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo base_url(); ?>admins/viewUsers">AdminPanel</a>
+        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="<?php echo base_url(); ?>users/logout">Log out</a>
         </li>
         <?php endif ?>
-        
+      
+        <?php if($this->session->userdata('admin')) : ?> 
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo base_url(); ?>admins/viewUsers">AdminPanel</a>
+        </li>
+        <?php endif ?>
+
       </ul>
     </div>
     <form action="<?php echo base_url(); ?>users/search" method = "post" class="searchbar">
