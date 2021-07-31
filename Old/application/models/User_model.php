@@ -272,6 +272,16 @@ class User_model extends CI_model
             return true;
         }
     }
+    public function updatecontact($id){
+        date_default_timezone_set('Europe/London');
+        $now = date('Y-m-d H:i:s');
+        $contact = array(
+            'LastContact' =>  $now
+        );
+        $this->db->where('User_id', $this->session->userdata('user_id'));
+        $this->db->update('users', $contact);
+
+    }
 
     public function gettextsize()
     {

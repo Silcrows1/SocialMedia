@@ -22,6 +22,7 @@
 
             $messages['Message']=$this->message_model->getMessages($id);
             $messages['friendid'] = $id;
+            $this->user_model->updatecontact($id);
 
             $this->load->view('templates/header');
 			$this->load->view('pages/chat', $messages);

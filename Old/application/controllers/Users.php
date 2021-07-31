@@ -60,6 +60,7 @@ class Users extends CI_controller
                     'Picture' => $profile[0]['Picture'],
                     'FirstName' => $profile[0]['FirstName'],
                     'LastName' => $profile[0]['LastName'],
+                    'UserType' => $profile[0]['UserType'],
                     'TextSize' => '1'
                 );
                 $this->session->set_userdata($user_data);

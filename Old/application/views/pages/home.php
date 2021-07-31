@@ -165,11 +165,6 @@ window.onclick = function(event) {
   }
 } 
 
-    socket.on("admin", function(data) {
-        console.log(data);
-        $('<a href="<?php echo base_url(); ?>Messages/'+data.userId+'">Accept</a>').appendTo('.close');
-        modal.style.display = "block";       
-
-    });
+   
 
 </script>

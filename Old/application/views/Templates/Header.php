@@ -13,11 +13,16 @@
 </head>
 <body>
 <script>
+
+  //if user is logged in, emit add user to insert in database as online user//
+  <?php if ($this->session->userdata('logged_in')) :?>
    var socket = io("http://localhost:3000");
     socket.emit("addUser", {
         userId: "<?php echo $this->session->userdata('user_id'); ?>",
         
     });
+    <?php endif ?>
+
 </script>
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
   <a class="navbar-brand" href="#">Navbar</a>
@@ -37,17 +42,12 @@
         <li class="nav-item">
           <a class="nav-link" href="<?php echo base_url(); ?>users/viewaccount">Account</a>
         </li>
-          <!-- remove after testing -->
-        <li class="nav-item">
-          <a class="nav-link" href="<?php echo base_url(); ?>admins/viewUsers">AdminPanel</a>
-        </li>
-
         <li class="nav-item">
           <a class="nav-link" href="<?php echo base_url(); ?>users/logout">Log out</a>
         </li>
         <?php endif ?>
       
-        <?php if($this->session->userdata('admin')) : ?> 
+        <?php if($this->session->userdata('UserType') == 'Admin') : ?> 
         <li class="nav-item">
           <a class="nav-link" href="<?php echo base_url(); ?>admins/viewUsers">AdminPanel</a>
         </li>

@@ -30,11 +30,13 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
             recieverId: <?php echo $friendid; ?>,
         });
     }
-    
-    socket.emit("adminContact", {
+
+    <?php if ($this->session->userdata('UserType') == "Admin") : ?>
+        socket.emit("adminContact", {
             userId: <?php echo $this->session->userdata('user_id') ?>,
             recieverId: <?php echo $friendid; ?>,
         });
+    <?php endif ?>
 
 
 
@@ -117,7 +119,7 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
 
 </body>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -134,21 +136,5 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
                 }
             }
         );
-        //add user to database function, needs an ajax function to remove user on disconnect
-        //id = 
-
-        //jQuery.ajax({
-        //    type: "POST",
-        //    url: "<?php echo base_url(); ?>Users/online",
-        //    dataType: 'json',
-        //    data: {
-        //        id
-        //    },
-        //    success: function(result) {
-        //        console.log("added to db");
-        //    }
-        //});
-
-
     });
 </script>

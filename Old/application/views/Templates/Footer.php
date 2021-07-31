@@ -9,7 +9,18 @@
 
 <script>
   $(document).ready(function() {
-    
+
+    <?php if ($this->session->userdata('logged_in')): ?>
+    {
+    socket.on("admin", function(data) {
+        console.log(data);
+        $('<a href="<?php echo base_url(); ?>Messages/'+data.userId+'">Accept</a>').appendTo('.close');
+        modal.style.display = "block";       
+
+      });
+    }
+    <?php endif ?>
+
     if (document.getElementById("typing")) {
       document.getElementById("typing").style.display = "none";
     }
@@ -140,7 +151,6 @@
         e.preventDefault();
       }
     });
-
   });
 
 var refresh;
