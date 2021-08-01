@@ -36,13 +36,16 @@
 
         }
 
-        public function delete($id){            
+        public function delete(){      
             
-            $this->comment_model->deleteComment($id);
-            redirect('Home');
+            $id = $this->input->post('commentid');
+            $Post_id = $this->input->post('Post_id'); 
 
-            
-        //echo $commentsfound;
+            $this->comment_model->deleteComment($id);
+            $comments = $this->comment_model->getsingleCount($Post_id);
+
+            $Comment = $comments['Comments'];
+            echo json_encode(array($Post_id, $Comment));
         }
 
     }
