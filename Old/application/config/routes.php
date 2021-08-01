@@ -60,6 +60,7 @@ $route['posts/like2'] = 'posts/like2';
 $route['posts/like/(:any)'] = 'posts/like/$1';
 $route['users/viewprofile/(:any)'] = 'users/viewprofile/$1';
 $route['users/editprofile/(:any)'] = 'users/editprofile/$1';
+$route['posts/delete/(:any)'] = 'posts/deletePost/$1';
 $route['users/edit/(:any)'] = 'users/editaccount/$1';
 $route['Message/(:any)'] = 'Messages/getMessages/$1';
 $route['Messages/(:any)'] = 'Messages/getMessagesadmin/$1';

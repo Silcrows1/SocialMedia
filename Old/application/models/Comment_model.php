@@ -54,13 +54,24 @@ class Comment_model extends CI_model{
 
     public function getComments($post_id){            
         
-        $this->db->select('comment_id, Post_id, comment, users.User_id, profiles.Picture, users.FirstName, users.LastName, comments.created_at');
+        $this->db->distinct();
+        $this->db->select('comment_id, comments.Post_id, comment, users.User_id, profiles.Picture, users.FirstName, users.LastName, comments.created_at, posts.User_id AS posterid');    
         $this->db->join('users', 'users.User_id = comments.User_id');
         $this->db->join('profiles', 'profiles.User_id = users.User_id');
-        $this->db->where('Post_id', $post_id);
+        $this->db->join('posts', 'posts.Post_id = comments.Post_id');
+        $this->db->where('comments.Post_id', $post_id);
         $this->db->order_by("comments.created_at", "desc");
         $comments = $this->db->get('comments');
         return $comments->result_array();    
+
+    }
+
+    
+    public function deleteComment($id){            
+        
+       $this->db->where('comments.Comment_id', $id);
+        $this->db->delete('comments');
+        return;  
 
     }
 }

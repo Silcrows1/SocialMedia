@@ -1,7 +1,7 @@
 <div class="body">
 
     <div class="row-12">
-        <div class="col-6 mainfeed">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 mainfeed">
 
             <?php echo form_open('posts/createPost'); ?>
             <div class="form-row">
@@ -16,31 +16,30 @@
             <?php foreach ($posts as $post) : ?>
 
                 <div class="col-12 post">
-                    <div class="row">
-                        <div class="col-1 pic">
+                    <div class="row g-0">
+                        <div class="wrap col-2 col-md-2 col-lg-1 pic">
 
                             <img src="<?php echo base_url('assets/images/' . $post['Picture']); ?>" class="profile">
                         </div>
 
-                        <div class="col-11 name">
+                        <div class="col-10 col-md-10 col-lg-11 name">
                             <div class="row-12">
-                                <div class="col details">
-                                    <p><a class="namelink" href="<?php echo base_url('users/viewprofile/' . $post['user_id']); ?>"><?php echo $post['FirstName'] . ' ' . $post['LastName'] ?></p></a>
-                                </div>
-                            </div>
-                            <div class="row-12">
-                                <div class="col details">
+                                <div class="col-9 details">
+                                    <p><a class="namelink" href="<?php echo base_url('users/viewprofile/' . $post['user_id']); ?>"><?php echo $post['FirstName'] . ' ' . $post['LastName'] ?></p></a>     
                                     <p><?php echo (date("H:i A", strtotime($post['Posted']))) . ' on ' . (date("jS F Y", strtotime($post['Posted']))) ?></p>
-                                </div>
+                                </div>                                
                             </div>
-
+                            <?php if ($post['user_id'] == $this->session->userdata('user_id')) : ?>
+                                       <a class="delete" href="<?php echo base_url('posts/delete/' . $post['post_id']); ?>">X</a>
+                            <?php endif ?>
+                            
                         </div>
-                        <div class="row">
+                        <div class="row g-0">
                             <div class="col-12 content">
                                 <p><?php echo $post['Content'] ?></p>
                             </div>
                         </div>
-                        <div class="row interact">
+                        <div class="row interact g-0">
                             <div class="col-6 postinteracttop" id="<?php echo $post['post_id'] ?>">
                                 <!--------------------LIKES COUNT HERE---------------------->
                                 <p><?php foreach ($likes as $entry) : ?>
@@ -68,7 +67,7 @@
                                     <?php endforeach; ?>
                             </div>
                         </div>
-                        <div class="row interact">
+                        <div class="row interact g-0">
 
                             <div class="col-6 postinteract">
                                 <a class="Likebtn" id="submit<?php echo $post['post_id'] ?>" href="" title="<?php echo $post['post_id'] ?>" data-elemid="">
@@ -98,7 +97,7 @@
                             </div>
                         </div>
                         <!-- ADD COMMENT SECTION-->
-                        <div class="row">
+                        <div class="row g-0">
                             <div class="comments<?php echo $post['post_id']; ?>">
 
                                 <div class="form-row hidden" id="viewcomment<?php echo $post['post_id']; ?>" name="comment<?php echo $post['post_id']; ?>">
@@ -125,7 +124,7 @@
         </div>
 
     </div>
-    <div id="wrapper friends">
+    <div id="wrapper friends col-md-9">
         <div id="friendfind" class="minimize"><a class="viewfriends" onclick="changeCssClass('friendfind')">View Friends</a>
             <ul class="friendList" id="friendList">
             </ul>
@@ -135,36 +134,32 @@
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <p>A volunteer wishes to talk with you, press accept to join the conversation or decline to close this</p>
-  </div>
+    <!-- Modal content -->
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>A volunteer wishes to talk with you, press accept to join the conversation or decline to close this</p>
+    </div>
 
 </div>
 <script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
 
-// Get the modal
-var modal = document.getElementById("myModal");
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
 
-// Get the button that opens the modal
-var btn = document.getElementById("myBtn");
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
 
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-} 
-
-   
-
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>

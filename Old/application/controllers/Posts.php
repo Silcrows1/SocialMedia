@@ -51,6 +51,11 @@
             
         }
 
+        public function deletePost($id){
+            $this->post_model->deletePost($id);
+            redirect('Home');
+        }
+
 
     }
 ?>

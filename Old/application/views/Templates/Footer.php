@@ -143,8 +143,16 @@
 
             //////foreach comment found, append to parent////////////
             $.each(response, function(index, value) {
-              $('<div class="post viewcommentsingle' + value.Post_id + ' row"><div class="col-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/' + value.Picture + '"></div><div class="col-11"><div class="row"><P>' + value.FirstName + ' ' + value.LastName + '</P></div><div class="row"><P>' + value.created_at + '</P></div></div><p> ' + value.comment + '</p></div>').appendTo('.viewcomments' + postid);
-              i++
+              console.log(value);
+
+              if (value.User_id == <?php echo ($this->session->userdata['user_id'])?> || value.posterid == <?php echo ($this->session->userdata['user_id'])?> ){
+              $('<div class="post viewcommentsingle' + value.Post_id + ' row"><div class="col-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/' + value.Picture + '"></div><div class="col-11"><div class="row"><P>' + value.FirstName + ' ' + value.LastName + '</P></div><div class="row"><P>' + value.created_at + '</P></div></div><p> ' + value.comment + '</p><a class="delete" href="<?php echo base_url('comments/delete/')?>'+value.comment_id+'">X</a></div>').appendTo('.viewcomments' + postid);
+             i++
+              }
+              else{
+                $('<div class="post viewcommentsingle' + value.Post_id + ' row"><div class="col-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/' + value.Picture + '"></div><div class="col-11"><div class="row"><P>' + value.FirstName + ' ' + value.LastName + '</P></div><div class="row"><P>' + value.created_at + '</P></div></div><p> ' + value.comment + '</p></div>').appendTo('.viewcomments' + postid);
+              }
+             
             });
           }
         });

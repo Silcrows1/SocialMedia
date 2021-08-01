@@ -34,6 +34,13 @@
 
             echo json_encode($commentsfound);
 
+        }
+
+        public function delete($id){            
+            
+            $this->comment_model->deleteComment($id);
+            redirect('Home');
+
             
         //echo $commentsfound;
         }
