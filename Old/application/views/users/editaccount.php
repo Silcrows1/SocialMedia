@@ -65,6 +65,6 @@
 	<button type="submit" class="btn btn-primary">submit</button>
 <?php echo form_close(); ?>
 </div>
-
+<a href="<?php echo base_url('/users/deleteAccount/' . $user['User_id']); ?>"class="deleteProfile" id="<?php echo ($user['User_id']) ?>">Delete Account</a>
 <?php endforeach; ?>
 </div>

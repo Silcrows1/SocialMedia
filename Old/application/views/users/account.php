@@ -5,4 +5,5 @@
 <p>Email: <?php echo $user['Email'] ?></p>
 <p>Gender: <?php echo $user['Gender'] ?></p>
 </div>
+
 <?php endforeach; ?>

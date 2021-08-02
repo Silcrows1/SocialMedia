@@ -185,6 +185,44 @@ class User_model extends CI_model
         return $user->result_array();
     }
 
+    public function deleteAccount($profileID)
+    {
+        if ($this->session->userdata('user_id') == $profileID) {
+
+            //delete other users interactions with users posts//
+            $this->db->query('DELETE FROM interactions WHERE interactions.post_id = ANY(SELECT interactions.post_id FROM interactions 
+            JOIN posts ON interactions.post_id = posts.Post_id WHERE posts.User_id = ' . $profileID . ')');
+
+            //Delete user account//
+            $this->db->where('users.User_id', $profileID);
+            $this->db->delete('users');
+
+            //delete profile from user//
+            $this->db->where('profiles.User_id', $profileID);
+            $this->db->delete('profiles');
+
+            //delete comments from user//
+            $this->db->where('comments.User_id', $profileID);
+            $this->db->delete('comments');
+
+            //delete chat from user//
+            $this->db->where('messages.User_id', $profileID);
+            $this->db->delete('messages');
+
+            //delete friends from user//
+            $this->db->where('friends.User_id', $profileID);
+            $this->db->delete('friends');
+
+            $this->db->where('friends.Usertwo_id', $profileID);
+            $this->db->delete('friends');
+
+            //delete all posts from user//
+            $this->db->where('posts.User_id', $profileID);
+            $this->db->delete('posts');
+        } else {
+        }
+    }
+
     public function viewaccount($id)
     {
         $this->db->select('*');
@@ -228,17 +266,17 @@ class User_model extends CI_model
     public function getFriends()
     {
 
-        
+
         $online = 'select User_id FROM onlineusers';
-         
+
 
 
         $this->db->select('users.FirstName, users.LastName, friends.Usertwo_id');
         $this->db->from('users');
-        $this->db->join('friends', 'users.User_id = friends.Usertwo_id');       
+        $this->db->join('friends', 'users.User_id = friends.Usertwo_id');
         $this->db->where('friends.User_id', $this->session->userdata('user_id'));
         $this->db->where('users.User_id NOT IN (select User_id FROM onlineusers)');
-        
+
         $friendsoff = $this->db->get();
         return $friendsoff->result_array();
     }
@@ -272,7 +310,8 @@ class User_model extends CI_model
             return true;
         }
     }
-    public function updatecontact($id){
+    public function updatecontact($id)
+    {
         date_default_timezone_set('Europe/London');
         $now = date('Y-m-d H:i:s');
         $contact = array(
@@ -280,7 +319,6 @@ class User_model extends CI_model
         );
         $this->db->where('User_id', $this->session->userdata('user_id'));
         $this->db->update('users', $contact);
-
     }
 
     public function gettextsize()
@@ -290,14 +328,16 @@ class User_model extends CI_model
         $text = $this->db->get('users');
     }
 
-    public function online($id){
+    public function online($id)
+    {
         $users = array(
             'User_id' => $id,
         );
         $this->db->insert('onlineUsers', $users);
     }
 
-    public function offline($id){
+    public function offline($id)
+    {
         $users = array(
             'User_id' => $id,
         );
