@@ -363,3 +363,17 @@ a:hover {
 	width:min-content;
 }
 
+.deletebox{
+	width:300px;
+	border-style:solid;
+	border-width:1px;
+	background-color:rgb(250, 147, 147);
+	position:absolute;
+	bottom:0px;
+	
+}
+.deletetextbox
+{
+	width:100%;
+}
+

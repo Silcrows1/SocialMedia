@@ -73,9 +73,10 @@ class Users extends CI_controller
         }
     }
     //delete user account//
-    public function deleteAccount($accountID)
+    public function deleteAccount()
     {
-        $this->user_model->deleteAccount($accountID);
+        $id = $this->input->post('accountID');
+        $this->user_model->deleteAccount($id);
         $this->logout();
     }
 
