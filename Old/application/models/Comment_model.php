@@ -3,7 +3,9 @@ class Comment_model extends CI_model{
     
     public function createComment($comment){
 
-        $this->db->insert('Comments', $comment);            
+        $this->db->insert('Comments', $comment);
+        $insert_id = $this->db->insert_id();
+        return $insert_id;            
         
     }
     

@@ -165,6 +165,18 @@ class User_model extends CI_model
         $this->db->insert('pending', $data2);
         return $this->db->insert('pending', $data);
     }
+
+    public function removeFriend($id){
+        $this->db->where('User_id', $id);
+        $this->db->where('Usertwo_id', $this->session->userdata('user_id'));
+        $this->db->delete('friends');
+
+        $this->db->where('Usertwo_id', $id);
+        $this->db->where('User_id', $this->session->userdata('user_id'));
+        $this->db->delete('friends');
+        return;
+
+    }
     public function editprofile()
     {
 

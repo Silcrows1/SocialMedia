@@ -85,7 +85,7 @@
 
                             </div>
                             <div class="col-6 postinteract " id="<?php echo $post['post_id']; ?>">
-                                <a class="viewcomment" id="viewcomment" title="<?php echo $post['post_id']; ?>">
+                                <a class="viewcomment" id="viewcommentid<?php echo $post['post_id']; ?>" title="<?php echo $post['post_id']; ?>">
                                     <?php foreach ($comments as $entry) : ?>
                                         <?php if ($entry['Post_id'] == $post['post_id']) : ?>
                                             <?php if ($entry['Comments'] == 0) : echo 'Add Comment'; ?>

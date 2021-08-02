@@ -10,13 +10,13 @@
                 'Comment' => $comment,
                 'User_id' => $this->session->userdata('user_id')
             );         
-            $this->comment_model->createComment($commentarray);
+            $commentid = $this->comment_model->createComment($commentarray);
             
             $comments = $this->comment_model->getsingleCount($id);
 
             $Post_id = $id; 
             $Comment = $comments['Comments'];
-            echo json_encode(array($Post_id, $Comment));
+            echo json_encode(array($Post_id, $Comment, $commentid));
 
         }
 

@@ -92,15 +92,23 @@
             var dt = new Date();
             var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
             var parentNode = document.querySelector('.viewcommentsingle' + postid);
-            $('<div class="post viewcommentsingle' + postid + ' row"><div class="col-1"><img class="profile "src="' + '<?php echo base_url('assets/images/' . $this->session->userdata('Picture')) ?>' + '"></div><div class="col-11"><div class="row"><P>' + '<?php echo $this->session->userdata('FirstName') ?>' + ' ' + '<?php echo $this->session->userdata('LastName') ?>' + '</P></div><div class="row"><P>Posted Now</P></div></div><p> ' + comment + '</p></div>').prependTo('.viewcomments' + postid);
+
+                    
             var response = $.parseJSON(result);
+            console.log(response);
+            $('<div id ="comment'+response[2]+'"class="post viewcommentsingle' + postid + ' row"><div class="col-1"><img class="profile "src="' + '<?php echo base_url('assets/images/' . $this->session->userdata('Picture')) ?>' + '"></div><div class="col-11"><div class="row"><P>' + '<?php echo $this->session->userdata('FirstName') ?>' + ' ' + '<?php echo $this->session->userdata('LastName') ?>' + '</P></div><div class="row"><P>Posted Now</P></div></div><p> ' + comment + '</p><a class="delete" id="'+ postid +'" title="'+ String(response[2]) +'" >X</a></div>').prependTo('.viewcomments' + postid);
+           
+           
             $('textarea#addcomment' + postid).val("");
             if (response[1] == 0) {
               document.getElementById('comment' + postid).innerHTML = ('');
+              document.getElementById('viewcommentid'+postid).innerHTML = ('Add Comment');
             } else if (response[1] > 1) {
               document.getElementById('comment' + postid).innerHTML = String(response[1]) + ' Comments';
+              document.getElementById('viewcommentid'+postid).innerHTML = ('View Comments');
             } else {
               document.getElementById('comment' + postid).innerHTML = String(response[1]) + ' Comment';
+              document.getElementById('viewcommentid'+postid).innerHTML = ('View Comments');
             }
 
 
@@ -196,8 +204,36 @@
       }
     });
 
+    //remove friend button, on click, show confirmation box//
+    $('.removeFriend').click(function(e) {
 
+      var x = document.getElementById('confirmremove')
 
+      if (x.className == "row removeconfirm hidden") {
+        document.getElementById('confirmremove').setAttribute("class", "row removeconfirm show");
+        document.getElementById('removeFriend').setAttribute("class", "deleteProfile hidden");
+      } else {
+        document.getElementById('deletebox').setAttribute("class", "row removeconfirm hidden");
+      }
+    });
+
+    //On confirmation box click, remove friend and redirect home//
+    $('.confirmedremove').click(function(e) {
+
+      var id = event.target.id;
+      var url = "<?php echo base_url(); ?>users/removeFriend";
+        jQuery.ajax({
+          type: "POST",
+          url: url,
+          dataType: "html",
+          data: {
+            friendID: id,
+          },
+          success: function(result) {
+            window.location.href = '<?php echo base_url(); ?>Home';
+          }
+        });
+    });
   });
 
   //////////////////DELETE FUNCTION//////////////////////////
@@ -224,10 +260,13 @@
         $('textarea#addcomment' + Post_id).val("");
         if (response[1] == 0) {
           document.getElementById('comment' + Post_id).innerHTML = ('');
+          document.getElementById('viewcommentid'+Post_id).innerHTML = ('Add Comment');
         } else if (response[1] > 1) {
           document.getElementById('comment' + Post_id).innerHTML = String(response[1]) + ' Comments';
+          document.getElementById('viewcommentid'+Post_id).innerHTML = ('View Comments');
         } else {
           document.getElementById('comment' + Post_id).innerHTML = String(response[1]) + ' Comment';
+          document.getElementById('viewcommentid'+Post_id).innerHTML = ('View Comments');
         }
       }
 

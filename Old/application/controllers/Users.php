@@ -177,6 +177,12 @@ class Users extends CI_controller
         echo json_encode($friendsoff);
     }
 
+    public function removeFriend(){
+        $friendid = $this->input->post('friendID');
+        $this->user_model->removeFriend($friendid);
+        return;
+    }
+
     public function getOnlineFriends()
     {
         $friends = $this->user_model->getOnlineFriends();

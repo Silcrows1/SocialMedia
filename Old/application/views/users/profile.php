@@ -24,7 +24,17 @@
                 <?php endif ?>
             </div>
             <!--Profile Information-->
+            <?php if ($match == TRUE && $this->session->userdata['user_id'] != $user['User_id']) : ?>
+                <a class="removeFriend" id="removeFriend">Remove friend</a>
+            <?php endif ?>
+            <div class="row removeconfirm hidden" id="confirmremove">
+                <div class="col">
+                    Are you sure you wish to remove this friend?
+                    <button class="confirmedremove" id="<?php echo $user['User_id']?>">Confirm</button>
+                </div>
+            </div>
             <div class="row-12">
+            <!--If profile is of a friend, and not own profile, show remove friend button-->            
                 <img class="profPic" src="<?php echo base_url('assets/images/' . $user['Picture']); ?>" alt="Profile Picture">
             </div>
             <div class="row 12 profileDetails">
@@ -106,7 +116,7 @@
 
                                 </div>
                                 <div class="col-6 postinteract " id="<?php echo $post['post_id']; ?>">
-                                    <a class="viewcomment" id="viewcomment" title="<?php echo $post['post_id']; ?>">
+                                    <a class="viewcomment" id="viewcomment<?php echo $post['post_id']; ?>" title="<?php echo $post['post_id']; ?>">
                                         <?php foreach ($comments as $entry) : ?>
                                             <?php if ($entry['Post_id'] == $post['post_id']) : ?>
                                                 <?php if ($entry['Comments'] == 0) : echo 'Add Comment'; ?>
