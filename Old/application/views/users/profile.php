@@ -30,11 +30,11 @@
             <div class="row removeconfirm hidden" id="confirmremove">
                 <div class="col">
                     Are you sure you wish to remove this friend?
-                    <button class="confirmedremove" id="<?php echo $user['User_id']?>">Confirm</button>
+                    <button class="confirmedremove" id="<?php echo $user['User_id'] ?>">Confirm</button>
                 </div>
             </div>
             <div class="row-12">
-            <!--If profile is of a friend, and not own profile, show remove friend button-->            
+                <!--If profile is of a friend, and not own profile, show remove friend button-->
                 <img class="profPic" src="<?php echo base_url('assets/images/' . $user['Picture']); ?>" alt="Profile Picture">
             </div>
             <div class="row 12 profileDetails">
@@ -171,7 +171,7 @@
                     </div>
                 <?php endforeach; ?>
                 </div>
-            <?php endif ?>       
+            <?php endif ?>
         </div>
 
     <?php endforeach; ?>

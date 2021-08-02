@@ -5,7 +5,6 @@ class Users extends CI_controller
     public function register()
     {
         unset($_SESSION['login_failed']);
-        $data['title'] = 'Sign Up';
 
         $this->form_validation->set_rules('fname', 'FName', 'required');
         $this->form_validation->set_rules('lname', 'LName', 'required');
@@ -16,13 +15,13 @@ class Users extends CI_controller
 
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('templates/header');
-            $this->load->view('users/register', $data);
+            $this->load->view('users/register');
             $this->load->view('templates/footer');
         } else {
             $password = $this->input->post('password');
+            $hashed = $this->hash_password($password);
             //ADD HASHING
-
-            $bool = $this->user_model->register($password);
+            $bool = $this->user_model->register($hashed);
 
             //if true, user was successfully created
             if ($bool == true) {
@@ -35,7 +34,9 @@ class Users extends CI_controller
             }
         }
     }
-
+    private function hash_password($password){
+        return password_hash($password, PASSWORD_DEFAULT);
+     }
     public function login()
     {
         $this->form_validation->set_rules('username', 'Username', 'required');
@@ -66,9 +67,9 @@ class Users extends CI_controller
                 $this->session->set_userdata($user_data);
                 $this->user_model->gettextsize();
                 redirect('pages/view');
-            } else {
-
-                redirect('users/login');
+            } else { 
+                var_dump($user);     
+                //redirect('users/login');
             }
         }
     }
