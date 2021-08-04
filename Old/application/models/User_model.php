@@ -79,8 +79,27 @@ class User_model extends CI_model
         $data = array(
             'Picture' => $url
         );
+
+        //get last profile picture name//
+        $this->db->select('Picture');
+        $this->db->from('profiles');
+        $this->db->where('User_id', $this->session->userdata('user_id'));
+        $query = $this->db->get();
+        $file_name = $query->result_array();        
+        $filenamelink = $file_name[0]['Picture'];
+
+        //if a file location exists, unlink the image (delete)//
+        if ($file_name != NULL) {
+            if (file_exists(FCPATH .'/assets/images/'.$filenamelink)){
+                var_dump($filenamelink);
+                unlink(FCPATH .'assets/images/'.$filenamelink);
+            }
+            else{                
+            }            
+        }
+
         $this->db->where('profiles.User_id', $this->session->userdata('user_id'));
-        $user = $this->db->update('profiles', $data);
+        $this->db->update('profiles', $data);
         return;
     }
     public function friends($id = NULL)
@@ -266,7 +285,7 @@ class User_model extends CI_model
         );
         $password = $this->input->post('password');
         $password2 = $this->input->post('password2');
-        if ($password != NULL){            
+        if ($password != NULL) {
             $hashed = $this->hash_password($password2);
             $this->db->select('Password');
             $this->db->from('users');
@@ -279,7 +298,7 @@ class User_model extends CI_model
                 'Password' => $hashed,
             );
 
-            if (password_verify($password, $result['Password'])){
+            if (password_verify($password, $result['Password'])) {
                 $this->db->where('User_id', $this->session->userdata('user_id'));
                 $this->db->set('Password', $newpw);
                 $this->db->update('users', $newpw);
@@ -296,9 +315,10 @@ class User_model extends CI_model
         $this->db->set($data2);
         return $this->db->update('profiles', $data2);
     }
-    private function hash_password($password){
+    private function hash_password($password)
+    {
         return password_hash($password, PASSWORD_DEFAULT);
-     }
+    }
     public function search($form_data)
     {
 

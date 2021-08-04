@@ -33,24 +33,17 @@ class Upload extends CI_Controller {
 
                 if ( ! $this->upload->do_upload('userfile'))
                 {
-                        $user['errors'] = array('error' => $this->upload->display_errors());
-                        $user['users']=$this->user_model->viewownaccount();
-                        $user['friends']=$this->user_model->friends();
-                        $user['requests']=$this->user_model->viewpending();
-                        $this->load->view('templates/header');
-                        $this->load->view('users/profile', $user);
-                        $this->load->view('templates/footer'); 
-                            }
+                        $user['errors'] = array('error' => $this->upload->display_errors());                        
+                        redirect('users/viewownprofile');
+
+                }
                 else
                 { 
                         $data = array('upload_data' => $this->upload->data()); 
                         $ext = $this->upload->data('file_ext');                       
                         $image = date('dmy'.'-'.'Gis').'-'.$id.$ext;
                         $this->user_model->profilepicture($image);
-                        $this->load->view('templates/header');
-                        $this->load->view('pages/upload_success', $data);
-                        $this->load->view('templates/footer');
+                        redirect('Home');
                 }
         }
 }
-?>
