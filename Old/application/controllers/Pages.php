@@ -10,7 +10,8 @@
                 redirect('users/login');
             }
             else{
-			$posts['posts']=$this->post_model->viewposts();
+				$limitStart = 0;
+			$posts['posts']=$this->post_model->viewposts($limitStart);
 			$posts['likes']=$this->post_model->getLikes($posts);
 			$posts['liked']=$this->post_model->Liked($posts);
 			$posts['comments']=$this->comment_model->getCommentCount($posts);

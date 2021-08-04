@@ -2,6 +2,7 @@
 
     <div class="row-12">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 mainfeed">
+            <ul class="mainfeeds"><ul>
 
             <?php echo form_open('posts/createPost'); ?>
             <div class="form-row">
@@ -18,21 +19,18 @@
                 <div class="col-12 post">
                     <div class="row g-0">
                         <div class="wrap col-2 col-md-2 col-lg-1 pic">
-
                             <img src="<?php echo base_url('assets/images/' . $post['Picture']); ?>" class="profile">
                         </div>
-
                         <div class="col-10 col-md-10 col-lg-11 name">
                             <div class="row-12">
                                 <div class="col-9 details">
-                                    <p><a class="namelink" href="<?php echo base_url('users/viewprofile/' . $post['user_id']); ?>"><?php echo $post['FirstName'] . ' ' . $post['LastName'] ?></p></a>     
+                                    <p><a class="namelink" href="<?php echo base_url('users/viewprofile/' . $post['user_id']); ?>"><?php echo $post['FirstName'] . ' ' . $post['LastName'] ?></p></a>
                                     <p><?php echo (date("H:i A", strtotime($post['Posted']))) . ' on ' . (date("jS F Y", strtotime($post['Posted']))) ?></p>
-                                </div>                                
+                                </div>
                             </div>
                             <?php if ($post['user_id'] == $this->session->userdata('user_id')) : ?>
-                                       <a class="delete" href="<?php echo base_url('posts/delete/' . $post['post_id']); ?>">X</a>
+                                <a class="delete" href="<?php echo base_url('posts/delete/' . $post['post_id']); ?>">X</a>
                             <?php endif ?>
-                            
                         </div>
                         <div class="row g-0">
                             <div class="col-12 content">
@@ -119,10 +117,8 @@
 
                     </div>
                 </div>
-
             <?php endforeach; ?>
         </div>
-
     </div>
     <div id="wrapper friends col-md-9">
         <div id="friendfind" class="minimize"><a class="viewfriends" onclick="changeCssClass('friendfind')">View Friends</a>
@@ -133,7 +129,6 @@
 </div>
 <!-- The Modal -->
 <div id="myModal" class="modal">
-
     <!-- Modal content -->
     <div class="modal-content">
         <span class="close">&times;</span>
@@ -141,6 +136,7 @@
     </div>
 
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
 <script>
     // Get the modal
     var modal = document.getElementById("myModal");
@@ -162,4 +158,5 @@
             modal.style.display = "none";
         }
     }
+
 </script>

@@ -21,9 +21,11 @@ class Post_model extends CI_model
 
     //view posts function
     public function viewPosts()
-    {
+    {       
+
 
         //SQL call for all posts that match session id in friends and match user id in users database
+
         $this->db->distinct();
         $this->db->select('users.FirstName, users.LastName, posts.Content, users.user_id, 
                 profiles.Picture, posts.Posted, friends.Usertwo_id, posts.post_id');
@@ -33,12 +35,13 @@ class Post_model extends CI_model
         $this->db->join('posts', 'posts.User_id = profiles.User_id');
         $this->db->where('friends.User_id = ' . $this->session->userdata('user_id'));
         $this->db->or_where('users.User_id = ' . $this->session->userdata('user_id'));
-        $this->db->order_by('posts.Posted', 'DESC');
+        $this->db->order_by('posts.Posted', 'DESC');                
+
         $posts = $this->db->get();
-        $posts->result_array();
+        $posts->result_array();        
 
-
-        return $posts->result_array();
+        return $posts->result_array();      
+        
     }
     public function viewownPosts($id = NULL)
     {

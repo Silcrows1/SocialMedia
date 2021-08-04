@@ -12,7 +12,7 @@ class User_model extends CI_model
         //If results from database are true, then return the Id of the user, else return false.
         if (!empty($result) && password_verify($password, $result['Password'])) {
             return $result['User_id'];
-        } else { 
+        } else {
             return false;
         }
     }
@@ -53,6 +53,17 @@ class User_model extends CI_model
             );
             $this->db->insert('profiles', $created);
             return true;
+        }
+    }
+
+    public function passwordreminder($email)
+    {
+        $this->db->select('reminderquestion, Reminder');
+        $this->db->from('users');
+        $this->db->where('users.Email', $email);
+        $user = $this->db->get();
+        if ($user) {
+            return $user->result_array();
         }
     }
     public function viewownprofile()
@@ -165,7 +176,8 @@ class User_model extends CI_model
         return $this->db->insert('pending', $data);
     }
 
-    public function removeFriend($id){
+    public function removeFriend($id)
+    {
         $this->db->where('User_id', $id);
         $this->db->where('Usertwo_id', $this->session->userdata('user_id'));
         $this->db->delete('friends');
@@ -174,7 +186,6 @@ class User_model extends CI_model
         $this->db->where('User_id', $this->session->userdata('user_id'));
         $this->db->delete('friends');
         return;
-
     }
     public function editprofile()
     {
@@ -253,6 +264,28 @@ class User_model extends CI_model
             'Vision' => $this->input->post('fontpref'),
             'Username' => $this->input->post('username')
         );
+        $password = $this->input->post('password');
+        $password2 = $this->input->post('password2');
+        if ($password != NULL){            
+            $hashed = $this->hash_password($password2);
+            $this->db->select('Password');
+            $this->db->from('users');
+            $this->db->where('User_id', $this->session->userdata('user_id'));
+            $query = $this->db->get();
+            $query->result_array();
+            $result = $query->row_array();
+
+            $newpw = array(
+                'Password' => $hashed,
+            );
+
+            if (password_verify($password, $result['Password'])){
+                $this->db->where('User_id', $this->session->userdata('user_id'));
+                $this->db->set('Password', $newpw);
+                $this->db->update('users', $newpw);
+            }
+        }
+
         $data2 = array(
             'Gender' => $this->input->post('gender')
         );
@@ -263,6 +296,9 @@ class User_model extends CI_model
         $this->db->set($data2);
         return $this->db->update('profiles', $data2);
     }
+    private function hash_password($password){
+        return password_hash($password, PASSWORD_DEFAULT);
+     }
     public function search($form_data)
     {
 
@@ -311,10 +347,16 @@ class User_model extends CI_model
         $this->db->select('Username');
         $this->db->where('users.Username', $data['Username']);
         $found = $this->db->get('users');
+        if ($found->num_rows() < 1) {
+            $this->db->select('Email');
+            $this->db->where('users.Email', $data['Email']);
+            $found = $this->db->get('users');
+        }
+
 
         //if username is found in database, create flashdata for user exsists.
         if ($found->num_rows() >= 1) {
-            $msgText = "User already exsists with this username";
+            $msgText = "User already exists with this username or email";
             $this->session->set_flashdata('userexsists', '<div class="alert alert-danger text-center">' . $msgText . '</div>');
             return false;
         } else {

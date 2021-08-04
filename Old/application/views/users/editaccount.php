@@ -40,7 +40,7 @@
 					<br>
 					<input type="radio" class="Yes" name="support" value="0" <?php if ($user['HelpRequired'] == '1') {
 																					echo 'checked="checked"';
-																				} ?>">
+																				} ?>>
 					<label for="Yes" class="small">Yes</label>
 				</div>
 			</div><br>
@@ -50,12 +50,12 @@
 				<div>
 					<input type="radio" class="No" name="gender" value="Male" <?php if ($user['Gender'] == 'Male') {
 																					echo 'checked="checked"';
-																				} ?>">
+																				} ?>>
 					<label for="No" class="small">Male</label>
 					<br>
 					<input type="radio" class="Yes" name="gender" value="Female" <?php if ($user['Gender'] == 'Female') {
 																						echo 'checked="checked"';
-																					} ?>">
+																					} ?>>
 					<label for="Yes" class="small">Female</label>
 				</div>
 			</div><br>
@@ -68,6 +68,18 @@
 				<!--Username input) -->
 				<label>Username</label>
 				<input type='text' class="form-control" name="username" placeholder="Username" value="<?php echo $user['Username'] ?>">
+			</div><br>
+
+			<div class="form-group loginelement">
+				<p>If you wish to change your password, enter your old password and new password. If your old password does not match, this will remain unchanged</p><br>
+				<!--Password input-->
+				<label>Old password</label>
+				<input type='password' class="form-control" name="password" placeholder="Old Password">
+			</div><br>
+			<div class="form-group loginelement">
+				<!--Confirm password input (must match previous password (validation)) -->
+				<label>New Password</label>
+				<input type='password' class="form-control" name="password2" placeholder="New Password">
 			</div><br>
 
 			<button type="submit" class="btn btn-primary">submit</button>

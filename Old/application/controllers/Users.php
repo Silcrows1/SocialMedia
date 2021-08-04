@@ -67,9 +67,8 @@ class Users extends CI_controller
                 $this->session->set_userdata($user_data);
                 $this->user_model->gettextsize();
                 redirect('pages/view');
-            } else { 
-                var_dump($user);     
-                //redirect('users/login');
+            } else {     
+                redirect('users/login');
             }
         }
     }
@@ -230,5 +229,12 @@ class Users extends CI_controller
     {
         $this->user_model->offline($id);
         return true;
+    }
+
+    public function passwordreminder(){
+        $email = $this->input->post('email');
+        $reminder = $this->user_model->passwordreminder($email);
+        echo json_encode($reminder);
+        
     }
 }

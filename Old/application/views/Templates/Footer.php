@@ -93,22 +93,22 @@
             var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
             var parentNode = document.querySelector('.viewcommentsingle' + postid);
 
-                    
+
             var response = $.parseJSON(result);
             console.log(response);
-            $('<div id ="comment'+response[2]+'"class="post viewcommentsingle' + postid + ' row"><div class="col-1"><img class="profile "src="' + '<?php echo base_url('assets/images/' . $this->session->userdata('Picture')) ?>' + '"></div><div class="col-11"><div class="row"><P>' + '<?php echo $this->session->userdata('FirstName') ?>' + ' ' + '<?php echo $this->session->userdata('LastName') ?>' + '</P></div><div class="row"><P>Posted Now</P></div></div><p> ' + comment + '</p><a class="delete" id="'+ postid +'" title="'+ String(response[2]) +'" >X</a></div>').prependTo('.viewcomments' + postid);
-           
-           
+            $('<div id ="comment' + response[2] + '"class="post viewcommentsingle' + postid + ' row"><div class="col-1"><img class="profile "src="' + '<?php echo base_url('assets/images/' . $this->session->userdata('Picture')) ?>' + '"></div><div class="col-11"><div class="row"><P>' + '<?php echo $this->session->userdata('FirstName') ?>' + ' ' + '<?php echo $this->session->userdata('LastName') ?>' + '</P></div><div class="row"><P>Posted Now</P></div></div><p> ' + comment + '</p><a class="delete" id="' + postid + '" title="' + String(response[2]) + '" >X</a></div>').prependTo('.viewcomments' + postid);
+
+
             $('textarea#addcomment' + postid).val("");
             if (response[1] == 0) {
               document.getElementById('comment' + postid).innerHTML = ('');
-              document.getElementById('viewcommentid'+postid).innerHTML = ('Add Comment');
+              document.getElementById('viewcommentid' + postid).innerHTML = ('Add Comment');
             } else if (response[1] > 1) {
               document.getElementById('comment' + postid).innerHTML = String(response[1]) + ' Comments';
-              document.getElementById('viewcommentid'+postid).innerHTML = ('View Comments');
+              document.getElementById('viewcommentid' + postid).innerHTML = ('View Comments');
             } else {
               document.getElementById('comment' + postid).innerHTML = String(response[1]) + ' Comment';
-              document.getElementById('viewcommentid'+postid).innerHTML = ('View Comments');
+              document.getElementById('viewcommentid' + postid).innerHTML = ('View Comments');
             }
 
 
@@ -222,17 +222,67 @@
 
       var id = event.target.id;
       var url = "<?php echo base_url(); ?>users/removeFriend";
-        jQuery.ajax({
-          type: "POST",
-          url: url,
-          dataType: "html",
-          data: {
-            friendID: id,
-          },
-          success: function(result) {
-            window.location.href = '<?php echo base_url(); ?>Home';
-          }
-        });
+      jQuery.ajax({
+        type: "POST",
+        url: url,
+        dataType: "html",
+        data: {
+          friendID: id,
+        },
+        success: function(result) {
+          window.location.href = '<?php echo base_url(); ?>Home';
+        }
+      });
+    });
+
+    $('.forgot').click(function(e) {
+
+      var x = document.getElementById('forgotten')
+
+      if (x.className == "col forgotten hidden") {
+        document.getElementById('forgotten').setAttribute("class", "col forgotten show");
+        document.getElementById('forgotclick').setAttribute("class", "hidden");
+      } else {
+        document.getElementById('forgotten').setAttribute("class", "col forgotten hidden");
+      }
+    });
+
+    //On confirmation box click, remove friend and redirect home//
+    $('#getreminder').click(function(e) {
+      e.preventDefault();
+      var email = document.getElementById('emailforgot').value
+      console.log(email);
+      var url = "<?php echo base_url(); ?>users/passwordreminder";
+      jQuery.ajax({
+        type: "POST",
+        url: url,
+        dataType: "json",
+        data: {
+          email: email,
+        },
+        success: function(result) {
+          var response = result;
+
+          $.each(response, function(index, value) {
+            console.log(value.Reminder);
+            document.getElementById('forgotten').setAttribute("class", "col forgotten hidden");
+            document.getElementById('forgotten').setAttribute("class", "col forgotten hidden");
+
+            if(value.reminderquestion =="1"){
+              var question= "Mothers Maiden Name";
+            }else if (value.reminderquestion =="2"){
+              var question= "The name of your first pet";
+            }else if (value.reminderquestion =="3"){
+              var question= "The first place you lived";
+            }else if (value.reminderquestion =="4"){
+              var question= "Your favourite holiday location";
+            }else {
+              var question= "Your favourite TV show";
+            }
+            $('<br><br><div class="col"><p>Your password reminder was set as the following: </p><br><p>'+question+'</p></div>').appendTo('.reglink');
+          });
+        }
+      });
     });
   });
 
@@ -260,13 +310,13 @@
         $('textarea#addcomment' + Post_id).val("");
         if (response[1] == 0) {
           document.getElementById('comment' + Post_id).innerHTML = ('');
-          document.getElementById('viewcommentid'+Post_id).innerHTML = ('Add Comment');
+          document.getElementById('viewcommentid' + Post_id).innerHTML = ('Add Comment');
         } else if (response[1] > 1) {
           document.getElementById('comment' + Post_id).innerHTML = String(response[1]) + ' Comments';
-          document.getElementById('viewcommentid'+Post_id).innerHTML = ('View Comments');
+          document.getElementById('viewcommentid' + Post_id).innerHTML = ('View Comments');
         } else {
           document.getElementById('comment' + Post_id).innerHTML = String(response[1]) + ' Comment';
-          document.getElementById('viewcommentid'+Post_id).innerHTML = ('View Comments');
+          document.getElementById('viewcommentid' + Post_id).innerHTML = ('View Comments');
         }
       }
 
