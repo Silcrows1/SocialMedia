@@ -84,7 +84,7 @@ if ($font == '3') {
                         <?php endif ?>
                     </div>
                 </div>
-
+                <?php if ($match == TRUE || $this->session->userdata['user_id'] == $user['User_id']) : ?>
                 <!--Display all posts-->
                 <?php foreach ($posts as $post) : ?>
 
@@ -184,6 +184,7 @@ if ($font == '3') {
                         </div>
                     </div>
                 <?php endforeach; ?>
+                <?php endif?>
                 <!--END posts-->
         </div>
     <?php endforeach; ?>
