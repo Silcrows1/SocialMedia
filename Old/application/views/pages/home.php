@@ -83,7 +83,7 @@ if ($font == '3') {
                                 <div class="row interact g-0">
 
                                     <div class="col-6 postinteract">
-                                        <a class="Likebtn" id="submit<?php echo $post['post_id'] ?>" href="" title="<?php echo $post['post_id'] ?>" data-elemid="">
+                                        <a class="Likebtn" id="submit<?php echo $post['post_id'] ?>" href="" title="<?php echo $post['post_id'] ?>">
                                             <?php $match = FALSE ?>
                                             <?php foreach ($liked as $like) : ?>
                                                 <?php if ($like['post_id'] == $post['post_id']) : $match = TRUE; ?>

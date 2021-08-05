@@ -97,6 +97,7 @@
 
           var contents = document.getElementById('submit' + postid).innerHTML;
           contentnew = contents.trim();
+          console.log(found[0]);
 
 
           change();
@@ -151,7 +152,7 @@
 
             var response = $.parseJSON(result);
             console.log(response);
-            $('<div id ="comment' + response[2] + '"class="post viewcommentsingle' + postid + ' comment row"><div class="col-2 col-md-1"><img class="profile "src="' + '<?php echo base_url('assets/images/' . $this->session->userdata('Picture')) ?>' + '"></div><div class="col-10 col-md-11 commentdetails"><div class="row"><P>' + '<?php echo $this->session->userdata('FirstName') ?>' + ' ' + '<?php echo $this->session->userdata('LastName') ?>' + '</P></div><div class="row"><P class="date">Posted Now</P></div></div><p> ' + comment + '</p><a class="delete" id="' + postid + '" title="' + String(response[2]) + '" >X</a></div>').prependTo('.viewcomments' + postid);
+            $('<div id ="comment' + response[2] + '"class="post viewcommentsingle' + postid + ' comment row"><div class="col-2 col-md-1"><img class="profile "src="' + '<?php echo base_url('assets/images/' . $this->session->userdata('Picture')) ?>' + '"></div><div class="col-10 col-md-11 commentdetails"><div class="row"><P>' + '<?php echo $this->session->userdata('FirstName') ?>' + ' ' + '<?php echo $this->session->userdata('LastName') ?>' + '</P></div><div class="row"><P class="date">Posted Now</P></div></div><p class="paddingchat"> ' + comment + '</p><a class="delete" id="' + postid + '" title="' + String(response[2]) + '" >X</a></div>').prependTo('.viewcomments' + postid);
 
 
             $('textarea#addcomment' + postid).val("");
@@ -219,10 +220,10 @@
               //////foreach comment found, append to parent////////////
               $.each(response, function(index, value) {
                 if (value.User_id == <?php echo ($this->session->userdata['user_id']) ?> || value.posterid == <?php echo ($this->session->userdata['user_id']) ?>) {
-                  $('<div class="post viewcommentsingle' + value.Post_id + '  comment row" id="comment' + value.comment_id + '"><div class="col-2 col-md-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/' + value.Picture + '"></div><div class="col-10 col-md-11 commentdetails"><div class="row"><P>' + value.FirstName + ' ' + value.LastName + '</P></div><div class="row"><P class="date">' + value.created_at + '</P></div></div><p> ' + value.comment + '</p><a class="delete" id="' + value.Post_id + '" title="' + value.comment_id + '" >X</a></div>').appendTo('.viewcomments' + postid);
+                  $('<div class="post viewcommentsingle' + value.Post_id + '  comment row" id="comment' + value.comment_id + '"><div class="col-2 col-md-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/' + value.Picture + '"></div><div class="col-10 col-md-11 commentdetails"><div class="row"><P>' + value.FirstName + ' ' + value.LastName + '</P></div><div class="row"><P class="date">' + value.created_at + '</P></div></div><p class="paddingchat"> ' + value.comment + '</p><a class="delete" id="' + value.Post_id + '" title="' + value.comment_id + '" >X</a></div>').appendTo('.viewcomments' + postid);
                   i++
                 } else {
-                  $('<div class="post viewcommentsingle' + value.Post_id + '  comment row"><div class="col-2 col-md-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/' + value.Picture + '"></div><div class="col-10 col-md-11 commentdetails"><div class="row"><P>' + value.FirstName + ' ' + value.LastName + '</P></div><div class="row"><P class="date">' + value.created_at + '</P></div></div><p> ' + value.comment + '</p></div>').appendTo('.viewcomments' + postid);
+                  $('<div class="post viewcommentsingle' + value.Post_id + '  comment row"><div class="col-2 col-md-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/' + value.Picture + '"></div><div class="col-10 col-md-11 commentdetails"><div class="row"><P>' + value.FirstName + ' ' + value.LastName + '</P></div><div class="row"><P class="date">' + value.created_at + '</P></div></div><p class="paddingchat"> ' + value.comment + '</p></div>').appendTo('.viewcomments' + postid);
                 }
 
               });

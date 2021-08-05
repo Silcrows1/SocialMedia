@@ -328,9 +328,11 @@ class User_model extends CI_model
     {
 
         $sql = "CONCAT(FirstName,' ', LastName) LIKE '%$form_data%'";
-        $this->db->select('FirstName, LastName, User_id');
+        $this->db->select('FirstName, LastName, users.User_id, Picture');
+        $this->db->from('users');
+        $this->db->join('profiles', 'users.User_id = profiles.User_id');
         $this->db->where($sql);
-        $found = $this->db->get('users');
+        $found = $this->db->get();
 
         return $found->result_array();
     }

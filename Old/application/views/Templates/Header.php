@@ -24,7 +24,7 @@
     <?php endif ?>
   </script>
   <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-    <a class="navbar-brand" href="<?php echo base_url(); ?>Home"><img class="beelogo" src = "<?php echo base_url(); ?>assets/images/beelogo.svg"></a> 
+    <a class="navbar-brand" href="<?php echo base_url(); ?>Home"><img class="beelogo" src="<?php echo base_url(); ?>assets/images/beelogo.svg"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -53,13 +53,21 @@
         <?php endif ?>
 
       </ul>
+      <form action="<?php echo base_url(); ?>users/search" method="post" class="searchbarmob" id="searchbarmob">
+        <label for="keyword">Search
+          <input class="input" type="text" name="keyword" placeholder="Search Users" label="Search" />
+          <input type="submit" value="Search" />
+        </label>
+      </form>
     </div>
-    <form action="<?php echo base_url(); ?>users/search" method="post" class="searchbar">
+
+    <form action="<?php echo base_url(); ?>users/search" method="post" class="searchbar" id="searchbar">
       <label for="keyword">Search
         <input class="input" type="text" name="keyword" placeholder="Search Users" label="Search" />
         <input type="submit" value="Search" />
       </label>
     </form>
+
 
     </div>
   </nav>
