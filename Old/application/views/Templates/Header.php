@@ -24,7 +24,7 @@
     <?php endif ?>
   </script>
   <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-    <a class="navbar-brand" href="<?php echo base_url(); ?>Home">Old Bees</a>
+    <a class="navbar-brand" href="<?php echo base_url(); ?>Home"><img class="beelogo" src = "<?php echo base_url(); ?>assets/images/beelogo.svg"></a> 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

@@ -19,13 +19,13 @@
 
 			<p>Select the font that is easiest to read (you can change this later).</p>
 			<div>
-				<input type="radio" class="small" name="fontpref" value="1" checked="checked">
+				<input type="radio" class="small" name="fontpref" value="1" <?php if ($user['Vision'] == "1") echo 'checked="checked"'?>>
 				<label for="small" class="small">A a B b C c</label>
 				<br>
-				<input type="radio" class="medium" name="fontpref" value="2">
+				<input type="radio" class="medium" name="fontpref" value="2" <?php if ($user['Vision'] == "2") echo 'checked="checked"'?>>
 				<label for="medium" class="medium">A a B b C c</label>
 				<br>
-				<input type="radio" class="large" name="fontpref" value="3">
+				<input type="radio" class="large" name="fontpref" value="3" <?php if ($user['Vision'] == "3") echo 'checked="checked"'?>>
 				<label for="large" class="large">A a B b C c</label>
 			</div><br>
 			<div class="form-group loginelement">

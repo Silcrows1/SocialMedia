@@ -10,14 +10,69 @@
 <script>
   $(document).ready(function() {
 
+    ///Change font size functions///
+
+    <?php if ($this->session->userdata('logged_in')) : ?>
+      var font = <?php echo $this->session->userdata('TextSize') ?>
+
+      var requestedfont;
+      if (font == 1) {
+        requestedfont = 100;
+      } else if (font == 2) {
+        requestedfont = 105;
+      } else if (font == 3) {
+        requestedfont = 110;
+      }
+    <?php endif ?>
+
+
+    checkFontSize();
+
+
+    function checkFontSize() {
+      var elems = document.querySelectorAll("div");
+
+
+      [].forEach.call(elems, function(el) {
+        scaleFontSize(el);
+      });
+
+
+    }
+
+    function scaleFontSize(element) {
+
+      element.style.fontSize = requestedfont + '%';
+
+
+      if (element.scrollWidth > element.clientWidth) {
+        element.style.letterSpacing = "-0.05em";
+      }
+
+      if (element.scrollWidth > element.clientWidth) {
+        element.style.letterSpacing = "0";
+        element.style.fontSize = "100%";
+      }
+
+    }
+
     <?php if ($this->session->userdata('logged_in')) : ?> {
         socket.on("admin", function(data) {
           console.log(data);
-          $('<a href="<?php echo base_url(); ?>Messages/' + data.userId + '">Accept</a>').appendTo('.close');
+          $('<a class="text-center" id="accept" href="<?php echo base_url(); ?>Messages/' + data.userId + '"><h2 class="acceptbtn">Accept</h2></a>').appendTo('.adminpop');
+          document.getElementById('myModal').title = data.userId;
           modal.style.display = "block";
-
+          var data = data;
         });
       }
+      $("body").on("click", '#accept', function(e) {
+        console.log("click works")
+        socket.emit("accepted", {
+            userId: <?php echo $this->session->userdata('user_id') ?>,
+            recieverId: document.getElementById('myModal').title,
+        });
+
+      });
     <?php endif ?>
 
     if (document.getElementById("typing")) {
@@ -96,7 +151,7 @@
 
             var response = $.parseJSON(result);
             console.log(response);
-            $('<div id ="comment' + response[2] + '"class="post viewcommentsingle' + postid + ' row"><div class="col-1"><img class="profile "src="' + '<?php echo base_url('assets/images/' . $this->session->userdata('Picture')) ?>' + '"></div><div class="col-11"><div class="row"><P>' + '<?php echo $this->session->userdata('FirstName') ?>' + ' ' + '<?php echo $this->session->userdata('LastName') ?>' + '</P></div><div class="row"><P>Posted Now</P></div></div><p> ' + comment + '</p><a class="delete" id="' + postid + '" title="' + String(response[2]) + '" >X</a></div>').prependTo('.viewcomments' + postid);
+            $('<div id ="comment' + response[2] + '"class="post viewcommentsingle' + postid + ' comment row"><div class="col-2 col-md-1"><img class="profile "src="' + '<?php echo base_url('assets/images/' . $this->session->userdata('Picture')) ?>' + '"></div><div class="col-10 col-md-11 commentdetails"><div class="row"><P>' + '<?php echo $this->session->userdata('FirstName') ?>' + ' ' + '<?php echo $this->session->userdata('LastName') ?>' + '</P></div><div class="row"><P class="date">Posted Now</P></div></div><p> ' + comment + '</p><a class="delete" id="' + postid + '" title="' + String(response[2]) + '" >X</a></div>').prependTo('.viewcomments' + postid);
 
 
             $('textarea#addcomment' + postid).val("");
@@ -119,10 +174,20 @@
       e.preventDefault();
     });
 
+    var isSliding = false;
+
     //////////view comments function on click//////////////////////////////
     $('.viewcomment').click(function(e) {
-      var postid = event.target.title;
 
+      //if function has been called and not finished, prevent running again//
+      if (isSliding) {
+        return false;
+      }
+
+      //set isSliding (function running) to true//
+      isSliding = true;
+
+      var postid = event.target.title;
       var x = document.getElementById('viewcomment' + postid)
 
       /////////////if div contains class name hidden, change to show, else change to hidden////////////////////////////////
@@ -132,6 +197,7 @@
       } else {
         document.getElementById('viewcomment' + postid).setAttribute("class", "form-row hidden");
         $(".viewcommentsingle" + postid).remove();
+        isSliding = false;
       }
       <?php if ($this->session->userdata('logged_in')) : ?>
 
@@ -153,13 +219,15 @@
               //////foreach comment found, append to parent////////////
               $.each(response, function(index, value) {
                 if (value.User_id == <?php echo ($this->session->userdata['user_id']) ?> || value.posterid == <?php echo ($this->session->userdata['user_id']) ?>) {
-                  $('<div class="post viewcommentsingle' + value.Post_id + ' row" id="comment' + value.comment_id + '"><div class="col-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/' + value.Picture + '"></div><div class="col-11"><div class="row"><P>' + value.FirstName + ' ' + value.LastName + '</P></div><div class="row"><P>' + value.created_at + '</P></div></div><p> ' + value.comment + '</p><a class="delete" id="' + value.Post_id + '" title="' + value.comment_id + '" >X</a></div>').appendTo('.viewcomments' + postid);
+                  $('<div class="post viewcommentsingle' + value.Post_id + '  comment row" id="comment' + value.comment_id + '"><div class="col-2 col-md-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/' + value.Picture + '"></div><div class="col-10 col-md-11 commentdetails"><div class="row"><P>' + value.FirstName + ' ' + value.LastName + '</P></div><div class="row"><P class="date">' + value.created_at + '</P></div></div><p> ' + value.comment + '</p><a class="delete" id="' + value.Post_id + '" title="' + value.comment_id + '" >X</a></div>').appendTo('.viewcomments' + postid);
                   i++
                 } else {
-                  $('<div class="post viewcommentsingle' + value.Post_id + ' row"><div class="col-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/' + value.Picture + '"></div><div class="col-11"><div class="row"><P>' + value.FirstName + ' ' + value.LastName + '</P></div><div class="row"><P>' + value.created_at + '</P></div></div><p> ' + value.comment + '</p></div>').appendTo('.viewcomments' + postid);
+                  $('<div class="post viewcommentsingle' + value.Post_id + '  comment row"><div class="col-2 col-md-1"><img class="profile "src="<?php echo base_url(); ?>assets/images/' + value.Picture + '"></div><div class="col-10 col-md-11 commentdetails"><div class="row"><P>' + value.FirstName + ' ' + value.LastName + '</P></div><div class="row"><P class="date">' + value.created_at + '</P></div></div><p> ' + value.comment + '</p></div>').appendTo('.viewcomments' + postid);
                 }
 
               });
+              //set function running isSliding variable to false when its finished running//
+              isSliding = false;
             }
           });
           e.preventDefault();
@@ -268,18 +336,18 @@
             document.getElementById('forgotten').setAttribute("class", "col forgotten hidden");
             document.getElementById('forgotten').setAttribute("class", "col forgotten hidden");
 
-            if(value.reminderquestion =="1"){
-              var question= "Mothers Maiden Name";
-            }else if (value.reminderquestion =="2"){
-              var question= "The name of your first pet";
-            }else if (value.reminderquestion =="3"){
-              var question= "The first place you lived";
-            }else if (value.reminderquestion =="4"){
-              var question= "Your favourite holiday location";
-            }else {
-              var question= "Your favourite TV show";
+            if (value.reminderquestion == "1") {
+              var question = "Mothers Maiden Name";
+            } else if (value.reminderquestion == "2") {
+              var question = "The name of your first pet";
+            } else if (value.reminderquestion == "3") {
+              var question = "The first place you lived";
+            } else if (value.reminderquestion == "4") {
+              var question = "Your favourite holiday location";
+            } else {
+              var question = "Your favourite TV show";
             }
-            $('<br><br><div class="col"><p>Your password reminder was set as the following: </p><br><p>'+question+'</p></div>').appendTo('.reglink');
+            $('<br><br><div class="col"><p>Your password reminder was set as the following: </p><br><p>' + question + '</p></div>').appendTo('.reglink');
           });
         }
       });
@@ -324,11 +392,18 @@
     e.preventDefault();
   });
 
+  var friendfind = document.getElementById('friendfind');
+  friendfind.style.cursor = 'pointer';
+  friendfind.onclick = function() {
+    changeCssClass('friendfind');
+  };
+
   var refresh;
   ////function to minimise and maximise the friend list//////////////
   function changeCssClass(friendfind) {
-    if (document.getElementById(friendfind).className == 'minimize') {
-      document.getElementById(friendfind).className = 'maximize';
+    console.log(friendfind);
+    if (document.getElementById(friendfind).className == 'minimize viewfriends') {
+      document.getElementById(friendfind).className = 'maximize viewfriends';
       getfriends();
       ///////set interval to refresh friends list, set to 30 seconds/////////////
       refresh = setInterval(getfriends, 30000);
@@ -360,7 +435,7 @@
           dataType: 'json',
           success: function(result) {
             var response = result;
-            //////foreach comment found, append to parent////////////
+            //////foreach offline friend, append to parent////////////
             $.each(response, function(index, value) {
               $('<ul class="Friend offline" id="' + value.Usertwo_id + '"><span class="offline">Offline</span><a href="<?php echo base_url('Message/') ?>' + value.Usertwo_id + '">' + value.FirstName + ' ' + value.LastName + '</a></ul>').appendTo('.friendList');
 
@@ -373,7 +448,7 @@
     } else {
       /////when minimizing friend box, clear the interval and remove the contents/////
       clearInterval(refresh);
-      document.getElementById(friendfind).className = 'minimize';
+      document.getElementById(friendfind).className = 'minimize viewfriends';
       $(".Friend").remove();
 
     }

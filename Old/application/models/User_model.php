@@ -283,6 +283,11 @@ class User_model extends CI_model
             'Vision' => $this->input->post('fontpref'),
             'Username' => $this->input->post('username')
         );
+
+        $newfont = $this->input->post('fontpref');
+        $this->session->set_userdata('TextSize', $newfont);
+        
+
         $password = $this->input->post('password');
         $password2 = $this->input->post('password2');
         if ($password != NULL) {

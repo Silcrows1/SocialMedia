@@ -37,7 +37,13 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
             recieverId: <?php echo $friendid; ?>,
         });
     <?php endif ?>
+    socket.on("cancelled",function(data) {
+        $('<div class="row-12 message"><div class="col pill right"><div class="row-12"></div><div class="row decline"><p>User did not accept invite</p></div></div></div>').prependTo('.messageboard');
+    });
 
+    socket.on("accepted",function(data) {
+        $('<div class="row-12 message"><div class="col pill right"><div class="row-12"></div><div class="row accepted"><p>User has joined the chatroom</p></div></div></div>').prependTo('.messageboard');
+    });
 
 
     socket.on("getUsers", users => {

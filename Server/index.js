@@ -78,6 +78,26 @@ io.on('connection', (socket) => {
       }
   });
 
+  socket.on("admincancelled", ({userId, recieverId})=>{
+    console.log("cancelled");
+      const user = getUser(recieverId);
+      if(user!=null){        
+        io.to(user.socketId).emit("cancelled", {
+          userId,       
+        })
+      }
+  });
+
+  socket.on("accepted", ({userId, recieverId})=>{
+    console.log("accepted");
+      const user = getUser(recieverId);
+      if(user!=null){        
+        io.to(user.socketId).emit("accepted", {
+          userId,       
+        })
+      }
+  });
+
     //send a message
     socket.on("sendMessage", ({userId, recieverId, text})=>{
       const user = getUser(recieverId);

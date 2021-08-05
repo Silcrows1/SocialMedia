@@ -11,6 +11,39 @@ body {
 	font-size: 10px;
 }
 
+.decline{
+	background-color:red;
+}
+.accepted{
+	background-color:green;
+}
+
+.beelogo{
+	height:4vh;
+	width:auto;
+	margin-left:1vw;
+}
+.foreback{
+	background-color:rgba(221, 220, 220, 0);
+	height:100%;	
+	padding:2vh;
+	padding-top:2vh;
+	margin:auto;
+
+
+}
+.background{
+	background-color:rgb(230, 228, 228);
+	/*background-image: url("../images/1.svg"); */
+
+	min-height: 500px;
+
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: repeat;	
+
+}
+
 #size {
 	font-size: 10px;
 	display: none;
@@ -45,7 +78,7 @@ body {
 
 .mainfeed {
 	margin: auto;
-	margin-top: 10vh;
+	margin-top: 0vh;
 }
 
 .createPost {
@@ -82,40 +115,88 @@ body {
 }
 
 .profile {
-	width: 5vh;
-	height: 5vh;
+
 	border-radius: 50%;
 	border-style: solid;
 	border-width: 1px;
+	object-fit: cover;
+    object-position: 20% 20%;
+    height: 95%;
+    width:95%;
+    margin: 5px 0px 0px 0px;
+    border-style:solid;
+    border-width:1px;
+    border-color:white;
+	
+}
+.propic{
+	position:relative;
+	display:flex;
+	height:25vh;
+	width:18vw;
+}
+.flex{
+	display:flex;
 }
 
-.profPic {
-	max-height: 15vh;
-	max-width: 15vh;
-	width: 100%;
+.profPicaccount {
+	object-fit: cover;
+    object-position: 20% 20%;
+    height: 90%;
+    width:100%;
+    margin: 5px 0px 0px 0px;
+    border-style:solid;
+    border-width:1px;
+    border-color:white;
+	border-radius:12px;
+	box-shadow: 1px 1px 3px;
+}
+.profPicfriend {
+	object-fit: cover;
+    object-position: 20% 20%;
+    height: 70%;
+    width:60%;
+    margin: 5px 0px 0px 0px;
+    border-style:solid;
+    border-width:1px;
+    border-color:white;
+	border-radius:12px;
+	box-shadow: 1px 1px 3px;
 }
 
+.editprofileoptions{
+	margin:auto;
+}
 .profileContent {
 	margin: 3vh;
-}
-
-.profileOptions {
-	margin-bottom: 3vh;
 }
 
 .profileDetails {
 	margin-top: 3vh;
 }
-
+.profilemain{
+	background-color:rgb(152, 152, 219);
+	border-radius:10px;
+	padding-left:2vw;
+	padding-top:2vh;
+	padding-bottom:2vh;
+	padding-right:2vw;
+	box-shadow:2px 2px 8px;
+}
 .profileFriends {
-	display: inline-block;
+	
 	background-color: rgb(255, 255, 255);
 	border-style: solid;
 	border-width: 1px;
-	padding: 2vh;
-
+	height:12vh;
+	width:100%;
+	display: inline-block;
+	box-shadow: 1px 1px 3px;
+	text-align:center;
 }
-
+.friendinner{
+	padding:1vw;
+}
 a {
 	color: #000000;
 	text-decoration: none;
@@ -186,13 +267,23 @@ a:hover {
 
 }
 
+.acceptbtn{
+	border-radius:15px;
+	border-style:solid;
+	padding:3px;
+	border-color:Green;
+	Background-color:rgb(149, 255, 149);
+	width: min-content;
+	margin:auto;
+	
+}
 #friendfind {
 	text-align: center;
 }
 
 .viewfriends {
 	color: White;
-	text-shadow: 1px 1px 2px black;
+
 }
 
 .Friend {
@@ -203,7 +294,11 @@ a:hover {
 	background-color: #bed7fd;
 	border-style: solid;
 	border-width: 0.5px;
+	border-radius:5px;
 	border-color: grey;
+	margin-top:2px;
+	margin-bottom:2px;
+	box-shadow:1px 1px 2px;
 }
 
 .offline {
@@ -353,6 +448,13 @@ a:hover {
 .post {
 	position: relative;
 }
+.comment img{
+	width: 45px;
+	height: 45px;
+	position: absolute;
+	top: 10px;
+	left: 10px;
+}
 
 .delete {
 	color: red;
@@ -376,4 +478,109 @@ a:hover {
 {
 	width:100%;
 }
-#loading { display:none; color:green; font-size:20px; }
+ul{
+	margin:0;
+	padding:0;
+}
+.line{
+	height:2px;
+	background-color:black;
+	width:15px;
+	position:absolute;
+	top:10px;
+	right:10px;
+
+}
+.date{
+	font-size: 70%;
+}
+.posttop{
+	position: relative;
+	top: 50%;
+
+}
+.wrap{
+	position:relative;
+}
+.profile{
+	width: 45px;
+	height: 45px;
+	position: absolute;
+	top: 0px;
+	left: 5px;
+}
+
+
+@media only screen and (max-width: 1750px) { 
+	.maximize, .minimize{
+		width:20vw;
+	}
+	.pic{
+		height:min-content;
+	}
+
+
+}
+
+@media only screen and (max-width: 1400px) { 
+	.maximize, .minimize{
+		width:30vw;
+	}
+	.pic{
+		height:min-content;
+	}
+
+
+}
+
+
+@media only screen and (max-width: 1200px) { 
+	.maximize, .minimize{
+		width:40vw;
+	}
+	.pic{
+		height:min-content;
+	}
+	.commentdetails, .postdetails{
+		padding-left:20px;
+	}
+
+
+}
+@media only screen and (max-width: 1100px) { 
+
+	.commentdetails, .postdetails{
+		padding-left:30px;
+	}
+	.foreback{	
+		padding:0vh;	
+	}
+	.details{
+		padding-left:10px;
+	}
+
+
+}
+
+@media only screen and (max-width: 767px) { 
+
+	.commentdetails, .postdetails{
+		padding-left:0px;
+	}
+
+
+}
+
+@media only screen and (max-width: 600px) { 
+	.maximize, .minimize{
+		width:100vw;
+	}
+	.pic{
+		height:min-content;
+	}
+	.commentdetails, .postdetails{
+		padding-left:20px;
+	}
+
+
+}

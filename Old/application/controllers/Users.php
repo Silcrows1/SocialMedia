@@ -62,7 +62,7 @@ class Users extends CI_controller
                     'FirstName' => $profile[0]['FirstName'],
                     'LastName' => $profile[0]['LastName'],
                     'UserType' => $profile[0]['UserType'],
-                    'TextSize' => '1'
+                    'TextSize' => $profile[0]['Vision'],
                 );
                 $this->session->set_userdata($user_data);
                 $this->user_model->gettextsize();
