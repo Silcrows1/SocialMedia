@@ -13,8 +13,7 @@
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Email</th>
-                <th>Chat Link
-                <td>
+                <th>Chat Link</th>
             </tr>
             <?php foreach ($users as $user) : ?>
                 <tr>

@@ -92,7 +92,6 @@ body {
 	border-width: 1px;
 	margin: 2vh;
 	padding: 2vh;
-	display:flex;
 }
 
 .post {
@@ -105,10 +104,32 @@ body {
 	padding: 2vh;
 	box-shadow: 0 1px 2px #3f3f3f;
 }
+.chatroom{
+	margin:auto;
+}
 
 .postinteract {
 	text-align: center;
-	border-top: 1px solid red;
+	border-style:solid;
+	border-radius: 1000px;
+	border-width:0px;
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	cursor: pointer;
+
+}
+.postinteract:hover {
+	text-align: center;
+	border-style:solid;
+	border-radius: 1000px;
+	border-width:0px;
+	box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+}
+.postinteract:target {
+	text-align: center;
+	border-style:solid;
+	border-radius: 1000px;
+	border-width:0px;
+	box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
 }
 
 .postinteracttop {
@@ -171,9 +192,6 @@ body {
 
 .editprofileoptions{
 	margin:auto;
-}
-.profileContent {
-	margin: 3vh;
 }
 
 .profileDetails {
@@ -471,7 +489,7 @@ a:hover {
 	text-align:right;
 	width:min-content;
 }
-.delete {
+.delete, .deletepost{
 	color: red;
 	position: absolute;
 	top: 0px;
@@ -525,7 +543,10 @@ ul{
 	left: 5px;
 }
 
-
+.acontrastlink{
+	color:rgb(255, 230, 0);
+	display:block;
+}
 @media only screen and (max-width: 1750px) { 
 	.maximize, .minimize{
 		width:20vw;
@@ -593,6 +614,10 @@ ul{
 
 	.commentdetails, .postdetails{
 		padding-left:0px;
+	}
+	.chatroom{
+		padding-left:5vw;
+		padding-right:5vw;
 	}
 
 

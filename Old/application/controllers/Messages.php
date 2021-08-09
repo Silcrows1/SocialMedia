@@ -31,7 +31,8 @@
         }
 
 
-        public function sendMessage(){
+        public function sendMessage()
+        {            
             $message = $this->input->post('message');
             $targetID = $this->input->post('targetId');
             $messagesend = array(
@@ -40,7 +41,7 @@
                 'User_id' => $this->session->userdata('user_id')
             );
             $this->message_model->sendMessage($messagesend);
-            $this->getMessages($targetID);            
+            //$this->getMessages($targetID);            
         }
 
 

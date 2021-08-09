@@ -1,6 +1,7 @@
 <?php
 	class Comments extends CI_Controller{
 
+        //create comment function//
         public function createComment(){
             $id = NULL;
             $id = $this->input->post('id');
@@ -10,43 +11,36 @@
                 'Comment' => $comment,
                 'User_id' => $this->session->userdata('user_id')
             );         
-            $commentid = $this->comment_model->createComment($commentarray);
-            
+            $commentid = $this->comment_model->createComment($commentarray);            
             $comments = $this->comment_model->getsingleCount($id);
-
             $Post_id = $id; 
             $Comment = $comments['Comments'];
             echo json_encode(array($Post_id, $Comment, $commentid));
-
         }
 
-        public function getCommentCount($posts){            
-            
+        //get count of comments for post//
+        public function getCommentCount($posts){        
             $commentsfound = $this->comment_model->getCommentCount($posts);
             return $commentsfound ->result_array();
         }
 
+        //retrieve comments for post//
         public function getComments(){            
-            $commentid = $this->input->post('id');
-            
+            $commentid = $this->input->post('id');            
             $commentsfound = $this->comment_model->getComments($commentid);
             $i=0;
-
             echo json_encode($commentsfound);
 
         }
-
+        //delete comments function//
         public function delete(){      
             
             $id = $this->input->post('commentid');
             $Post_id = $this->input->post('Post_id'); 
-
             $this->comment_model->deleteComment($id);
             $comments = $this->comment_model->getsingleCount($Post_id);
-
             $Comment = $comments['Comments'];
             echo json_encode(array($Post_id, $Comment));
         }
 
     }
-?>

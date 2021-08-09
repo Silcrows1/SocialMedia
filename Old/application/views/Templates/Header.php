@@ -19,10 +19,11 @@
       var socket = io("http://localhost:3000");
       socket.emit("addUser", {
         userId: "<?php echo $this->session->userdata('user_id'); ?>",
-
       });
     <?php endif ?>
+
   </script>
+  <!-- Nav bar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <a class="navbar-brand" href="<?php echo base_url(); ?>Home"><img class="beelogo" src="<?php echo base_url(); ?>assets/images/beelogo.svg"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,6 +54,8 @@
         <?php endif ?>
 
       </ul>
+
+      <!-- Search bar for mobile, set to hidden until media query -->
       <form action="<?php echo base_url(); ?>users/search" method="post" class="searchbarmob" id="searchbarmob">
         <label for="keyword">Search
           <input class="input" type="text" name="keyword" placeholder="Search Users" label="Search" />
@@ -60,7 +63,7 @@
         </label>
       </form>
     </div>
-
+    <!-- Search bar, hidden when mobile version appears. -->
     <form action="<?php echo base_url(); ?>users/search" method="post" class="searchbar" id="searchbar">
       <label for="keyword">Search
         <input class="input" type="text" name="keyword" placeholder="Search Users" label="Search" />
@@ -71,6 +74,7 @@
 
     </div>
   </nav>
+  <!-- Login falsed alert -->
   <?php if ($this->session->flashdata('login_failed')) : ?>
     <?php echo '<div class="flash"><p class="alert alert-success">' . $this->session->flashdata('login_failed') . '</p></div>'; ?>
   <?php endif; ?>

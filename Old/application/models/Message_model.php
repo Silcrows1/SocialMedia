@@ -42,7 +42,15 @@ class Message_model extends CI_model{
     }
 
     public function sendMessage($message){
-        $this->db->insert('Messages', $message);
+        
+        $message = $this->input->post('message');
+        $targetID = $this->input->post('targetId');
+        $messagesend = array(
+            'Posted_to' => $targetID,
+            'Message' => $message,
+            'User_id' => $this->session->userdata('user_id')
+        );
+        $this->db->insert('Messages', $messagesend);
 
     }
 

@@ -85,17 +85,16 @@ class User_model extends CI_model
         $this->db->from('profiles');
         $this->db->where('User_id', $this->session->userdata('user_id'));
         $query = $this->db->get();
-        $file_name = $query->result_array();        
+        $file_name = $query->result_array();
         $filenamelink = $file_name[0]['Picture'];
 
         //if a file location exists, unlink the image (delete)//
         if ($file_name != NULL) {
-            if (file_exists(FCPATH .'/assets/images/'.$filenamelink)){
+            if (file_exists(FCPATH . '/assets/images/' . $filenamelink)) {
                 var_dump($filenamelink);
-                unlink(FCPATH .'assets/images/'.$filenamelink);
+                unlink(FCPATH . 'assets/images/' . $filenamelink);
+            } else {
             }
-            else{                
-            }            
         }
 
         $this->db->where('profiles.User_id', $this->session->userdata('user_id'));
@@ -286,7 +285,7 @@ class User_model extends CI_model
 
         $newfont = $this->input->post('fontpref');
         $this->session->set_userdata('TextSize', $newfont);
-        
+
 
         $password = $this->input->post('password');
         $password2 = $this->input->post('password2');

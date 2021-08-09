@@ -10,11 +10,11 @@
 <script>
   $(document).ready(function() {
 
-    ///Change font size functions///
-
+    //Change font size functions if user is logged in//
     <?php if ($this->session->userdata('logged_in')) : ?>
       var font = <?php echo $this->session->userdata('TextSize') ?>
 
+      //set font size amount in %.
       var requestedfont;
       if (font == 1) {
         requestedfont = 100;
@@ -22,41 +22,42 @@
         requestedfont = 105;
       } else if (font == 3) {
         requestedfont = 110;
-      }
-    <?php endif ?>
+      }    
 
 
+    //run checkFontSize
     checkFontSize();
 
-
+    //retrieve all divs into a variable
     function checkFontSize() {
       var elems = document.querySelectorAll("div");
 
-
+      //for each element, called scale font size
       [].forEach.call(elems, function(el) {
         scaleFontSize(el);
       });
-
-
     }
 
+    //scale font size function
     function scaleFontSize(element) {
 
+      //change font size
       element.style.fontSize = requestedfont + '%';
 
-
+      //if element scroll width is greater than client width, reduce letter spacing.
       if (element.scrollWidth > element.clientWidth) {
         element.style.letterSpacing = "-0.05em";
       }
-
+      //if element scroll width is still greater than client width, reduce letter spacing and set font size back to 100%.
       if (element.scrollWidth > element.clientWidth) {
         element.style.letterSpacing = "0";
         element.style.fontSize = "100%";
       }
-
-    }
-
+    }    
+    <?php endif ?>
+    //check if user is logged in//
     <?php if ($this->session->userdata('logged_in')) : ?> {
+        //if user recieved admin socket call, append accept button to myModal popup 
         socket.on("admin", function(data) {
           console.log(data);
           $('<a class="text-center" id="accept" href="<?php echo base_url(); ?>Messages/' + data.userId + '"><h2 class="acceptbtn">Accept</h2></a>').appendTo('.adminpop');
@@ -65,26 +66,28 @@
           var data = data;
         });
       }
+      //if user accepts chat request from admin, emit accepted
       $("body").on("click", '#accept', function(e) {
-        console.log("click works")
         socket.emit("accepted", {
-            userId: <?php echo $this->session->userdata('user_id') ?>,
-            recieverId: document.getElementById('myModal').title,
+          userId: <?php echo $this->session->userdata('user_id') ?>,
+          recieverId: document.getElementById('myModal').title,
         });
-
       });
     <?php endif ?>
-
+    
+    //set typing element to display none on first load
     if (document.getElementById("typing")) {
       document.getElementById("typing").style.display = "none";
     }
 
+    //like button function
     $('.Likebtn').click(function(e) {
+
+      //get target title
       var postid = event.target.title;
-
-
       var url = "<?php echo base_url(); ?>posts/like2";
-      //var post_id = $(this).closest("div.post").attr("id");
+
+      //post like to database
       jQuery.ajax({
         type: "POST",
         url: url,
@@ -95,25 +98,28 @@
         success: function(result) {
           var found = $.parseJSON(result);
 
+          //get innerHTML of element
           var contents = document.getElementById('submit' + postid).innerHTML;
           contentnew = contents.trim();
-          console.log(found[0]);
 
-
+          //call change and like function
           change();
           Like();
 
+          //Change element text to oposite text to starting text
           function change(contentsnew) {
             var like = "Like";
             var liked = "You liked this";
-            if (contentnew == liked) {
-              document.getElementById('submit' + postid).textContent = like;
-            } else {
+            console.log(contentnew);
+            if (contentnew == like) {
               document.getElementById('submit' + postid).textContent = liked;
+            } else {
+              document.getElementById('submit' + postid).textContent = like;
             }
           }
-
+          //change like text depending on the number of likes
           function Like() {
+            console.log(found[0]);
             if (found[0] == 0) {
               document.getElementById(postid).innerHTML = ('');
             } else if (found[0] > 1) {
@@ -178,7 +184,7 @@
     var isSliding = false;
 
     //////////view comments function on click//////////////////////////////
-    $('.viewcomment').click(function(e) {
+    $('.comment').click(function(e) {
 
       //if function has been called and not finished, prevent running again//
       if (isSliding) {
@@ -392,7 +398,7 @@
     });
     e.preventDefault();
   });
-
+  
   var friendfind = document.getElementById('friendfind');
   friendfind.style.cursor = 'pointer';
   friendfind.onclick = function() {
@@ -423,7 +429,6 @@
             //////foreach comment found, prepend to parent to appear higher than offline users////////////
             $.each(response, function(index, value) {
               $('<ul class="Friend online" id="' + value.Usertwo_id + '"><span class="online">Online</span><a href="<?php echo base_url('Message/') ?>' + value.Usertwo_id + '">' + value.FirstName + ' ' + value.LastName + '</a></ul>').prependTo('.friendList');
-
             });
           }
         });
@@ -443,9 +448,7 @@
             });
           }
         });
-
       }
-
     } else {
       /////when minimizing friend box, clear the interval and remove the contents/////
       clearInterval(refresh);

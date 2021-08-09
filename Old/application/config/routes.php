@@ -51,7 +51,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $route['default_controller'] = 'Pages/view';
-
+$route['Messages/sendMessage'] = 'Messages/sendMessage';
 $route['Home'] = 'Pages/view';
 $route['users/online'] = 'users/online';
 $route['404_override'] = '';
@@ -65,3 +65,6 @@ $route['users/edit/(:any)'] = 'users/editaccount/$1';
 $route['Message/(:any)'] = 'Messages/getMessages/$1';
 $route['Messages/(:any)'] = 'Messages/getMessagesadmin/$1';
 $route['translate_uri_dashes'] = FALSE;
+
+
+

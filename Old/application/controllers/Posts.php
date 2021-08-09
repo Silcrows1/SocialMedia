@@ -49,7 +49,12 @@
             $id = $posts['likes'][0]['Post_id'];
             echo json_encode(array($like, $id));
             
-        }      
+        }    
+        
+        public function deletePost($id){
+            $this->post_model->deletePost($id);
+            redirect('Home');
+        }
 
     }
 ?>

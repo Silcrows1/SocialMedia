@@ -4,9 +4,11 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
 <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
 
 <script>
+
     function sendMessage(e) {
         e.preventDefault();
         var url = "<?php echo base_url(); ?>Messages/sendMessage";
+
 
         jQuery.ajax({
             type: "POST",
@@ -24,37 +26,47 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
             }
 
         });
+        //emit the message sent
         socket.emit("sendMessage", {
             text: document.getElementById("message").value,
             userId: <?php echo $this->session->userdata('user_id') ?>,
             recieverId: <?php echo $friendid; ?>,
         });
     }
-
+    //if user is an admin and uses live chat, prompt the user for admin contact.
     <?php if ($this->session->userdata('UserType') == "Admin") : ?>
         socket.emit("adminContact", {
             userId: <?php echo $this->session->userdata('user_id') ?>,
             recieverId: <?php echo $friendid; ?>,
         });
     <?php endif ?>
-    socket.on("cancelled",function(data) {
+
+    //if cancelled is recieved, append div to alert admin
+    socket.on("cancelled", function(data) {
         $('<div class="row-12 message"><div class="col pill right"><div class="row-12"></div><div class="row decline"><p>User did not accept invite</p></div></div></div>').prependTo('.messageboard');
     });
 
-    socket.on("accepted",function(data) {
+    //if accepted is recieved, append div to alert admin that user has joined
+    socket.on("accepted", function(data) {
         $('<div class="row-12 message"><div class="col pill right"><div class="row-12"></div><div class="row accepted"><p>User has joined the chatroom</p></div></div></div>').prependTo('.messageboard');
     });
 
-
+    //get users request
     socket.on("getUsers", users => {
         console.log(users);
     });
+
+    //getmessage function, append the message.
     socket.on("getMessage", function(data) {
 
         $('<div class="row-12 message"><div class="col pill right"><div class="row-12"><p>Testnames</p><p>Posted Now</p></div><div class="row"><p>' + data.text + '</p></div></div></div>').prependTo('.messageboard');
 
     });
+
+    //create timeout variable
     var timeout;
+
+    //on typing recieved, set typing element to block.
     socket.on("typing", function(data) {
 
         if (document.getElementById("typing").style.display != "block") {
@@ -62,27 +74,29 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
         } else {
 
         }
+        //clear previous timeout
         clearTimeout(timeout);
+
+        //create new timeout function, after 1500ms, run timeout function.
         timeout = setTimeout(timeoutFunction, 1500);
 
     });
-
-    function timeoutFunction() {
-
+    //function to hide typing element.
+    function timeoutFunction() {        
         document.getElementById("typing").style.display = "none";
     }
-    //adding message into array for emit
+
 </script>
 
 <body>
     <?php if (!$this->session->userdata('logged_in')) {
         redirect("users/login");
     } ?>
-    <div class="row">
-        <div class="col messageboard">
+    <div class="row no-gutters">
+        <div class="chatroom col-12 col-md-10 col-lg-8 messageboard">
             <?php foreach ($Message as $message) : ?>
-                <div class="row-12 message">
-                    <div class="col-12 contents 
+                <div class="row-12 row-md-8 row-lg-6 message">
+                    <div class="col-12 contents
                         <?php if ($message['Posted_to'] == $this->session->userdata('user_id')) {
                             echo "right";
                         } else {
@@ -92,7 +106,7 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
                             <div class="col pill">
                                 <div class="row-12">
                                     <p><?php echo $message['FirstName'] ?> <?php echo $message['LastName'] ?></p>
-                                    <p><?php echo $message['Posted_at'] ?></p>
+                                    <p class="date"><?php echo $message['Posted_at'] ?></p>
                                 </div>
                                 <div class="row">
                                     <p><?php echo $message['Message'] ?></p>
@@ -105,7 +119,7 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
         </div>
     </div>
     <div class="row">
-        <div class="col">
+        <div class="chatroom col-12 col-md-10 col-lg-8 ">
             <form onsubmit="return sendMessage(event)">
                 <div class="sticky-bottom">
                     <input type="hidden" name="targetId" value="<?php echo $friendid; ?>">
@@ -129,21 +143,18 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
 
 <script type="text/javascript">
     $(document).ready(function() {
-
+        //if user types, emite typing with friendid
         $("#message").keyup(
             function(e) {
 
                 socket.emit("typing", {
                     recieverId: <?php echo $friendid; ?>,
                 });
-
+                //if user presses enter, sendmessage
                 if (e.keyCode == 13) {
                     sendMessage(event)
                 }
             }
         );
     });
-
 </script>
-
-
