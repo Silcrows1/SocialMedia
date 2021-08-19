@@ -5,6 +5,9 @@
 
         $this->post_model->createPost();
         $posts['posts']=$this->post_model->viewposts();
+        if ($posts['posts'] == NULL){
+            $posts['posts']=$this->post_model->viewownposts();
+        }
         $posts['likes']=$this->post_model->getLikes($posts);
         $posts['liked']=$this->post_model->Liked($posts);
         $posts['comments']=$this->comment_model->getCommentCount($posts);

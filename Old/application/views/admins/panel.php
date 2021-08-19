@@ -1,6 +1,5 @@
 <div class="row">
     <div class="col">
-        
         <form action="<?php echo base_url(); ?>admins/search" method="post" class="search">
             <label for="keyword">Search
                 <input class="input" type="text" name="keyword" placeholder="Search Users" label="Search" />

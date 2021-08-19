@@ -32,7 +32,8 @@
 
 
         public function sendMessage()
-        {            
+        {           
+            if ($this->input->post('message') != NULL) {
             $message = $this->input->post('message');
             $targetID = $this->input->post('targetId');
             $messagesend = array(
@@ -41,7 +42,7 @@
                 'User_id' => $this->session->userdata('user_id')
             );
             $this->message_model->sendMessage($messagesend);
-            //$this->getMessages($targetID);            
+        }         
         }
 
 

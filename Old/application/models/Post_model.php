@@ -9,19 +9,22 @@ class Post_model extends CI_model
 
     public function createPost()
     {
-        $data = array(
-            "Content" => $this->input->post('postContent'),
-            "User_id" => $this->session->userdata('user_id')
-        );
+        if ($this->input->post('postContent') != NULL) {
+            $data = array(
+                "Content" => $this->input->post('postContent'),
+                "User_id" => $this->session->userdata('user_id')
+            );
 
-        $this->db->insert('posts', $data);
+            $this->db->insert('posts', $data);
+        }
     }
+
     //Find friends function
 
 
     //view posts function
     public function viewPosts()
-    {       
+    {
 
 
         //SQL call for all posts that match session id in friends and match user id in users database
@@ -35,13 +38,12 @@ class Post_model extends CI_model
         $this->db->join('posts', 'posts.User_id = profiles.User_id');
         $this->db->where('friends.User_id = ' . $this->session->userdata('user_id'));
         $this->db->or_where('users.User_id = ' . $this->session->userdata('user_id'));
-        $this->db->order_by('posts.Posted', 'DESC');                
+        $this->db->order_by('posts.Posted', 'DESC');
 
         $posts = $this->db->get();
-        $posts->result_array();        
+        $posts->result_array();
 
-        return $posts->result_array();      
-        
+        return $posts->result_array();
     }
     public function viewownPosts($id = NULL)
     {
@@ -189,8 +191,9 @@ class Post_model extends CI_model
         return $liked->result_array();
     }
 
-    public function deletePost($id){
-        
+    public function deletePost($id)
+    {
+
         $this->db->where('posts.Post_id', $id);
         $this->db->delete('posts');
 

@@ -38,7 +38,7 @@
 																			} ?>>
 					<label for="No" class="small">No</label>
 					<br>
-					<input type="radio" class="Yes" name="support" value="0" <?php if ($user['HelpRequired'] == '1') {
+					<input type="radio" class="Yes" name="support" value="1" <?php if ($user['HelpRequired'] == '1') {
 																					echo 'checked="checked"';
 																				} ?>>
 					<label for="Yes" class="small">Yes</label>

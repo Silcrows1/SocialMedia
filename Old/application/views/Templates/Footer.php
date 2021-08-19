@@ -1,10 +1,10 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
-<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
-<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" ></script>
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js" ></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" ></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous" defer></script>
+</main>
 </body>
 
 <script>
@@ -22,38 +22,38 @@
         requestedfont = 105;
       } else if (font == 3) {
         requestedfont = 110;
-      }    
-
-
-    //run checkFontSize
-    checkFontSize();
-
-    //retrieve all divs into a variable
-    function checkFontSize() {
-      var elems = document.querySelectorAll("div");
-
-      //for each element, called scale font size
-      [].forEach.call(elems, function(el) {
-        scaleFontSize(el);
-      });
-    }
-
-    //scale font size function
-    function scaleFontSize(element) {
-
-      //change font size
-      element.style.fontSize = requestedfont + '%';
-
-      //if element scroll width is greater than client width, reduce letter spacing.
-      if (element.scrollWidth > element.clientWidth) {
-        element.style.letterSpacing = "-0.05em";
       }
-      //if element scroll width is still greater than client width, reduce letter spacing and set font size back to 100%.
-      if (element.scrollWidth > element.clientWidth) {
-        element.style.letterSpacing = "0";
-        element.style.fontSize = "100%";
+
+
+      //run checkFontSize
+      checkFontSize();
+
+      //retrieve all divs into a variable
+      function checkFontSize() {
+        var elems = document.querySelectorAll("div");
+
+        //for each element, called scale font size
+        [].forEach.call(elems, function(el) {
+          scaleFontSize(el);
+        });
       }
-    }    
+
+      //scale font size function
+      function scaleFontSize(element) {
+
+        //change font size
+        element.style.fontSize = requestedfont + '%';
+
+        //if element scroll width is greater than client width, reduce letter spacing.
+        if (element.scrollWidth > element.clientWidth) {
+          element.style.letterSpacing = "-0.05em";
+        }
+        //if element scroll width is still greater than client width, reduce letter spacing and set font size back to 100%.
+        if (element.scrollWidth > element.clientWidth) {
+          element.style.letterSpacing = "0";
+          element.style.fontSize = "100%";
+        }
+      }
     <?php endif ?>
     //check if user is logged in//
     <?php if ($this->session->userdata('logged_in')) : ?> {
@@ -74,7 +74,7 @@
         });
       });
     <?php endif ?>
-    
+
     //set typing element to display none on first load
     if (document.getElementById("typing")) {
       document.getElementById("typing").style.display = "none";
@@ -398,7 +398,7 @@
     });
     e.preventDefault();
   });
-  
+
   var friendfind = document.getElementById('friendfind');
   friendfind.style.cursor = 'pointer';
   friendfind.onclick = function() {
@@ -460,3 +460,5 @@
 </script>
 
 </html>
+<footer>
+</footer>

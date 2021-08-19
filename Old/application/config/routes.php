@@ -51,6 +51,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $route['default_controller'] = 'Pages/view';
+
+
 $route['Messages/sendMessage'] = 'Messages/sendMessage';
 $route['Home'] = 'Pages/view';
 $route['users/online'] = 'users/online';

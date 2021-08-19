@@ -34,9 +34,10 @@ class Users extends CI_controller
             }
         }
     }
-    private function hash_password($password){
+    private function hash_password($password)
+    {
         return password_hash($password, PASSWORD_DEFAULT);
-     }
+    }
     public function login()
     {
         $this->form_validation->set_rules('username', 'Username', 'required');
@@ -67,7 +68,7 @@ class Users extends CI_controller
                 $this->session->set_userdata($user_data);
                 $this->user_model->gettextsize();
                 redirect('pages/view');
-            } else {     
+            } else {
                 redirect('users/login');
             }
         }
@@ -94,22 +95,35 @@ class Users extends CI_controller
 
     public function viewaccount()
     {
-        $user['users'] = $this->user_model->viewownaccount();
-        $this->load->view('templates/header');
-        $this->load->view('users/account', $user);
-        $this->load->view('templates/footer');
+        if (!$this->session->userdata('logged_in')) {
+            redirect('users/login');
+        } else {
+            $user['users'] = $this->user_model->viewownaccount();
+            $this->load->view('templates/header');
+            $this->load->view('users/account', $user);
+            $this->load->view('templates/footer');
+        }
     }
 
     public function requests()
     {
+        if (!$this->session->userdata('logged_in')) {
+            redirect('users/login');
+        }
+        else{
         $user['requests'] = $this->user_model->viewpending();
         $this->load->view('templates/header');
         $this->load->view('users/requests', $user);
         $this->load->view('templates/footer');
+        }
     }
 
     public function viewownprofile()
     {
+        if (!$this->session->userdata('logged_in')) {
+            redirect('users/login');
+        }
+        else{
         $id = $this->session->userdata('user_id');
         $this->load->library('upload');
         $user['errors'] = array('error' => $this->upload->display_errors());
@@ -125,10 +139,15 @@ class Users extends CI_controller
         $this->load->view('templates/header');
         $this->load->view('users/profile', $user);
         $this->load->view('templates/footer');
+        }
     }
 
     public function viewprofile($id)
     {
+        if (!$this->session->userdata('logged_in')) {
+            redirect('users/login');
+        }
+        else{
         $this->load->library('upload');
         $user['errors'] = array('error' => $this->upload->display_errors());
         $user['users'] = $this->user_model->viewaccount($id);
@@ -141,6 +160,7 @@ class Users extends CI_controller
         $this->load->view('templates/header');
         $this->load->view('users/profile', $user);
         $this->load->view('templates/footer');
+        }
     }
 
     public function editaccount($id)
@@ -151,24 +171,31 @@ class Users extends CI_controller
         $this->form_validation->set_rules('email', 'Email', 'required');
         $user['users'] = $this->user_model->viewaccount($id);
 
-
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('templates/header');
-            $this->load->view('users/editaccount', $user);
-            $this->load->view('templates/footer');
+        if ($this->session->userdata('user_id') == $id) {
+            if ($this->form_validation->run() === FALSE) {
+                $this->load->view('templates/header');
+                $this->load->view('users/editaccount', $user);
+                $this->load->view('templates/footer');
+            } else {
+                $this->user_model->editaccount($id);
+                $this->viewaccount();
+            }
         } else {
-            $this->user_model->editaccount($id);
-            $this->viewaccount();
+            redirect('Home');
         }
     }
 
     public function search()
     {
-        $form_data = $this->input->post('keyword');
-        $users['users'] = $this->user_model->search($form_data);
-        $this->load->view('templates/header');
-        $this->load->view('users/search', $users);
-        $this->load->view('templates/footer');
+        if ($this->input->post('keyword') != NULL) {
+            $form_data = $this->input->post('keyword');
+            $users['users'] = $this->user_model->search($form_data);
+            $this->load->view('templates/header');
+            $this->load->view('users/search', $users);
+            $this->load->view('templates/footer');
+        } else {
+            redirect('Home');
+        }
     }
 
     public function getFriends()
@@ -177,7 +204,8 @@ class Users extends CI_controller
         echo json_encode($friendsoff);
     }
 
-    public function removeFriend(){
+    public function removeFriend()
+    {
         $friendid = $this->input->post('friendID');
         $this->user_model->removeFriend($friendid);
         return;
@@ -187,6 +215,11 @@ class Users extends CI_controller
     {
         $friends = $this->user_model->getOnlineFriends();
         echo json_encode($friends);
+    }
+    public function declinerequest($id)
+    {
+        $this->user_model->declinerequest($id);
+        redirect('Home');
     }
 
 
@@ -199,14 +232,18 @@ class Users extends CI_controller
         $id = $this->session->userdata('user_id');
         $user['users'] = $this->user_model->viewaccount($id);
 
-
-        if ($this->form_validation->run() === FALSE) {
-            $this->load->view('templates/header');
-            $this->load->view('users/editprofile', $user);
-            $this->load->view('templates/footer');
-        } else {
-            $this->user_model->editprofile();
-            $this->viewprofile($id);
+        if (!$this->session->userdata('logged_in')) {
+            redirect('users/login');
+        }
+        else{
+            if ($this->form_validation->run() === FALSE) {
+                $this->load->view('templates/header');
+                $this->load->view('users/editprofile', $user);
+                $this->load->view('templates/footer');
+            } else {
+                $this->user_model->editprofile();
+                $this->viewprofile($id);
+            }        
         }
     }
     public function logout()
@@ -231,10 +268,10 @@ class Users extends CI_controller
         return true;
     }
 
-    public function passwordreminder(){
+    public function passwordreminder()
+    {
         $email = $this->input->post('email');
         $reminder = $this->user_model->passwordreminder($email);
         echo json_encode($reminder);
-        
     }
 }

@@ -4,7 +4,6 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
 <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
 
 <script>
-
     function sendMessage(e) {
         e.preventDefault();
         var url = "<?php echo base_url(); ?>Messages/sendMessage";
@@ -20,18 +19,21 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
             },
 
             success: function(result) {
-
-                $('<div class="row-12 message"><div class="col pill"><div class="row-12"><p>' + "<?php echo $this->session->userdata('FirstName'); ?>" + " " + "<?php echo $this->session->userdata('LastName'); ?>" + '</p><p>Posted Now</p></div><div class="row"><p>' + document.getElementById("message").value + '</p></div></div></div>').prependTo('.messageboard');
-                $('#message').val('')
+                if (document.getElementById("message").value != '') {
+                    $('<div class="row-12 message"><div class="col pill"><div class="row-12"><p>' + "<?php echo $this->session->userdata('FirstName'); ?>" + " " + "<?php echo $this->session->userdata('LastName'); ?>" + '</p><p>Posted Now</p></div><div class="row"><p>' + document.getElementById("message").value + '</p></div></div></div>').prependTo('.messageboard');
+                    $('#message').val('')
+                }
             }
 
         });
         //emit the message sent
-        socket.emit("sendMessage", {
-            text: document.getElementById("message").value,
-            userId: <?php echo $this->session->userdata('user_id') ?>,
-            recieverId: <?php echo $friendid; ?>,
-        });
+        if (document.getElementById("message").value != '') {
+            socket.emit("sendMessage", {
+                text: document.getElementById("message").value,
+                userId: <?php echo $this->session->userdata('user_id') ?>,
+                recieverId: <?php echo $friendid; ?>,
+            });
+        }
     }
     //if user is an admin and uses live chat, prompt the user for admin contact.
     <?php if ($this->session->userdata('UserType') == "Admin") : ?>
@@ -82,10 +84,9 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
 
     });
     //function to hide typing element.
-    function timeoutFunction() {        
+    function timeoutFunction() {
         document.getElementById("typing").style.display = "none";
     }
-
 </script>
 
 <body>

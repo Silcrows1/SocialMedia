@@ -17,7 +17,7 @@
 if (isset($_SESSION['userexsists'])) {
   unset($_SESSION['userexsists']);
 } ?>
-<div class="col-3 login">
+<div class="col-12 col-md-6 login">
 
   <!--login Form-->
   <?php echo form_open_multipart('users/login'); ?>

@@ -9,7 +9,6 @@ if ($font == '2') {
 if ($font == '3') {
     $col = "col-lg-10 col-md-10 col-12";
 } ?>
-
 <body>
     <div class="row-12 background">
         <!-- dynamic divs depending on font size -->
@@ -34,7 +33,7 @@ if ($font == '3') {
                                 <div class="posttop">
                                     <div class="row g-0">
                                         <div class="wrap col-1 col-md-1 col-lg-1 pic">
-                                            <img src="<?php echo base_url('assets/images/' . $post['Picture']); ?>" class="profile">
+                                            <img src="<?php echo base_url('assets/images/' . $post['Picture']); ?>" class="profile" alt="Profile Picture">
                                         </div>
                                         <div class="col-11 col-md-11 col-lg-11 name postdetails">
                                             <div class="row-12">

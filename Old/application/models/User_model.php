@@ -131,6 +131,35 @@ class User_model extends CI_model
         $friends = $this->db->get();
         return $friends->result_array();
     }
+    
+    public function declinerequest($id)
+    {
+        $this->db->select('pending.User_id, Usertwo_id, users.FirstName, users.LastName');
+        $this->db->from('pending');
+        $this->db->join('users', 'users.user_id = pending.usertwo_id');
+        $this->db->where('pending.Pending_id', $id);
+        $friends = $this->db->get();
+        $array = (array)$friends->row();
+
+        $id1 = $array['User_id'];
+        $id2 = $array['Usertwo_id'];
+
+        //delete pending friend 1 
+        $this->db->select('*');
+        $this->db->from('pending');
+        $this->db->where('pending.User_id', $id1);
+        $this->db->where('pending.Usertwo_id', $id2);
+        $this->db->delete();
+
+        //delete pending friend 2
+        $this->db->select('*');
+        $this->db->from('pending');
+        $this->db->where('pending.User_id', $id2);
+        $this->db->where('pending.Usertwo_id', $id1);
+        $this->db->delete();      
+
+        return;
+    }
 
     public function acceptrequest($id)
     {
