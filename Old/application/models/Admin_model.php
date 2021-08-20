@@ -1,7 +1,10 @@
 <?php
-class Admin_model extends CI_model{
+class Admin_model extends CI_model
+{
 
-    public function getSocialUsers(){
+    //Get social users function
+    public function getSocialUsers()
+    {
         $this->db->select('*');
         $this->db->where('HelpRequired', "1");
         $this->db->join('onlineusers', 'users.User_id = onlineusers.User_id');
@@ -11,6 +14,7 @@ class Admin_model extends CI_model{
         return $users;
     }
 
+    //Search function
     public function search($form_data)
     {
         $sql = "CONCAT(FirstName,' ', LastName) LIKE '%$form_data%'";
@@ -22,8 +26,4 @@ class Admin_model extends CI_model{
 
         return $found->result_array();
     }
-
-
-
 }
-?>

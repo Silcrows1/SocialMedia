@@ -7,8 +7,10 @@ class Post_model extends CI_model
         $this->load->database();
     }
 
+    //Create Post function
     public function createPost()
     {
+        //Check that post request isnt blank
         if ($this->input->post('postContent') != NULL) {
             $data = array(
                 "Content" => $this->input->post('postContent'),
@@ -19,14 +21,9 @@ class Post_model extends CI_model
         }
     }
 
-    //Find friends function
-
-
     //view posts function
     public function viewPosts()
     {
-
-
         //SQL call for all posts that match session id in friends and match user id in users database
 
         $this->db->distinct();
@@ -45,13 +42,14 @@ class Post_model extends CI_model
 
         return $posts->result_array();
     }
+
+    //view own posts function
     public function viewownPosts($id = NULL)
     {
-
-        //SQL call for all posts that match session id in friends database
         if ($id == NULL) {
             $id = $this->session->userdata('user_id');
         }
+        //view posts, user and profile information for session holder
         $this->db->select('users.FirstName, users.LastName, posts.Content, users.user_id, profiles.Picture, posts.Posted,  posts.post_id');
         $this->db->from('posts');
         $this->db->join('users', 'users.User_id = posts.User_id');
@@ -61,31 +59,17 @@ class Post_model extends CI_model
         $posts = $this->db->get();
         $posts->result_array();
 
-
         return $posts->result_array();
     }
 
-    public function viewaPost($id)
-    {
-
-        $this->db->select('users.FirstName, users.LastName, posts.Content, posts.Posted');
-        $this->db->from('users');
-        $this->db->join('profiles', 'users.User_id = profiles.User_id');
-        $this->db->join('posts', 'posts.User_id = profiles.User_id');
-        $this->db->where('users.User_id', $id);
-        $this->db->order_by('posts.Posted', 'DESC');
-        $posts = $this->db->get();
-        return $posts->result_array();
-    }
-
+    //Like post function
     public function likePost($post_id)
     {
-
         $data = array(
             'post_id' => $post_id,
             'user_id' => $this->session->userdata('user_id')
         );
-
+        //Check if user had previously liked post
         $this->db->select('*');
         $this->db->from('Interactions');
         $this->db->where('post_id', $post_id);
@@ -93,14 +77,17 @@ class Post_model extends CI_model
         $liked = $this->db->get();
         $data2 = $liked->result_array();
 
+        //if post wasnt previously liked, add a like
         if ($data2 == NULL) {
             $this->db->insert('Interactions', $data);
         } else {
+
+            //if it was previously liked, remove like
             $this->db->where('Interaction_id', $data2[0]['Interaction_id']);
             $this->db->delete('Interactions', $data2[0]);
         }
     }
-
+    //Get likes function
     public function getLikes($posts)
     {
         $found = array();
@@ -113,20 +100,20 @@ class Post_model extends CI_model
                 $liked = $this->db->get('Interactions');
                 $rows = $liked->num_rows();
 
-
+                //Get post ID and number of likes and add to an array
                 $found2 = array(
                     'Post_id' => $entry['post_id'],
                     'Likes' => $rows
-
                 );
-                array_push($found, $found2);
-                // echo '<script>console.log($found)</script>';                
+
+                //Add likes count array to container array
+                array_push($found, $found2);            
             }
         }
         return $found;
     }
 
-
+    //seperate get likes function due to different nesting
     public function getLikes2($posts)
     {
 
@@ -152,8 +139,8 @@ class Post_model extends CI_model
 
         return $found;
     }
-    ////////////////////////////////TEMPORARY as Nested array/////////////////////////////////////////
-    //////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    //Get Profile likes function
     public function getprofileLikes($posts)
     {
 
@@ -178,12 +165,10 @@ class Post_model extends CI_model
         }
         return $found;
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////
-    //////////////////////////////////////////TEMPORARY ////////////////////////////////////////////////
-
+    
+    //Liked function
     public function liked()
     {
-
         $this->db->select('interactions.post_id');
         $this->db->where('user_id', $this->session->userdata('user_id'));
         $liked = $this->db->get('interactions');
@@ -191,12 +176,14 @@ class Post_model extends CI_model
         return $liked->result_array();
     }
 
+    //delete post function
     public function deletePost($id)
     {
-
+        //delete post
         $this->db->where('posts.Post_id', $id);
         $this->db->delete('posts');
 
+        //delete comments for post
         $this->db->where('comments.Post_id', $id);
         $this->db->delete('comments');
     }

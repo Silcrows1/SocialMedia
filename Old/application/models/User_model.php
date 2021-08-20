@@ -1,6 +1,7 @@
 <?php
 class User_model extends CI_model
 {
+    //Login function
     public function login($username, $password)
     {
         //Checks database to see where username and password match
@@ -17,11 +18,10 @@ class User_model extends CI_model
         }
     }
 
-    ////////////////////Register new user function///////////////////
+    //Register new user function
     public function register($password)
     {
 
-        var_dump($password);
         $data = array(
             'FirstName' => $this->input->post('fname'),
             'LastName' => $this->input->post('lname'),
@@ -36,6 +36,7 @@ class User_model extends CI_model
 
         //run duplicate function
         $bool = $this->duplicate($data);
+
         //if duplicate username found, return false
         if ($bool == false) {
             return false;
@@ -43,19 +44,23 @@ class User_model extends CI_model
         //if no duplicate username found, insert new user.
         else {
             $this->db->insert('users', $data);
+
             //return the new user id
             $created_new = $this->db->insert_id();
             $created_id = (string)$created_new;
+
             //add user id to array to be used to create profile for user.
             $created = array(
                 'User_id' => $created_id,
                 'gender' => $this->input->post('gender')
             );
+
             $this->db->insert('profiles', $created);
             return true;
         }
     }
 
+    //Password reminder function
     public function passwordreminder($email)
     {
         $this->db->select('reminderquestion, Reminder');
@@ -66,6 +71,8 @@ class User_model extends CI_model
             return $user->result_array();
         }
     }
+
+    //View own profile function
     public function viewownprofile()
     {
         $this->db->select('*');
@@ -74,6 +81,8 @@ class User_model extends CI_model
         $user = $this->db->get('users');
         return $user->result_array();
     }
+
+    //Profile picture function for uploading
     public function profilepicture($url)
     {
         $data = array(
@@ -96,13 +105,15 @@ class User_model extends CI_model
             } else {
             }
         }
-
         $this->db->where('profiles.User_id', $this->session->userdata('user_id'));
         $this->db->update('profiles', $data);
         return;
     }
+
+    //Friends function
     public function friends($id = NULL)
     {
+        //Find friends that match the ID
         $this->db->select('Usertwo_id, users.FirstName, users.LastName, profiles.Picture');
         $this->db->from('friends');
         $this->db->join('users', 'users.user_id = friends.usertwo_id');
@@ -112,8 +123,10 @@ class User_model extends CI_model
         return $friends->result_array();
     }
 
+    //Get friend status function
     public function getfriendstatus($id)
     {
+        //find if user ID and session ID are friends
         $this->db->select('*');
         $this->db->from('friends');
         $this->db->where('friends.Usertwo_id', $id);
@@ -122,6 +135,7 @@ class User_model extends CI_model
         return $friends->result_array();
     }
 
+    //View pending friend requests function
     public function viewpending()
     {
         $this->db->select('Usertwo_id, users.FirstName, users.LastName, Pending_id, submitted_by');
@@ -131,7 +145,8 @@ class User_model extends CI_model
         $friends = $this->db->get();
         return $friends->result_array();
     }
-    
+
+    //decline friend request function
     public function declinerequest($id)
     {
         $this->db->select('pending.User_id, Usertwo_id, users.FirstName, users.LastName');
@@ -156,11 +171,12 @@ class User_model extends CI_model
         $this->db->from('pending');
         $this->db->where('pending.User_id', $id2);
         $this->db->where('pending.Usertwo_id', $id1);
-        $this->db->delete();      
+        $this->db->delete();
 
         return;
     }
 
+    //Accept friend request function
     public function acceptrequest($id)
     {
         $this->db->select('pending.User_id, Usertwo_id, users.FirstName, users.LastName');
@@ -204,15 +220,18 @@ class User_model extends CI_model
 
         return;
     }
+
+    //Add friend function
     public function addfriend($id)
     {
-
+        //data array one for friend request to id
         $data = array(
             'User_id' => $this->session->userdata('user_id'),
             'Usertwo_id' => $id,
             'submitted_by' => $this->session->userdata('user_id')
         );
 
+        //data array two for friend request from session holder
         $data2 = array(
             'User_id' => $id,
             'Usertwo_id' => $this->session->userdata('user_id'),
@@ -223,6 +242,7 @@ class User_model extends CI_model
         return $this->db->insert('pending', $data);
     }
 
+    //Remove friend function
     public function removeFriend($id)
     {
         $this->db->where('User_id', $id);
@@ -234,6 +254,8 @@ class User_model extends CI_model
         $this->db->delete('friends');
         return;
     }
+
+    //Edit profile function
     public function editprofile()
     {
 
@@ -245,6 +267,7 @@ class User_model extends CI_model
         return $this->db->update('profiles', $data);
     }
 
+    //View own account function
     public function viewownaccount()
     {
         $this->db->select('*');
@@ -254,6 +277,7 @@ class User_model extends CI_model
         return $user->result_array();
     }
 
+    //Delete account function
     public function deleteAccount($profileID)
     {
         if ($this->session->userdata('user_id') == $profileID) {
@@ -292,6 +316,7 @@ class User_model extends CI_model
         }
     }
 
+    //View account with id function
     public function viewaccount($id)
     {
         $this->db->select('*');
@@ -300,9 +325,10 @@ class User_model extends CI_model
         $user = $this->db->get('users');
         return $user->result_array();
     }
+
+    //edit account function
     public function editaccount()
     {
-
         $data = array(
             'FirstName' => $this->input->post('fname'),
             'LastName' => $this->input->post('lname'),
@@ -318,6 +344,8 @@ class User_model extends CI_model
 
         $password = $this->input->post('password');
         $password2 = $this->input->post('password2');
+
+        //If new password inserted, hash new password
         if ($password != NULL) {
             $hashed = $this->hash_password($password2);
             $this->db->select('Password');
@@ -330,8 +358,9 @@ class User_model extends CI_model
             $newpw = array(
                 'Password' => $hashed,
             );
-
+            //compare old password from input and database
             if (password_verify($password, $result['Password'])) {
+                //If match, set new hashed password
                 $this->db->where('User_id', $this->session->userdata('user_id'));
                 $this->db->set('Password', $newpw);
                 $this->db->update('users', $newpw);
@@ -341,20 +370,27 @@ class User_model extends CI_model
         $data2 = array(
             'Gender' => $this->input->post('gender')
         );
+        //Update users
         $this->db->where('User_id', $this->session->userdata('user_id'));
         $this->db->set($data);
         $this->db->update('users', $data);
+
+        //Update profiles
         $this->db->where('User_id', $this->session->userdata('user_id'));
         $this->db->set($data2);
         return $this->db->update('profiles', $data2);
     }
+
+    //Hash password function
     private function hash_password($password)
     {
         return password_hash($password, PASSWORD_DEFAULT);
     }
+
+    //Search users function
     public function search($form_data)
     {
-
+        //SQL to concat first name and last name to compare against form data.
         $sql = "CONCAT(FirstName,' ', LastName) LIKE '%$form_data%'";
         $this->db->select('FirstName, LastName, users.User_id, Picture');
         $this->db->from('users');
@@ -365,14 +401,9 @@ class User_model extends CI_model
         return $found->result_array();
     }
 
+    //Get friends function (offline)
     public function getFriends()
     {
-
-
-        $online = 'select User_id FROM onlineusers';
-
-
-
         $this->db->select('users.FirstName, users.LastName, friends.Usertwo_id');
         $this->db->from('users');
         $this->db->join('friends', 'users.User_id = friends.Usertwo_id');
@@ -382,7 +413,7 @@ class User_model extends CI_model
         $friendsoff = $this->db->get();
         return $friendsoff->result_array();
     }
-
+    //Get Online friends function
     public function getOnlineFriends()
     {
 
@@ -395,19 +426,19 @@ class User_model extends CI_model
         return $friends->result_array();
     }
 
-    ////////////////////check for duplicate usernames function///////////////////
+    //check for duplicate usernames function
     public function duplicate($data)
     {
         //retireve all users that match username entered.
         $this->db->select('Username');
         $this->db->where('users.Username', $data['Username']);
         $found = $this->db->get('users');
+
         if ($found->num_rows() < 1) {
             $this->db->select('Email');
             $this->db->where('users.Email', $data['Email']);
             $found = $this->db->get('users');
         }
-
 
         //if username is found in database, create flashdata for user exsists.
         if ($found->num_rows() >= 1) {
@@ -418,17 +449,23 @@ class User_model extends CI_model
             return true;
         }
     }
+
+    //Update contact function
     public function updatecontact($id)
     {
+        // Set array with date time
         date_default_timezone_set('Europe/London');
         $now = date('Y-m-d H:i:s');
         $contact = array(
             'LastContact' =>  $now
         );
+
+        //update users Last Contact column when talking with a volunteer
         $this->db->where('User_id', $this->session->userdata('user_id'));
         $this->db->update('users', $contact);
     }
 
+    //Get Text Size function
     public function gettextsize()
     {
         $this->db->select('vision');
@@ -436,6 +473,7 @@ class User_model extends CI_model
         $text = $this->db->get('users');
     }
 
+    //Online function to Add users as online
     public function online($id)
     {
         $users = array(
@@ -444,6 +482,7 @@ class User_model extends CI_model
         $this->db->insert('onlineUsers', $users);
     }
 
+    //Offline function to Add users as offline
     public function offline($id)
     {
         $users = array(

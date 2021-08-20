@@ -51,18 +51,14 @@ if ($font == '3') {
                         </div>
                         <h1><?php echo $user['FirstName'] . ' ' . $user['LastName'] ?><br></h1>
                         <!--Checking user_id isnt the same as the session holder and that users are not friends-->
-
                         <div class="row-12">
                             <div class="col-2 propic">
                                 <img class="profPicaccount" src="<?php echo base_url('assets/images/' . $user['Picture']); ?>" alt="Profile Picture">
-
                             </div>
                         </div>
                         <div class="row 12 profileDetails">
                             <p>Bio: <?php echo $user['Bio'] ?><br><br></p>
                         </div>
-
-
                         <!--Show upload profile picture and friend requests if session user_id matches the profile User_id-->
                         <?php if ($this->session->userdata['user_id'] == $user['User_id']) : ?>
 
@@ -132,9 +128,9 @@ if ($font == '3') {
                                     </div>
                                     <div class="col-6 postinteracttop" id="comment<?php echo $post['post_id'] ?>">
 
-                                    <!-- Append comments -->
+                                        <!-- Append comments -->
                                         <p><?php foreach ($comments as $entry) : ?>
-                                            <!-- Check for number of comments and change wording -->
+                                                <!-- Check for number of comments and change wording -->
                                                 <?php if ($entry['Post_id'] == $post['post_id']) : ?>
                                                     <?php if ($entry['Comments'] > 0) : echo $entry['Comments'] ?>
                                                         <?php if ($entry['Comments'] <> 1) : echo 'Comments'; ?>
@@ -165,7 +161,7 @@ if ($font == '3') {
                                     <div class="col-6 postinteract comment" id="<?php echo $post['post_id']; ?>" title="<?php echo $post['post_id']; ?>">
                                         <a class="viewcomment" id="viewcommentid<?php echo $post['post_id']; ?>" title="<?php echo $post['post_id']; ?>">
 
-                                        <!-- If post contains a comment, set text to view comments, otherwise Add Comment -->
+                                            <!-- If post contains a comment, set text to view comments, otherwise Add Comment -->
                                             <?php foreach ($comments as $entry) : ?>
                                                 <?php if ($entry['Post_id'] == $post['post_id']) : ?>
                                                     <?php if ($entry['Comments'] == 0) : echo 'Add Comment'; ?>
@@ -176,7 +172,6 @@ if ($font == '3') {
                                         </a>
                                     </div>
                                 </div>
-
                                 <!-- Add comment section -->
                                 <div class="row pt-3 g-0">
                                     <div class="comments<?php echo $post['post_id']; ?>">

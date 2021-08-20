@@ -95,8 +95,10 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
     } ?>
     <div class="row no-gutters">
         <div class="chatroom col-12 col-md-10 col-lg-8 messageboard">
+            <!-- Itterate through messages -->
             <?php foreach ($Message as $message) : ?>
                 <div class="row-12 row-md-8 row-lg-6 message">
+                    <!-- Change class to float left or right depening on message destination -->
                     <div class="col-12 contents
                         <?php if ($message['Posted_to'] == $this->session->userdata('user_id')) {
                             echo "right";
@@ -106,10 +108,14 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
                         <div class="row">
                             <div class="col pill">
                                 <div class="row-12">
+
+                                    <!-- Message Name and Post time -->
                                     <p><?php echo $message['FirstName'] ?> <?php echo $message['LastName'] ?></p>
                                     <p class="date"><?php echo $message['Posted_at'] ?></p>
                                 </div>
                                 <div class="row">
+
+                                    <!-- Message Body -->
                                     <p><?php echo $message['Message'] ?></p>
                                 </div>
                             </div>
@@ -121,12 +127,16 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
     </div>
     <div class="row">
         <div class="chatroom col-12 col-md-10 col-lg-8 ">
+            
+            <!-- Message box with Onsubmit function -->
             <form onsubmit="return sendMessage(event)">
                 <div class="sticky-bottom">
                     <input type="hidden" name="targetId" value="<?php echo $friendid; ?>">
                     <textarea type="text" name="message" id="message" class="form-control" rows="3" placeholder="Insert Message here"></textarea>
                     <input type="submit" style="visibility: hidden;" />
                     <button type="submit" id="messagesubmit" class="messagesubmit createPost btn btn-primary">Post</button>
+
+                    <!-- Hidden User is typing element -->
                     <div id='typing' class="pulsate">
                         <p>User is typing...</p>
                     </div>

@@ -1,8 +1,8 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js" ></script>
-<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js" ></script>
-<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.js"></script>
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous" defer></script>
 </main>
 </body>
@@ -141,7 +141,7 @@
         var comment = $('textarea#addcomment' + postid).val();
 
         var url = "<?php echo base_url(); ?>comments/createComment";
-        //var post_id = $(this).closest("div.post").attr("id");
+
         jQuery.ajax({
           type: "POST",
           url: url,
@@ -242,7 +242,7 @@
       <?php endif ?>
     });
 
-    ////////////////DELETE PROFILE POPUP////////////////////////////////////
+    //Delete profile button click function
     $('.deleteProfile').click(function(e) {
 
       var x = document.getElementById('deletebox')
@@ -255,11 +255,14 @@
       }
     });
 
+    //Confirm account delete button click
     $('.confirmdelete').click(function(e) {
 
       var x = document.getElementById('confirmationinput').value;
       var y = event.target.id;
       var url = "<?php echo base_url(); ?>users/deleteAccount";
+
+      //Check inserted text matches Delete or dont delete.
       if (x == "Delete") {
         console.log(y + "delete now");
         jQuery.ajax({
@@ -279,7 +282,7 @@
       }
     });
 
-    //remove friend button, on click, show confirmation box//
+    //remove friend button, on click, show confirmation box and hide option//
     $('.removeFriend').click(function(e) {
 
       var x = document.getElementById('confirmremove')
@@ -310,6 +313,7 @@
       });
     });
 
+    //Password reminder / Forgot password click
     $('.forgot').click(function(e) {
 
       var x = document.getElementById('forgotten')
@@ -325,9 +329,12 @@
     //On confirmation box click, remove friend and redirect home//
     $('#getreminder').click(function(e) {
       e.preventDefault();
+
+      //get entered value of email
       var email = document.getElementById('emailforgot').value
       console.log(email);
       var url = "<?php echo base_url(); ?>users/passwordreminder";
+
       jQuery.ajax({
         type: "POST",
         url: url,
@@ -343,6 +350,7 @@
             document.getElementById('forgotten').setAttribute("class", "col forgotten hidden");
             document.getElementById('forgotten').setAttribute("class", "col forgotten hidden");
 
+            //Corresponsding questions set fro values stored.
             if (value.reminderquestion == "1") {
               var question = "Mothers Maiden Name";
             } else if (value.reminderquestion == "2") {
@@ -354,6 +362,7 @@
             } else {
               var question = "Your favourite TV show";
             }
+            //Append question reminder
             $('<br><br><div class="col"><p>Your password reminder was set as the following: </p><br><p>' + question + '</p></div>').appendTo('.reglink');
           });
         }
@@ -361,7 +370,7 @@
     });
   });
 
-  //////////////////DELETE FUNCTION//////////////////////////
+  //DELETE Comment function
   $("body").on("click", '.delete', function(e) {
     var commentid = event.target.title;
     var comment = "comment"
@@ -378,11 +387,12 @@
         Post_id: Post_id,
       },
       success: function(result) {
-
+        //display none for target comment
         document.getElementById(target).style.display = "none";
         var response = $.parseJSON(result);
-
         $('textarea#addcomment' + Post_id).val("");
+
+        //Change option to either add comment or view comments depending on the number of comments found
         if (response[1] == 0) {
           document.getElementById('comment' + Post_id).innerHTML = ('');
           document.getElementById('viewcommentid' + Post_id).innerHTML = ('Add Comment');
@@ -399,6 +409,7 @@
     e.preventDefault();
   });
 
+  //Click event for view friends
   var friendfind = document.getElementById('friendfind');
   friendfind.style.cursor = 'pointer';
   friendfind.onclick = function() {

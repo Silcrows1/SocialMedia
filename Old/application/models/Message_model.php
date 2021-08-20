@@ -1,23 +1,11 @@
 <?php
 class Message_model extends CI_model{
 
-    public function sgetMessages($id){
-        $this->db->distinct();
-        $this->db->select('Message, Posted_to, Posted_at, users.FirstName, users.LastName');
-        $this->db->from('Messages');
-        $this->db->join('Users', 'Messages.User_id = Users.User_id');
-        $this->db->where('Posted_to', $id);
-        $this->db->or_where('Messages.User_id', $id);
-        $this->db->order_by("Messages.Posted_at", "DESC");
-        $messages=$this->db->get();
 
-        return $messages->result_array();
-
-    }
-
+    //Get messages function
     public function getMessages($id){
 
-
+        //Get all messages to id
         $this->db->distinct();
         $this->db->select('Message, Posted_to, Posted_at, users.FirstName, users.LastName');
         $this->db->from('Messages');
@@ -27,7 +15,7 @@ class Message_model extends CI_model{
         $messages=$this->db->get();
         $query1 = $this->db->last_query();
 
-
+        //Get all messages from id to Session id holder
         $this->db->select('Message, Posted_to, Posted_at, users.FirstName, users.LastName');
         $this->db->from('Messages');
         $this->db->join('Users', 'Messages.User_id = Users.User_id');
@@ -36,21 +24,16 @@ class Message_model extends CI_model{
         $messages2=$this->db->get();
         $query2 = $this->db->last_query();
 
+        //Union messages together and order by posted date DESC
         $messages = $this->db->query("select * from ($query1 UNION ALL $query2) as unionTable ORDER BY Posted_at DESC");        
 
         return $messages->result_array();
     }
 
+    //Send message function
     public function sendMessage($message){
-        
-        $message = $this->input->post('message');
-        $targetID = $this->input->post('targetId');
-        $messagesend = array(
-            'Posted_to' => $targetID,
-            'Message' => $message,
-            'User_id' => $this->session->userdata('user_id')
-        );
-        $this->db->insert('Messages', $messagesend);
+
+        $this->db->insert('Messages', $message);
 
     }
 

@@ -3,7 +3,7 @@
 		<!--Validation errors show here -->
 		<?php $id = $this->session->userdata('user_id') ?>
 		<?php echo validation_errors(); ?>
-		<!--Form location -->
+		<!--Form location all values are changed depending on data recieved -->
 		<div class="col-8 register">
 			<?php echo form_open('users/editaccount/' . $id); ?>
 			<div class="form-group loginelement">
@@ -72,7 +72,7 @@
 
 			<div class="form-group loginelement">
 				<p>If you wish to change your password, enter your old password and new password. If your old password does not match, this will remain unchanged</p><br>
-				<!--Password input-->
+				<!--Password input (will not change password unless data is inserted)-->
 				<label>Old password</label>
 				<input type='password' class="form-control" name="password" placeholder="Old Password">
 			</div><br>

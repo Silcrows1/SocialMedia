@@ -10,11 +10,13 @@
 		<input type='text' class="form-control" name="fname" placeholder="First Name">
 	</div><br>
 	<div class="form-group loginelement">
+
 	<!--Last Name input-->
 		<label>Last Name</label>
 		<input type='text' class="form-control" name="lname" placeholder="Last Name">
 	</div><br>
 
+	<!-- Font selection input -->
     <p>Select the font that is easiest to read (you can change this later).</p>
     <div>
     <input type="radio" class="small" name="fontpref" value="1" checked="checked">
@@ -27,6 +29,7 @@
     <label for="large" class="large">A a B b C c</label>
     </div><br>
     <div class="form-group loginelement">
+
 	<!--Support required input -->
 		<p>This website supports its users and can provide volunteers to keep you company,
             please select if you would like to use this service. (You can change this preference from your profile)</p>
@@ -39,6 +42,7 @@
         </div>
 	</div><br>
 	<div class="form-group loginelement">
+
 	<!--Gender input -->
 		<p>Gender</p>
         <div>    
@@ -50,28 +54,32 @@
         </div>
 	</div><br>
 	<div class="form-group loginelement">
+
 	<!--Email address input -->
 		<label>Email Address</label>
 		<input type='email' class="form-control" name="email" placeholder="Email Address">
 	</div><br>
     <div class="form-group loginelement">
+
 	<!--Username input) -->
 		<label>Username</label>
 		<input type='text' class="form-control" name="username" placeholder="Username">
 	</div><br>
 	<div class="form-group loginelement">
+
 	<!--Password input-->
 		<label>Password</label>
 		<input type='text' class="form-control" name="password" placeholder="Password">
 	</div><br>
 	<div class="form-group loginelement">
+
 	<!--Confirm password input (must match previous password (validation)) -->
 		<label>Confirm Password</label>
 		<input type='text' class="form-control" name="password2" placeholder="Confirm Password">
 	</div><br>
 
     <div class="form-group loginelement">
-	<!--password reminder input -->
+	<!--password reminder selection input -->
     <label for="cars">Choose a password reminder:</label>
     <br>
         <select name="question" id="questions">

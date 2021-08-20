@@ -1,12 +1,16 @@
 <div class="row">
     <div class="col">
+        <!-- Search form -->
         <form action="<?php echo base_url(); ?>admins/search" method="post" class="search">
             <label for="keyword">Search
                 <input class="input" type="text" name="keyword" placeholder="Search Users" label="Search" />
                 <input type="submit" value="Search" />
             </label>
         </form>
+        <!-- Reset Link -->
         <a href="<?php echo base_url(); ?>admins/viewUsers">Reset</a>
+
+        <!-- Table for online users -->
         <table id="customers">
             <tr>
                 <th>First name</th>

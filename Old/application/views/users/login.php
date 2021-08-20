@@ -14,11 +14,13 @@
   }
 </script>
 <?php
+
+//unset flashdata 
 if (isset($_SESSION['userexsists'])) {
   unset($_SESSION['userexsists']);
 } ?>
-<div class="col-12 col-md-6 login">
 
+<div class="col-12 col-md-6 login">
   <!--login Form-->
   <?php echo form_open_multipart('users/login'); ?>
   <div class="col-12 mb-3">
@@ -32,15 +34,19 @@ if (isset($_SESSION['userexsists'])) {
     <input type="password" name="password" id="password" class="form-control">
   </div>
   <div class="col-12 mb-3 form-check">
+    
+    <!-- Show password checkbox -->
     <input type="checkbox" class="form-check-input" onclick="myFunction()">
     <label class="form-check-label" for="exampleCheck1">Show Password</label>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button></br></br></br>
 
-  <p class = "reglink">Need an account? Register <a href="<?php echo base_url(); ?>users/register">here</a></p>
-  <p id="forgotclick">Forgot password? Click <a class="forgot" >here for a reminder</a></p>
+  <!-- Register and Password reminder links -->
+  <p class="reglink">Need an account? Register <a href="<?php echo base_url(); ?>users/register">here</a></p>
+  <p id="forgotclick">Forgot password? Click <a class="forgot">here for a reminder</a></p>
   </br>
 
+  <!-- Hidden password reminder box -->
   <div class="col forgotten hidden" id="forgotten">
     <div class="col-12">
       <label class="form-check-label" for="exampleCheck1">Enter Email</label>
