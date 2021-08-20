@@ -156,6 +156,7 @@ if ($font == '3') {
     </div>
 
     <!-- Popup used for when a volunteer makes contact -->
+    
     <div id="myModal" title="" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
