@@ -169,6 +169,7 @@ class Post_model extends CI_model
     //Liked function
     public function liked()
     {
+        //get interactions for post.
         $this->db->select('interactions.post_id');
         $this->db->where('user_id', $this->session->userdata('user_id'));
         $liked = $this->db->get('interactions');

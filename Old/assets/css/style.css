@@ -497,7 +497,16 @@ a:hover {
 	text-align:right;
 	width:min-content;
 }
-
+.deletecontainer{
+	position:relative;
+}
+#Deletebutton{
+	display:block;
+	position:absolute;
+	bottom:0px;
+	left:0px;
+	color:red;
+}
 .deletebox{
 	width:300px;
 	border-style:solid;

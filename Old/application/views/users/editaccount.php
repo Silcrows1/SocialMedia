@@ -16,16 +16,15 @@
 				<label>Last Name</label>
 				<input type='text' class="form-control" name="lname" placeholder="Last Name" value="<?php echo $user['LastName'] ?>">
 			</div><br>
-
 			<p>Select the font that is easiest to read (you can change this later).</p>
 			<div>
-				<input type="radio" class="small" name="fontpref" value="1" <?php if ($user['Vision'] == "1") echo 'checked="checked"'?>>
+				<input type="radio" class="small" name="fontpref" value="1" <?php if ($user['Vision'] == "1") echo 'checked="checked"' ?>>
 				<label for="small" class="small">A a B b C c</label>
 				<br>
-				<input type="radio" class="medium" name="fontpref" value="2" <?php if ($user['Vision'] == "2") echo 'checked="checked"'?>>
+				<input type="radio" class="medium" name="fontpref" value="2" <?php if ($user['Vision'] == "2") echo 'checked="checked"' ?>>
 				<label for="medium" class="medium">A a B b C c</label>
 				<br>
-				<input type="radio" class="large" name="fontpref" value="3" <?php if ($user['Vision'] == "3") echo 'checked="checked"'?>>
+				<input type="radio" class="large" name="fontpref" value="3" <?php if ($user['Vision'] == "3") echo 'checked="checked"' ?>>
 				<label for="large" class="large">A a B b C c</label>
 			</div><br>
 			<div class="form-group loginelement">
@@ -69,7 +68,6 @@
 				<label>Username</label>
 				<input type='text' class="form-control" name="username" placeholder="Username" value="<?php echo $user['Username'] ?>">
 			</div><br>
-
 			<div class="form-group loginelement">
 				<p>If you wish to change your password, enter your old password and new password. If your old password does not match, this will remain unchanged</p><br>
 				<!--Password input (will not change password unless data is inserted)-->
@@ -81,19 +79,24 @@
 				<label>New Password</label>
 				<input type='password' class="form-control" name="password2" placeholder="New Password">
 			</div><br>
-
 			<button type="submit" class="btn btn-primary">submit</button>
 			<?php echo form_close(); ?>
-		</div>
-		<div class="row deletebox hidden" id="deletebox">
-			<div class="col text-center">
-				<p>Deleting your account is irreversible, to proceed with delete, please type Delete below to confirm.
-					<input type="text" id="confirmationinput" name="confirm"><br>
-					<button class="confirmdelete" id="<?php echo $user['User_id'] ?>">CONFIRM</button>
+
+			<!-- Delete account option with confirmation -->
+			<div class="deletecontainer">
+				<a class="deleteProfile" id="Deletebutton">Delete Account</a><br><br>
+				<div class="row deletebox hidden" id="deletebox">
+					<div class="col text-center">
+						<p>Deleting your account is irreversible, to proceed with delete, please type Delete below to confirm.
+							<input type="text" id="confirmationinput" name="confirm"><br>
+							<button class="confirmdelete" id="<?php echo $user['User_id'] ?>">CONFIRM</button>
+					</div>
+				</div>
 			</div>
 		</div>
-		<a class="deleteProfile" id="Deletebutton">Delete Account</a><br><br>
 
 
 	<?php endforeach; ?>
+
+
 </div>

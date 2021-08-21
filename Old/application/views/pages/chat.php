@@ -127,7 +127,7 @@ header("Access-Control-Allow-Methods: GET, OPTIONS"); ?>
     </div>
     <div class="row">
         <div class="chatroom col-12 col-md-10 col-lg-8 ">
-            
+
             <!-- Message box with Onsubmit function -->
             <form onsubmit="return sendMessage(event)">
                 <div class="sticky-bottom">
